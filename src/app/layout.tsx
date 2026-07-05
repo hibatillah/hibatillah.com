@@ -10,6 +10,7 @@ import profile from "@/contents/profile.json"
 import { cn } from "@/lib/utils"
 import { Analytics } from "@vercel/analytics/next"
 import { SpeedInsights } from "@vercel/speed-insights/next"
+import { VercelToolbar } from "@vercel/toolbar/next"
 import Script from "next/script"
 import "./globals.css"
 import Provider from "./provider"
@@ -71,6 +72,11 @@ export default function RootLayout({
 }: Readonly<{
 	children: React.ReactNode
 }>) {
+	// Mount the Vercel Toolbar on dev + preview (incl. custom preview domains,
+	// where Vercel does not auto-inject it), but never on production.
+	const shouldInjectToolbar =
+		process.env.NODE_ENV === "development" || process.env.VERCEL_ENV === "preview"
+
 	return (
 		<html lang="en" suppressHydrationWarning>
 			<body
@@ -100,6 +106,7 @@ export default function RootLayout({
 								strategy="beforeInteractive"
 							/>
 						)}
+						{shouldInjectToolbar && <VercelToolbar />}
 					</Provider>
 				</MotionConfig>
 			</body>
