@@ -1,14 +1,18 @@
 import { Header } from "@/components/header"
 import { BreadcrumbJsonLd } from "@/components/json-ld"
 import profile from "@/contents/profile.json"
+import { isProjectVisible } from "@/flags"
 import { getContentData } from "@/lib/contents"
 import { Project } from "@/lib/types"
 import { Metadata } from "next"
+import { notFound } from "next/navigation"
 
 export async function generateMetadata({
 	params,
 }: PageProps<"/project/[slug]">): Promise<Metadata> {
 	const { slug } = await params
+	if (!(await isProjectVisible(slug))) return {}
+
 	const { data } = await getContentData<Project>("projects", slug)
 
 	return {
@@ -36,6 +40,8 @@ export async function generateMetadata({
 
 export default async function Page({ params }: PageProps<"/project/[slug]">) {
 	const { slug } = await params
+	if (!(await isProjectVisible(slug))) notFound()
+
 	const { Content, data } = await getContentData<Project>("projects", slug)
 
 	return (

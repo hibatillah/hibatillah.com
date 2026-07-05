@@ -1,8 +1,11 @@
 import { Header } from "@/components/header"
 import { TextLink } from "@/components/text-link"
+import { eduSectionFlag, workSectionFlag } from "@/flags"
 import { EduSection, ProjectSection, WorkSection } from "./_components/sections"
 
-export default function Page() {
+export default async function Page() {
+	const [showWork, showEdu] = await Promise.all([workSectionFlag(), eduSectionFlag()])
+
 	return (
 		<>
 			<Header heading="M. Hibatillah Hasanin" description="Fullstack Web Developer" />
@@ -15,12 +18,12 @@ export default function Page() {
 						Hono, and Elysia. I work with Laravel and Python professionally too, and spend part of
 						my time on side projects and building things I find interesting.
 					</p>
-					<p>Currently Programmer AI at Onesia.</p>
+					<p>Currently AI Programmer at Onesia.</p>
 				</article>
 			</section>
 
-			<WorkSection />
-			<EduSection />
+			{showWork && <WorkSection />}
+			{showEdu && <EduSection />}
 			<ProjectSection />
 
 			<section>

@@ -45,6 +45,14 @@ export interface Project {
 
 export const works: Work[] = [
 	{
+		role: "AI Programmer",
+		company: "Onesia",
+		year: "2026",
+		url: "ai-programmer-onesia",
+		// No dedicated thumbnail yet — reusing a prior work image just to preview the frame.
+		images: [{ src: ministry1, offsets: "c" }],
+	},
+	{
 		role: "Frontend Developer",
 		company: "Ministry Finance Indonesia",
 		year: "2024",
@@ -92,6 +100,22 @@ export const projects: Project[] = [
 		year: "2024",
 		url: "yemeni-music-classification",
 		images: [{ src: yemeni, offsets: "c" }],
+	},
+	{
+		title: "Ekolog App",
+		description: "Disaster reporting with K-Means classification.",
+		year: "2024",
+		url: "ekolog-app",
+		// No dedicated thumbnail yet — reusing a project image just to preview the card.
+		images: [{ src: massbeat, offsets: "c" }],
+	},
+	{
+		title: "Indogrosir Supply Chain",
+		description: "Automated procurement and inventory control.",
+		year: "2024",
+		url: "indogrosir-scm",
+		// No dedicated thumbnail yet — reusing a project image just to preview the card.
+		images: [{ src: klc, offsets: "c" }],
 	},
 	{
 		title: "MassBeat",

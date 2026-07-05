@@ -1,4 +1,5 @@
 import profile from "@/contents/profile.json"
+import { isProjectVisible } from "@/flags"
 import { getContentByCategory } from "@/lib/contents"
 import { Education, Experience, Project } from "@/lib/types"
 import { all } from "better-all"
@@ -28,12 +29,16 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 		},
 	]
 
-	const projectPages: MetadataRoute.Sitemap = projects.map((project) => ({
-		url: `${baseUrl}/project/${project.slug}`,
-		lastModified: new Date(),
-		changeFrequency: "yearly",
-		priority: 0.5,
-	}))
+	// Drop flag-hidden projects so the sitemap never points crawlers at a 404.
+	const projectVisibility = await Promise.all(projects.map((p) => isProjectVisible(p.slug)))
+	const projectPages: MetadataRoute.Sitemap = projects
+		.filter((_, index) => projectVisibility[index])
+		.map((project) => ({
+			url: `${baseUrl}/project/${project.slug}`,
+			lastModified: new Date(),
+			changeFrequency: "yearly",
+			priority: 0.5,
+		}))
 
 	const experiencePages: MetadataRoute.Sitemap = experiences.map((experience) => ({
 		url: `${baseUrl}/work/${experience.slug}`,

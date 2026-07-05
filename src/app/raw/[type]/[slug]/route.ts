@@ -1,5 +1,6 @@
 import { readFile } from "node:fs/promises"
 import { join } from "node:path"
+import { isProjectVisible } from "@/flags"
 import { ContentCategory } from "@/lib/types"
 
 /** URL segment → content directory. Reached via the `*.md` rewrites in next.config.ts. */
@@ -21,6 +22,11 @@ export async function GET(
 	const category = TYPE_TO_CATEGORY[type]
 
 	if (!category) {
+		return new Response("Not found", { status: 404 })
+	}
+
+	// A flag-hidden project is unreachable in every form, including its `.md`.
+	if (type === "project" && !(await isProjectVisible(slug))) {
 		return new Response("Not found", { status: 404 })
 	}
 

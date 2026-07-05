@@ -42,6 +42,8 @@ interface LogoEntry {
 	dark?: LogoComponent
 	/** Extra classes for single-variant logos (e.g. `dark:invert` for pure-black marks). */
 	className?: string
+	/** Wide (non-square) marks like jQuery: keep the height, let width scale so they aren't shrunk. */
+	wide?: boolean
 }
 
 /**
@@ -61,19 +63,26 @@ const STACK_LOGOS: Record<string, LogoEntry> = {
 	mysql: { light: MysqlIconLight, dark: MysqlIconDark },
 	postgresql: { light: Postgresql },
 	"prisma orm": { light: Prisma, dark: PrismaDark },
-	"sql server": { light: SqlServer },
+	// Two-tone mark (light grey + red) that disappears when grayscaled; force a solid theme-aware fill.
+	"sql server": {
+		light: SqlServer,
+		className: "[&_path]:fill-neutral-700 dark:[&_path]:fill-neutral-200",
+	},
 	python: { light: Python },
 	flask: { light: FlaskLight, dark: FlaskDark },
 	firebase: { light: Firebase },
 	figma: { light: Figma },
 	kotlin: { light: Kotlin },
 	android: { light: AndroidIcon },
-	jquery: { light: Jquery, dark: JqueryDark },
+	jquery: { light: Jquery, dark: JqueryDark, wide: true },
 	nextauth: { light: Authjs },
 	"asp.net": { light: Dotnet },
 }
 
-const ICON = "size-5 grayscale contrast-125"
+const ICON = "grayscale contrast-125"
+/** Square by default; wide marks (e.g. jQuery) keep the height and let width scale. */
+const ICON_SIZE = "size-5"
+const ICON_SIZE_WIDE = "h-5 w-12 object-contain"
 
 const POPUP =
 	"z-50 w-fit origin-(--transform-origin) whitespace-nowrap rounded-md bg-foreground px-3 py-1.5 text-xs text-background transition-[width,height] duration-[400ms] ease-out data-instant:transition-none data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95 data-closed:animate-out data-closed:fade-out-0 data-closed:zoom-out-95"
@@ -93,6 +102,7 @@ export function StackLogos({ stacks }: { stacks: string[] }) {
 				{logos.map(({ name, entry }) => {
 					const Light = entry.light
 					const Dark = entry.dark
+					const size = entry.wide ? ICON_SIZE_WIDE : ICON_SIZE
 
 					return (
 						<li key={name}>
@@ -105,11 +115,14 @@ export function StackLogos({ stacks }: { stacks: string[] }) {
 							>
 								{Dark ? (
 									<>
-										<Light aria-hidden className={cn(ICON, entry.className, "dark:hidden")} />
-										<Dark aria-hidden className={cn(ICON, entry.className, "hidden dark:block")} />
+										<Light aria-hidden className={cn(size, ICON, entry.className, "dark:hidden")} />
+										<Dark
+											aria-hidden
+											className={cn(size, ICON, entry.className, "hidden dark:block")}
+										/>
 									</>
 								) : (
-									<Light aria-hidden className={cn(ICON, entry.className)} />
+									<Light aria-hidden className={cn(size, ICON, entry.className)} />
 								)}
 							</Tooltip.Trigger>
 						</li>

@@ -7,16 +7,20 @@ import {
 	ItemMedia,
 	ItemTitle,
 } from "@/components/ui/item"
+import { AI_PROGRAMMER_SLUG, aiProgrammerBetaFlag, isProjectVisible } from "@/flags"
 import Image from "next/image"
 import Link from "next/link"
 import { educations, projects, works } from "./content"
 
-export function WorkSection({ ...props }: React.ComponentProps<"section">) {
+export async function WorkSection({ ...props }: React.ComponentProps<"section">) {
+	const showBeta = await aiProgrammerBetaFlag()
+	const items = showBeta ? works : works.filter((work) => work.url !== AI_PROGRAMMER_SLUG)
+
 	return (
 		<section {...props}>
 			<h2>Work</h2>
 			<ItemGroup className="mx-[-13px] w-auto gap-4!">
-				{works.map((item, key) => (
+				{items.map((item, key) => (
 					<Item
 						key={key}
 						variant="default"
@@ -99,12 +103,15 @@ export function EduSection({ ...props }: React.ComponentProps<"section">) {
 	)
 }
 
-export function ProjectSection({ ...props }: React.ComponentProps<"section">) {
+export async function ProjectSection({ ...props }: React.ComponentProps<"section">) {
+	const visibility = await Promise.all(projects.map((project) => isProjectVisible(project.url)))
+	const items = projects.filter((_, index) => visibility[index])
+
 	return (
 		<section {...props}>
 			<h2>Project</h2>
 			<ItemGroup className="mx-[-13px] w-auto gap-4!">
-				{projects.map((item, key) => (
+				{items.map((item, key) => (
 					<Item
 						key={key}
 						variant="default"

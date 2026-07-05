@@ -1,4 +1,5 @@
 import profile from "@/contents/profile.json"
+import { isProjectVisible } from "@/flags"
 import { getContentByCategory } from "@/lib/contents"
 import { Education, Experience, Project } from "@/lib/types"
 import { all } from "better-all"
@@ -22,6 +23,10 @@ export async function GET(request: Request) {
 
 	const url = profile.url
 
+	// Drop flag-hidden projects so the map never links a page that 404s.
+	const projectVisibility = await Promise.all(projects.map((p) => isProjectVisible(p.slug)))
+	const visibleProjects = projects.filter((_, index) => projectVisibility[index])
+
 	const sections = [
 		`# ${profile.name}`,
 		`> ${profile.description}`,
@@ -35,7 +40,7 @@ export async function GET(request: Request) {
 		].join("\n"),
 		[
 			"## Projects",
-			...projects.map((p) => `- [${p.title}](${url}/project/${p.slug}.md): ${p.headline}`),
+			...visibleProjects.map((p) => `- [${p.title}](${url}/project/${p.slug}.md): ${p.headline}`),
 		].join("\n"),
 		[
 			"## Education",
