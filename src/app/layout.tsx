@@ -72,10 +72,7 @@ export default function RootLayout({
 }: Readonly<{
 	children: React.ReactNode
 }>) {
-	// Mount the Vercel Toolbar on dev + preview (incl. custom preview domains,
-	// where Vercel does not auto-inject it), but never on production.
-	const shouldInjectToolbar =
-		process.env.NODE_ENV === "development" || process.env.VERCEL_ENV === "preview"
+	const shouldInjectToolbar = process.env.VERCEL_ENV !== "production"
 
 	return (
 		<html lang="en" suppressHydrationWarning>
