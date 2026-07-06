@@ -17,6 +17,10 @@ bun format:check # Check formatting without writing
 
 Pre-commit hooks (husky + lint-staged) automatically run `oxlint --fix` and `oxfmt` on staged `.js/.jsx/.ts/.tsx/.json` files.
 
+### Git workflow
+
+This is a solo repo — **never open pull requests**. Feature branches (e.g. `preview`) are merged straight into `master` locally (`git checkout master && git merge <branch> && git push`), then deleted. Do not run `gh pr create` or the PR-based commit skills for this project.
+
 ## Architecture
 
 **Next.js 16 App Router** portfolio site with MDX-based content management.
