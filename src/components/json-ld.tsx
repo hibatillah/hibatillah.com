@@ -1,10 +1,6 @@
 import profile from "@/contents/profile.json"
 
-/**
- * Structured data (`Person` + `WebSite` + `ProfilePage`) declaring hibatillah.com
- * as the canonical entity for the name, with `sameAs` linking the social profiles.
- * Rendered once in the root layout.
- */
+/** `Person` + `WebSite` + `ProfilePage` graph declaring hibatillah.com as the canonical entity. Rendered once in the root layout. */
 export function JsonLd() {
 	const personId = `${profile.url}/#person`
 	const websiteId = `${profile.url}/#website`
@@ -16,6 +12,7 @@ export function JsonLd() {
 				"@type": "Person",
 				"@id": personId,
 				name: profile.name,
+				alternateName: ["M Hibatillah", "Hibatillah Hasanin", "Hibatillah Habib", "Habib Hasanin"],
 				url: profile.url,
 				image: `${profile.url}/opengraph-image`,
 				jobTitle: "Fullstack Web Developer",
@@ -37,6 +34,7 @@ export function JsonLd() {
 					"Node.js",
 					"Hono",
 					"Elysia",
+					"Python",
 					"Laravel",
 					"Web Development",
 				],
