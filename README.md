@@ -17,7 +17,7 @@ A modern, responsive portfolio website showcasing work, education, and projects.
 
 The site is built to be read by LLMs and autonomous agents, not just search crawlers:
 
-- **`/llms.txt`** — a curated markdown map of the site ([llmstxt.org](https://llmstxt.org)), linking each page to its raw `.md` version.
+- **`/llms.txt`** — a curated markdown map of the site, linking each page to its raw `.md` version.
 - **Markdown endpoints** — append `.md` to any detail URL (`/project/<slug>.md`, `/work/<slug>.md`, `/edu/<slug>.md`) to get the raw MDX content instead of rendered HTML.
 - **Structured data** — schema.org JSON-LD (`Person` + `WebSite` + `ProfilePage`) and `next/og` Open Graph images on every page.
 - **AI-crawler friendly** — `robots.txt` explicitly welcomes GPTBot, ClaudeBot, PerplexityBot, Google-Extended, and others.

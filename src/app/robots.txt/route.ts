@@ -13,17 +13,10 @@ const aiCrawlers = [
 	"CCBot",
 ]
 
-/**
- * Content Signals (contentsignals.org) — declare AI-usage preferences:
- * `search` indexing is allowed; `ai-input` (answer-engine retrieval) and
- * `ai-train` (model training) are opted out.
- */
+// Content Signals (contentsignals.org): allow search indexing, opt out of AI retrieval/training.
 const contentSignal = "search=yes, ai-input=no, ai-train=no"
 
-/**
- * Hand-built `/robots.txt`. Replaces the `robots.ts` metadata file because the
- * `MetadataRoute.Robots` type cannot emit the non-standard `Content-Signal:` line.
- */
+// Hand-built since `MetadataRoute.Robots` can't emit the non-standard `Content-Signal:` line.
 export function GET() {
 	const lines = [
 		"User-agent: *",
