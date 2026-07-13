@@ -1,12 +1,4 @@
-export type ContentCategory = "edu" | "exp" | "projects" | "components"
-
-export interface RemoteImage {
-	src: string
-	width: number
-	height: number
-	blurData?: string
-	error?: string
-}
+export type ContentCategory = "edu" | "work" | "projects" | "components"
 
 export interface ItemLink {
 	label: string
@@ -34,7 +26,6 @@ export interface Project {
 	description: string
 	headline: string
 	roles: string[]
-	thumbnail?: RemoteImage
 	/** Human-readable date span, e.g. "Oct 2024 - Jul 2025". */
 	period: string
 	slug: string

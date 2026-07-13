@@ -41,18 +41,18 @@ Listing pages and `/explore` were removed in the redesign. Home-page section dat
 All portfolio content lives in `src/contents/`:
 
 - `profile.json` — Central config: `url` (the canonical site origin, `https://hibatillah.com` — cascades to `metadataBase`, canonical URLs, OG image URLs, `sitemap.ts`, `json-ld.tsx`, and the robots.txt `Host:`/`Sitemap:` lines, so changing it re-points the whole site), name, description, `twitterHandle` (e.g. `@handle`), and social links. Referenced in `next.config.ts` for `/links/:label` redirects (`mailto:` entries are filtered out). The `featured` field exists but the current home page does not read from it — it's vestigial.
-- `edu/`, `exp/`, `projects/`, `components/` — MDX files with YAML frontmatter matching types in `src/lib/types.ts`.
+- `edu/`, `work/`, `projects/`, `components/` — MDX files with YAML frontmatter matching types in `src/lib/types.ts`.
 
 Content is loaded via two server functions in `src/lib/contents.ts`:
 
 - `getContentByCategory<T>(category)` — Returns all frontmatter objects for a category
 - `getContentData<T>(category, slug)` — Returns `{ Content, data }` for a specific MDX file. Throws a readable error if the slug doesn't exist.
 
-`ContentCategory` is `"edu" | "exp" | "projects" | "components"`. MDX frontmatter is exported as `frontmatter` via `remark-mdx-frontmatter`. Type definitions (`Experience`, `Education`, `Project`, `Component`) are in `src/lib/types.ts`.
+`ContentCategory` is `"edu" | "work" | "projects" | "components"`. MDX frontmatter is exported as `frontmatter` via `remark-mdx-frontmatter`. Type definitions (`Experience`, `Education`, `Project`, `Component`) are in `src/lib/types.ts`.
 
 ### Images
 
-Local detail-page and home-page images live under `src/static/{edu,exp,project}/` and are imported as `StaticImageData` (Next.js handles blur placeholders automatically for static imports).
+Local detail-page and home-page images live under `src/static/{edu,work,project}/` and are imported as `StaticImageData` (Next.js handles blur placeholders automatically for static imports).
 
 The `RemoteImage` type (`src/lib/types.ts`) describes a remote image plus its precomputed thumbhash blur (`{ src, width, height, blurData?, error? }`); `Project.thumbnail` uses it. `ImageFrame` (`src/components/image-frame.tsx`) accepts a `RemoteImage` and decodes its `blurData` to a `blurDataURL` for `next/image`.
 
@@ -92,7 +92,7 @@ The root `metadata` in `src/app/layout.tsx` uses a title template: `{ default: p
 Beyond search SEO, the site exposes machine-readable representations for autonomous agents:
 
 - **`/llms.txt`** (`src/app/llms.txt/route.ts`) — a curated, grouped markdown map of the site (per [llmstxt.org](https://llmstxt.org)), generated from the MDX content via `getContentByCategory`. Each entry links to the page's `.md` endpoint. Discovered by convention at the root.
-- **Markdown endpoints** — `/project/<slug>.md`, `/work/<slug>.md`, `/edu/<slug>.md` return the raw MDX (frontmatter + prose, ESM `import`s stripped) as `text/markdown`. Served by `src/app/raw/[type]/[slug]/route.ts`, reached via `*.md` → `/raw/[type]/[slug]` rewrites in `next.config.ts` (the handler's `TYPE_TO_CATEGORY` maps `project→projects`, `work→exp`, `edu→edu`). The page-route slug must equal the MDX filename for both the page and its `.md` endpoint to resolve.
+- **Markdown endpoints** — `/project/<slug>.md`, `/work/<slug>.md`, `/edu/<slug>.md` return the raw MDX (frontmatter + prose, ESM `import`s stripped) as `text/markdown`. Served by `src/app/raw/[type]/[slug]/route.ts`, reached via `*.md` → `/raw/[type]/[slug]` rewrites in `next.config.ts` (the handler's `TYPE_TO_CATEGORY` maps `project→projects`, `work→work`, `edu→edu`). The page-route slug must equal the MDX filename for both the page and its `.md` endpoint to resolve.
 - **Self-advertised alternates** — each detail page's `generateMetadata` sets `alternates.types["text/markdown"]` so the rendered HTML carries `<link rel="alternate" type="text/markdown" href="…/<slug>.md">` (the web-standard way to point agents at the markdown version). A page-level `alternates` replaces the inherited root one, so each detail page re-declares its own `canonical` there too.
 - **`Link` response headers (RFC 8288)** — `headers()` in `next.config.ts` adds an HTTP `Link` header so agents discover the machine-readable representations without parsing HTML: home → `</llms.txt>; rel="describedby"`, each detail page → `</<type>/<slug>.md>; rel="alternate"; type="text/markdown"` (the header twin of the in-HTML alternate; Next interpolates the `:slug` source param into the header value).
 - **Markdown content negotiation** (`src/proxy.ts` — Next 16 renamed the `middleware` file convention to `proxy`; the exported fn is `proxy`, `config.matcher` unchanged) — when a request carries `Accept: text/markdown`, the proxy rewrites (URL-preserving) `/` → `/llms.txt` and `/project|work|edu/<slug>` → `/raw/<type>/<slug>`. Browsers (`Accept: text/html`) fall through to HTML. The matcher's `[^/.]+` excludes `<slug>.md` paths (those go through the `next.config.ts` rewrites instead). `llms.txt`'s route branches its `Content-Type` on the same `Accept` header so direct human visits stay `text/plain` (viewable) while negotiated requests get `text/markdown`; both it and the raw handler send `Vary: Accept`.
@@ -110,6 +110,6 @@ Beyond search SEO, the site exposes machine-readable representations for autonom
 
 ### Adding new content
 
-To add a new project/experience/education/component, create an MDX file in the appropriate `src/contents/` subdirectory (`projects/`, `exp/`, `edu/`, `components/`) with YAML frontmatter matching the corresponding TypeScript interface in `src/lib/types.ts`. The slug is derived from the filename.
+To add a new project/experience/education/component, create an MDX file in the appropriate `src/contents/` subdirectory (`projects/`, `work/`, `edu/`, `components/`) with YAML frontmatter matching the corresponding TypeScript interface in `src/lib/types.ts`. The slug is derived from the filename.
 
 To surface a new item on the home page, add a static-image import and entry to the relevant array (`works`, `educations`, or `projects`) in `src/app/(app)/_components/content.ts`.

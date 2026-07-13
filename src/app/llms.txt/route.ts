@@ -4,17 +4,14 @@ import { getContentByCategory } from "@/lib/contents"
 import { Education, Experience, Project } from "@/lib/types"
 import { all } from "better-all"
 
-/**
- * `/llms.txt` — a curated, markdown map of the site for LLMs and agents.
- * @see https://llmstxt.org
- */
+// `/llms.txt` — a curated, markdown map of the site for LLMs and agents. See https://llmstxt.org
 export async function GET(request: Request) {
 	const { projects, experiences, educations } = await all({
 		async projects() {
 			return getContentByCategory<Project>("projects")
 		},
 		async experiences() {
-			return getContentByCategory<Experience>("exp")
+			return getContentByCategory<Experience>("work")
 		},
 		async educations() {
 			return getContentByCategory<Education>("edu")
@@ -57,10 +54,7 @@ export async function GET(request: Request) {
 		].join("\n"),
 	]
 
-	/**
-	 * Agents that negotiate `Accept: text/markdown` get `text/markdown`.
-	 * humans visiting /llms.txt get `text/plain` so the browser renders it inline instead of downloading.
-	 */
+	// text/plain for browsers so it renders inline; text/markdown for negotiating agents.
 	const wantsMarkdown = (request.headers.get("accept") ?? "").includes("text/markdown")
 
 	return new Response(`${sections.join("\n\n")}\n`, {

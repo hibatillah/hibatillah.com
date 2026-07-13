@@ -7,7 +7,7 @@ import { Metadata } from "next"
 
 export async function generateMetadata({ params }: PageProps<"/work/[slug]">): Promise<Metadata> {
 	const { slug } = await params
-	const { data } = await getContentData<Experience>("exp", slug)
+	const { data } = await getContentData<Experience>("work", slug)
 
 	return {
 		title: data.title,
@@ -34,7 +34,7 @@ export async function generateMetadata({ params }: PageProps<"/work/[slug]">): P
 
 export default async function Page({ params }: PageProps<"/work/[slug]">) {
 	const { slug } = await params
-	const { Content, data } = await getContentData<Experience>("exp", slug)
+	const { Content, data } = await getContentData<Experience>("work", slug)
 
 	return (
 		<>

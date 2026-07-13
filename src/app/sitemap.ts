@@ -13,7 +13,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 			return getContentByCategory<Project>("projects")
 		},
 		async experiences() {
-			return getContentByCategory<Experience>("exp")
+			return getContentByCategory<Experience>("work")
 		},
 		async educations() {
 			return getContentByCategory<Education>("edu")

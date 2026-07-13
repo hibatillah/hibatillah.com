@@ -55,7 +55,6 @@
 		"sonner": "^2.0.7",
 		"tailwind-merge": "^3.5.0",
 		"tailwind-scrollbar-hide": "^4.0.0",
-		"thumbhash": "^0.1.1",
 		"vaul": "^1.1.2",
 		"zwitch": "2.0.4"
 	},

@@ -7,7 +7,7 @@ export const contentType = OG_CONTENT_TYPE
 
 export default async function Image({ params }: PageProps<"/work/[slug]">) {
 	const { slug } = await params
-	const { data } = await getContentData<Experience>("exp", slug)
+	const { data } = await getContentData<Experience>("work", slug)
 
 	return renderOgImage({
 		eyebrow: "EXPERIENCE — HIBATILLAH HASANIN",

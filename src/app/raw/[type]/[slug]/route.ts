@@ -3,17 +3,14 @@ import { join } from "node:path"
 import { isProjectVisible } from "@/flags"
 import { ContentCategory } from "@/lib/types"
 
-/** URL segment → content directory. Reached via the `*.md` rewrites in next.config.ts. */
+// URL segment → content directory. Reached via the `*.md` rewrites in next.config.ts.
 const TYPE_TO_CATEGORY: Record<string, ContentCategory> = {
 	project: "projects",
-	work: "exp",
+	work: "work",
 	edu: "edu",
 }
 
-/**
- * Serves the raw MDX source of a content page as `text/markdown` so agents can parse
- * frontmatter + prose directly, skipping the rendered HTML. ESM imports are stripped.
- */
+// Serves raw MDX (frontmatter + prose, imports stripped) as text/markdown for agents.
 export async function GET(
 	_request: Request,
 	{ params }: { params: Promise<{ type: string; slug: string }> },

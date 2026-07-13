@@ -19,10 +19,7 @@ const nextConfig: NextConfig = {
 		{ source: "/work/:slug.md", destination: "/raw/work/:slug" },
 		{ source: "/edu/:slug.md", destination: "/raw/edu/:slug" },
 	],
-	// RFC 8288 Link headers — advertise machine-readable representations so agents
-	// can discover them without parsing HTML. Home points at the llms.txt site map;
-	// each detail page points at its `.md` alternate (mirrors the in-HTML
-	// `<link rel="alternate" type="text/markdown">` from generateMetadata).
+	// RFC 8288 Link headers advertising machine-readable representations to agents.
 	headers: async () => [
 		// Baseline security headers applied to every route.
 		{

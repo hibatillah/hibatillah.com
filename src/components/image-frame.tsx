@@ -1,6 +1,3 @@
-import { RemoteImage } from "@/lib/types"
-import { decodeThumbhash } from "@/lib/thumbhash"
-import Image from "next/image"
 import { cn } from "../lib/utils"
 
 export type StackOffset =
@@ -118,37 +115,6 @@ export function ImageFrame({
 					...style,
 				} as React.CSSProperties
 			}
-			{...props}
-		/>
-	)
-}
-
-interface ImageItemProps extends Omit<React.ComponentProps<typeof Image>, "src"> {
-	image: RemoteImage
-}
-
-export function ImageItem({ image, alt, className, ...props }: ImageItemProps) {
-	const { width, height } = image
-
-	let styles = {}
-
-	if (width && height) {
-		const aspectRatio = Number(width) / Number(height)
-		const targetWidth = height * aspectRatio
-
-		styles = { width: Math.round(targetWidth) }
-	}
-
-	return (
-		<Image
-			src={image?.src}
-			alt={alt}
-			width={image.width}
-			height={image.height}
-			placeholder={image.blurData ? "blur" : "empty"}
-			blurDataURL={image.blurData ? decodeThumbhash(image.blurData) : undefined}
-			style={styles}
-			className={cn(className)}
 			{...props}
 		/>
 	)
