@@ -1,0 +1,35 @@
+@import "@packages/ui/globals.css";
+@import "tw-animate-css";
+@import "tailwind-scrollbar-hide/v4";
+@import "shadcn/tailwind.css";
+
+@layer base {
+	* {
+		@apply border-border font-sans outline-ring/50;
+	}
+	html {
+		@apply font-sans md:scrollbar-thin md:[scrollbar-color:var(--color-muted-foreground)_transparent] md:scrollbar-gutter-stable;
+	}
+	body {
+		@apply bg-background text-foreground;
+	}
+	p {
+		@apply font-sans text-base/relaxed font-normal text-pretty text-muted-foreground;
+	}
+
+	section {
+		@apply space-y-3;
+
+		h2 {
+			@apply font-mono text-xs leading-normal font-normal tracking-widest uppercase;
+		}
+
+		article {
+			@apply space-y-1;
+
+			p {
+				@apply text-base leading-relaxed;
+			}
+		}
+	}
+}
