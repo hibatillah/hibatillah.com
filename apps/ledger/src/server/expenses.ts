@@ -53,7 +53,7 @@ async function ensureExpenseTagsInRegistry() {
 
 export const getExpensesByYearFn = createServerFn()
 	.middleware([authMiddleware])
-	.inputValidator(z.number())
+	.validator(z.number())
 	.handler(async ({ data: year }) => {
 		return db
 			.select()
@@ -117,7 +117,7 @@ const paginatedInputSchema = z.object({
 
 export const getExpensesPaginatedFn = createServerFn()
 	.middleware([authMiddleware])
-	.inputValidator(paginatedInputSchema)
+	.validator(paginatedInputSchema)
 	.handler(async ({ data }) => {
 		const {
 			page,
@@ -163,7 +163,7 @@ export const getExpensesPaginatedFn = createServerFn()
 
 export const updateExpenseFn = createServerFn({ method: "POST" })
 	.middleware([authMiddleware])
-	.inputValidator(
+	.validator(
 		z.object({
 			id: z.number().int().positive(),
 			date: z.string().min(1),
@@ -185,7 +185,7 @@ export const updateExpenseFn = createServerFn({ method: "POST" })
 
 export const deleteExpenseFn = createServerFn({ method: "POST" })
 	.middleware([authMiddleware])
-	.inputValidator(z.object({ id: z.number().int().positive() }))
+	.validator(z.object({ id: z.number().int().positive() }))
 	.handler(async ({ data }) => {
 		await db.delete(expenses).where(eq(expenses.id, data.id))
 	})
@@ -238,7 +238,7 @@ export const getTagsWithStatsFn = createServerFn()
 
 export const updateTagColorFn = createServerFn({ method: "POST" })
 	.middleware([authMiddleware])
-	.inputValidator(z.object({ tag: z.string(), color: z.string() }))
+	.validator(z.object({ tag: z.string(), color: z.string() }))
 	.handler(async ({ data }) => {
 		const now = new Date().toISOString()
 		await db
@@ -254,7 +254,7 @@ const renameOrMergeInput = z.object({
 
 export const renameOrMergeTagFn = createServerFn({ method: "POST" })
 	.middleware([authMiddleware])
-	.inputValidator(renameOrMergeInput)
+	.validator(renameOrMergeInput)
 	.handler(async ({ data }) => {
 		const { from, to } = data
 		if (from === to) return
@@ -279,7 +279,7 @@ export const renameOrMergeTagFn = createServerFn({ method: "POST" })
 
 export const deleteTagFn = createServerFn({ method: "POST" })
 	.middleware([authMiddleware])
-	.inputValidator(z.object({ name: z.string().min(1) }))
+	.validator(z.object({ name: z.string().min(1) }))
 	.handler(async ({ data }) => {
 		const [{ count }] = await db
 			.select({ count: sql<number>`count(*)`.mapWith(Number) })
@@ -295,7 +295,7 @@ export const deleteTagFn = createServerFn({ method: "POST" })
 
 export const checkConflictingDatesFn = createServerFn({ method: "POST" })
 	.middleware([authMiddleware])
-	.inputValidator(z.object({ dates: z.array(z.string()) }))
+	.validator(z.object({ dates: z.array(z.string()) }))
 	.handler(async ({ data }) => {
 		if (data.dates.length === 0) return []
 
@@ -310,7 +310,7 @@ export const checkConflictingDatesFn = createServerFn({ method: "POST" })
 
 export const importExpensesFn = createServerFn({ method: "POST" })
 	.middleware([authMiddleware])
-	.inputValidator(
+	.validator(
 		z.object({
 			rows: z.array(
 				z.object({

@@ -37,10 +37,10 @@
 	},
 	"type": "module",
 	"scripts": {
-		"dev": "turbo run dev",
-		"dev:portfolio": "turbo run dev --filter=@apps/portfolio",
-		"dev:auth": "turbo run dev --filter=@apps/auth",
-		"dev:ledger": "turbo run dev --filter=@apps/ledger",
+		"dev": "PORTLESS_TLD=test turbo run dev",
+		"dev:portfolio": "PORTLESS_TLD=test turbo run dev --filter=@apps/portfolio",
+		"dev:auth": "PORTLESS_TLD=test turbo run dev --filter=@apps/auth",
+		"dev:ledger": "PORTLESS_TLD=test turbo run dev --filter=@apps/ledger",
 		"build": "turbo run build",
 		"build:portfolio": "turbo run build --filter=@apps/portfolio",
 		"build:auth": "turbo run build --filter=@apps/auth",
@@ -57,6 +57,7 @@
 		"lint-staged": "^16.2.7",
 		"oxfmt": "^0.51.0",
 		"oxlint": "^1.66.0",
+		"portless": "^0.15.6",
 		"turbo": "^2.6.1"
 	},
 	"lint-staged": {

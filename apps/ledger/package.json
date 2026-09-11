@@ -4,7 +4,8 @@
 	"private": true,
 	"type": "module",
 	"scripts": {
-		"dev": "vite dev --port 3002",
+		"dev": "portless run --force",
+		"dev:app": "bun --env-file=../../.env.local --env-file=.env.local vite dev",
 		"build": "vite build",
 		"test": "vitest run",
 		"db:generate": "drizzle-kit generate",
@@ -69,5 +70,9 @@
 		"vite": "^8.0.14",
 		"vitest": "^4.1.7",
 		"web-vitals": "^5.1.0"
+	},
+	"portless": {
+		"name": "ledger.hibatillah",
+		"script": "dev:app"
 	}
 }

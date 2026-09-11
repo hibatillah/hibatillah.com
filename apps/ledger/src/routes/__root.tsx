@@ -16,6 +16,7 @@ import {
 } from "@/components/ui/empty"
 import { Toaster } from "@/components/ui/sonner"
 import { TooltipProvider } from "@packages/ui/components/tooltip"
+import { AUTH_APP_URL } from "@/lib/auth-app-url"
 import { queryClient } from "@/lib/query-client"
 import { getSessionFn } from "@/server/auth"
 
@@ -77,7 +78,7 @@ function RootNotFound() {
 							size="sm"
 							onClick={() =>
 								window.location.assign(
-									`https://auth.hibatillah.com/login?redirect=${encodeURIComponent(window.location.href)}`,
+									`${AUTH_APP_URL}/login?redirect=${encodeURIComponent(window.location.href)}`,
 								)
 							}
 						>
@@ -118,7 +119,7 @@ function RootError({ error, reset }: { error: unknown; reset: () => void }) {
 							size="sm"
 							onClick={() =>
 								window.location.assign(
-									`https://auth.hibatillah.com/login?redirect=${encodeURIComponent(window.location.href)}`,
+									`${AUTH_APP_URL}/login?redirect=${encodeURIComponent(window.location.href)}`,
 								)
 							}
 						>

@@ -5,7 +5,7 @@ import { drizzleAdapter } from "better-auth/adapters/drizzle"
 import { db } from "./db"
 
 const isProd = process.env.NODE_ENV === "production"
-const rootDomain = "hibatillah.com"
+const rootDomain = isProd ? "hibatillah.com" : "hibatillah.test"
 
 export const auth = betterAuth({
 	baseURL: process.env.AUTH_BASE_URL,
@@ -33,7 +33,7 @@ export const auth = betterAuth({
 	plugins: [
 		passkey({
 			rpName: "hibatillah",
-			rpID: isProd ? rootDomain : "localhost",
+			rpID: rootDomain,
 			origin: process.env.AUTH_BASE_URL,
 			authenticatorSelection: {
 				residentKey: "required",

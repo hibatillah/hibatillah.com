@@ -5,6 +5,7 @@ import { useEffect, useMemo, useState } from "react"
 
 import { LogoutDialog } from "@/components/logout-dialog"
 import { useTheme } from "@/components/theme-provider"
+import { AUTH_APP_URL } from "@/lib/auth-app-url"
 import { Button } from "@packages/ui/components/button"
 import { Kbd } from "@packages/ui/components/kbd"
 import {
@@ -141,7 +142,7 @@ export function Header() {
 					<Tooltip>
 						<TooltipTrigger render={<span />}>
 							<LogoutDialog
-								onSuccess={() => window.location.assign("https://auth.hibatillah.com/login")}
+								onSuccess={() => window.location.assign(`${AUTH_APP_URL}/login`)}
 								className="hit-area-2 hit-area-l-0.5"
 								open={signOutOpen}
 								onOpenChange={setSignOutOpen}

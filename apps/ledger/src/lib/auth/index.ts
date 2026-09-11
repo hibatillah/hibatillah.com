@@ -6,7 +6,7 @@ import { tanstackStartCookies } from "better-auth/tanstack-start"
 import { db } from "@packages/auth"
 
 const isProd = process.env.NODE_ENV === "production"
-const rootDomain = "hibatillah.com"
+const rootDomain = isProd ? "hibatillah.com" : "hibatillah.test"
 
 /**
  * Ledger-local auth instance layered on top of `@packages/auth`'s shared
@@ -49,7 +49,7 @@ export const auth = betterAuth({
 	plugins: [
 		passkey({
 			rpName: "hibatillah",
-			rpID: isProd ? rootDomain : "localhost",
+			rpID: rootDomain,
 			origin: process.env.AUTH_BASE_URL,
 			authenticatorSelection: {
 				residentKey: "required",

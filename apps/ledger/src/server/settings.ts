@@ -17,7 +17,7 @@ export const getSettingsFn = createServerFn({ method: "GET" }).handler(async () 
 
 export const updateSettingsFn = createServerFn({ method: "POST" })
 	.middleware([authMiddleware])
-	.inputValidator(z.object({ googleAuthEnabled: z.boolean() }))
+	.validator(z.object({ googleAuthEnabled: z.boolean() }))
 	.handler(async ({ data }) => {
 		await db
 			.insert(settings)

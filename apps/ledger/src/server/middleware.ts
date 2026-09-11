@@ -3,6 +3,7 @@ import { createMiddleware } from "@tanstack/react-start"
 import { getRequest } from "@tanstack/react-start/server"
 
 import { auth } from "@/lib/auth"
+import { AUTH_APP_URL } from "@/lib/auth-app-url"
 
 import { getSessionFn } from "./auth"
 
@@ -16,7 +17,7 @@ export const authMiddleware = createMiddleware().server(async ({ next }) => {
 	const session = await auth.api.getSession({ headers: request.headers })
 	if (!session) {
 		const returnTo = encodeURIComponent(request.url)
-		throw redirect({ href: `https://auth.hibatillah.com/login?redirect=${returnTo}` })
+		throw redirect({ href: `${AUTH_APP_URL}/login?redirect=${returnTo}` })
 	}
 	return next()
 })
@@ -34,6 +35,6 @@ export async function requireAuth(currentUrl: string) {
 	const session = await getSessionFn()
 	if (!session) {
 		const returnTo = encodeURIComponent(currentUrl)
-		throw redirect({ href: `https://auth.hibatillah.com/login?redirect=${returnTo}` })
+		throw redirect({ href: `${AUTH_APP_URL}/login?redirect=${returnTo}` })
 	}
 }
