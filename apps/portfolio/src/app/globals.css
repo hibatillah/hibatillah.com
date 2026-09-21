@@ -2,6 +2,14 @@
 @import "tw-animate-css";
 @import "tailwind-scrollbar-hide/v4";
 @import "shadcn/tailwind.css";
+@import "@packages/ui/typeset.css";
+
+@layer components {
+	.typeset {
+		--typeset-font-body: var(--font-sans);
+		--typeset-font-heading: var(--font-sans);
+	}
+}
 
 @layer base {
 	* {

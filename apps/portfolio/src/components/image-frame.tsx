@@ -89,7 +89,7 @@ export function ImageFrame({
 			data-hover={hoverAttr}
 			data-trigger={trigger}
 			className={cn(
-				"aspect-video h-auto max-h-96 min-w-20 bg-white p-2 shadow-lg will-change-transform data-[size=lg]:p-4 data-[size=sm]:p-1 data-[size=sm]:shadow-md dark:bg-neutral-200 [&>img]:size-full [&>img]:object-cover [&>img]:dark:brightness-95",
+				"not-typeset aspect-video h-auto max-h-96 min-w-20 bg-white p-2 shadow-lg will-change-transform data-[size=lg]:p-4 data-[size=sm]:p-1 data-[size=sm]:shadow-md dark:bg-neutral-200 [&>img]:size-full [&>img]:object-cover [&>img]:dark:brightness-95",
 				"data-offset:transition-transform data-offset:duration-300 data-offset:ease-out",
 				"data-[rest=translate]:transform-[translate(var(--tx),var(--ty))]",
 				"data-[rest=rotate]:transform-[rotate(var(--tr))]",

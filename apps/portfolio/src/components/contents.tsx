@@ -19,7 +19,7 @@ export function Wrapper({ children }: { children: React.ReactNode }) {
 			initial="hidden"
 			whileInView="visible"
 			viewport={{ once: true }}
-			className="flex flex-col gap-6"
+			className="typeset"
 		>
 			{children}
 		</motion.article>
@@ -34,7 +34,7 @@ export function Heading2({ className, children, ...props }: React.ComponentProps
 			href={id ? `#${id}` : undefined}
 			variants={staggerItem}
 			className={cn(
-				"group/heading relative mt-6 block w-fit leading-snug font-normal focus-visible:outline-none",
+				"group/heading relative block w-fit no-underline focus-visible:outline-none",
 				className,
 			)}
 		>
@@ -59,7 +59,7 @@ export function Heading3({ className, children, ...props }: React.ComponentProps
 			href={id ? `#${id}` : undefined}
 			variants={staggerItem}
 			className={cn(
-				"group/heading relative mt-4 block w-fit text-base/snug font-normal focus-visible:outline-none",
+				"group/heading relative block w-fit no-underline focus-visible:outline-none",
 				className,
 			)}
 		>
@@ -78,11 +78,7 @@ export function Heading3({ className, children, ...props }: React.ComponentProps
 
 export function Paragraph({ className, ...props }: React.ComponentProps<typeof motion.p>) {
 	return (
-		<motion.p
-			variants={staggerItem}
-			className={cn("text-base/relaxed text-foreground/70", className)}
-			{...props}
-		/>
+		<motion.p variants={staggerItem} className={cn("text-foreground/70", className)} {...props} />
 	)
 }
 
@@ -93,33 +89,18 @@ export function Blockquote({
 	return (
 		<motion.blockquote
 			variants={staggerItem}
-			className={cn(
-				"border-s-2 border-muted-foreground ps-3 text-muted-foreground italic",
-				className,
-			)}
+			className={cn("border-muted-foreground text-muted-foreground italic", className)}
 			{...props}
 		/>
 	)
 }
 
 export function ListUnordered({ className, ...props }: React.ComponentProps<typeof motion.ul>) {
-	return (
-		<motion.ul
-			variants={staggerItem}
-			className={cn("ms-6 list-disc space-y-3", className)}
-			{...props}
-		/>
-	)
+	return <motion.ul variants={staggerItem} className={className} {...props} />
 }
 
 export function ListOrdered({ className, ...props }: React.ComponentProps<typeof motion.ol>) {
-	return (
-		<motion.ol
-			variants={staggerItem}
-			className={cn("ms-6 list-decimal space-y-3", className)}
-			{...props}
-		/>
-	)
+	return <motion.ol variants={staggerItem} className={className} {...props} />
 }
 
 export function ListItem({ className, ...props }: React.ComponentProps<typeof motion.li>) {
@@ -134,16 +115,14 @@ export function ListItem({ className, ...props }: React.ComponentProps<typeof mo
 
 export function TableRoot({ className, ...props }: React.ComponentProps<"table">) {
 	return (
-		<motion.div variants={staggerItem} className="my-6 w-full overflow-y-auto">
-			<table className={cn("w-full caption-bottom text-sm", className)} {...props} />
+		<motion.div variants={staggerItem} className="typeset-scroll w-full">
+			<table className={cn("w-full caption-bottom", className)} {...props} />
 		</motion.div>
 	)
 }
 
 export function TableHead({ className, ...props }: React.ComponentProps<typeof motion.thead>) {
-	return (
-		<motion.thead variants={staggerItem} className={cn("[&_tr]:border-b", className)} {...props} />
-	)
+	return <motion.thead variants={staggerItem} className={className} {...props} />
 }
 
 export function TableRow({ className, ...props }: React.ComponentProps<typeof motion.tr>) {
@@ -151,7 +130,7 @@ export function TableRow({ className, ...props }: React.ComponentProps<typeof mo
 		<motion.tr
 			variants={staggerItem}
 			className={cn(
-				"border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted",
+				"transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted",
 				className,
 			)}
 			{...props}
@@ -161,21 +140,13 @@ export function TableRow({ className, ...props }: React.ComponentProps<typeof mo
 
 export function TableHeader({ className, ...props }: React.ComponentProps<typeof motion.th>) {
 	return (
-		<motion.th
-			variants={staggerItem}
-			className={cn("h-10 px-2 text-left align-middle font-normal text-foreground", className)}
-			{...props}
-		/>
+		<motion.th variants={staggerItem} className={cn("text-foreground", className)} {...props} />
 	)
 }
 
 export function TableCell({ className, ...props }: React.ComponentProps<typeof motion.td>) {
 	return (
-		<motion.td
-			variants={staggerItem}
-			className={cn("p-2 align-middle text-foreground/70", className)}
-			{...props}
-		/>
+		<motion.td variants={staggerItem} className={cn("text-foreground/70", className)} {...props} />
 	)
 }
 
@@ -184,7 +155,7 @@ export function Pre({ className, ...props }: React.ComponentProps<typeof motion.
 		<motion.pre
 			variants={staggerItem}
 			className={cn(
-				"my-4 overflow-x-auto rounded-xl bg-card p-4 font-mono text-sm leading-relaxed font-normal max-lg:mx-4",
+				"overflow-x-auto rounded-xl bg-card p-4 font-mono text-sm leading-relaxed font-normal max-lg:mx-4",
 				className,
 			)}
 			{...props}
@@ -214,7 +185,7 @@ export function Snippet({ path }: { path: string }) {
 	} as Record<PackageManger, string>
 
 	return (
-		<Card className="relative gap-0 p-0">
+		<Card className="not-typeset relative gap-0 p-0">
 			<Tabs
 				value={selected}
 				onValueChange={(value) => setSelected(value as PackageManger)}
