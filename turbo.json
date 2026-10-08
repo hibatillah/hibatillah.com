@@ -1,8 +1,9 @@
 {
 	"$schema": "https://turborepo.com/schema.json",
+	"globalPassThroughEnv": ["PORTLESS_TLD"],
 	"tasks": {
 		"dev": { "cache": false, "persistent": true },
 		"build": { "outputs": [".next/**", "!.next/cache/**", ".output/**"], "cache": false },
-		"start": { "dependsOn": ["build"], "cache": false, "persistent": true }
+		"start": { "cache": false, "persistent": true }
 	}
 }
