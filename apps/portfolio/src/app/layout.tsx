@@ -72,7 +72,8 @@ export default function RootLayout({
 }: Readonly<{
 	children: React.ReactNode
 }>) {
-	const shouldInjectToolbar = process.env.VERCEL_ENV !== "production"
+	// True only on the live Vercel deployment; local dev and `bun start` stay false.
+	const isProductionDeployment = process.env.VERCEL_ENV === "production"
 
 	return (
 		<html lang="en" suppressHydrationWarning>
@@ -96,14 +97,14 @@ export default function RootLayout({
 							data-cf-beacon='{"token": "95733bfa7c5a497ab02dbf9fcf2b6327"}'
 							defer
 						/>
-						{process.env.NODE_ENV === "development" && (
+						{!isProductionDeployment && (
 							<Script
 								src="//unpkg.com/react-grab/dist/index.global.js"
 								crossOrigin="anonymous"
 								strategy="beforeInteractive"
 							/>
 						)}
-						{shouldInjectToolbar && <VercelToolbar />}
+						{!isProductionDeployment && <VercelToolbar />}
 					</Provider>
 				</MotionConfig>
 			</body>

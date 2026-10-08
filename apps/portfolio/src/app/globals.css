@@ -41,3 +41,54 @@
 		}
 	}
 }
+
+/* View transitions: only the detail panel animates (see components/detail-transition.tsx). */
+::view-transition {
+	pointer-events: none;
+}
+
+/* The page backdrop and master panel stay put; drop their default crossfade. */
+::view-transition-old(root),
+::view-transition-old(master-panel) {
+	display: none;
+}
+::view-transition-new(root),
+::view-transition-new(master-panel),
+::view-transition-group(master-panel) {
+	animation: none;
+}
+
+::view-transition-old(.detail-exit) {
+	animation: 150ms ease-in both detail-fade reverse;
+}
+::view-transition-new(.detail-enter) {
+	animation:
+		220ms ease-out 100ms both detail-fade,
+		300ms ease-out both detail-rise;
+}
+
+@keyframes detail-fade {
+	from {
+		opacity: 0;
+	}
+	to {
+		opacity: 1;
+	}
+}
+@keyframes detail-rise {
+	from {
+		translate: 0 8px;
+	}
+	to {
+		translate: 0;
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	::view-transition-old(*),
+	::view-transition-new(*),
+	::view-transition-group(*) {
+		animation-duration: 0s !important;
+		animation-delay: 0s !important;
+	}
+}

@@ -17,8 +17,7 @@ export function Wrapper({ children }: { children: React.ReactNode }) {
 		<motion.article
 			variants={staggerContainer}
 			initial="hidden"
-			whileInView="visible"
-			viewport={{ once: true }}
+			animate="visible"
 			className="typeset"
 		>
 			{children}

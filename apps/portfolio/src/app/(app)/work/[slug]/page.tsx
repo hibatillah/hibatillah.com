@@ -1,3 +1,4 @@
+import { DetailTransition } from "@/components/detail-transition"
 import { Header } from "@/components/header"
 import { BreadcrumbJsonLd } from "@/components/json-ld"
 import profile from "@/contents/profile.json"
@@ -37,7 +38,7 @@ export default async function Page({ params }: PageProps<"/work/[slug]">) {
 	const { Content, data } = await getContentData<Experience>("work", slug)
 
 	return (
-		<>
+		<DetailTransition routeKey={`work/${slug}`}>
 			<BreadcrumbJsonLd
 				items={[
 					{ name: "Home", path: "/" },
@@ -46,6 +47,6 @@ export default async function Page({ params }: PageProps<"/work/[slug]">) {
 			/>
 			<Header heading={data.title} description={data.company} meta={[data.location, data.period]} />
 			<Content />
-		</>
+		</DetailTransition>
 	)
 }

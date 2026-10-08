@@ -1,152 +1,97 @@
-import { ImageFrame, ImageFrameGrid } from "@/components/image-frame"
+import { NavItemLink } from "@/components/nav-item-link"
 import {
 	Item,
 	ItemContent,
 	ItemDescription,
 	ItemGroup,
-	ItemMedia,
 	ItemTitle,
 } from "@packages/ui/components/item"
 import { AI_PROGRAMMER_SLUG, aiProgrammerBetaFlag, isProjectVisible } from "@/flags"
-import Image from "next/image"
-import Link from "next/link"
 import { educations, projects, works } from "./content"
 
-export async function WorkSection({ ...props }: React.ComponentProps<"section">) {
-	const showBeta = await aiProgrammerBetaFlag()
-	const items = showBeta ? works : works.filter((work) => work.url !== AI_PROGRAMMER_SLUG)
+interface ListItem {
+	href: string
+	title: string
+	year: string
+}
 
+function SectionList({
+	heading,
+	items,
+	...props
+}: React.ComponentProps<"section"> & {
+	heading: string
+	items: ListItem[]
+}) {
 	return (
 		<section {...props}>
-			<h2>Work</h2>
-			<ItemGroup className="mx-[-13px] w-auto gap-4!">
-				{items.map((item, key) => (
+			<h2>{heading}</h2>
+			<ItemGroup className="mx-[-8px] w-auto gap-0!">
+				{items.map((item) => (
 					<Item
-						key={key}
+						key={item.href}
 						variant="default"
 						role="listitem"
-						className="group"
-						render={<Link href={`/work/${item.url}`} />}
+						className="group px-2 py-1 aria-[current=page]:bg-muted"
+						render={<NavItemLink href={item.href} />}
 					>
-						<ItemMedia>
-							<ImageFrameGrid layout="stack">
-								{item.images.map((image, i) => (
-									<ImageFrame key={i} size="sm" offset={image.offsets} className="w-24">
-										<Image
-											src={image.src}
-											alt={item.company}
-											placeholder="blur"
-											width={400}
-											height={400}
-										/>
-									</ImageFrame>
-								))}
-							</ImageFrameGrid>
-						</ItemMedia>
-						<ItemContent className="ml-6">
-							<ItemTitle className="line-clamp-1">{item.role}</ItemTitle>
-							<ItemDescription>{item.company}</ItemDescription>
+						<ItemContent className="min-w-0">
+							<ItemTitle className="line-clamp-1 text-xs font-normal">{item.title}</ItemTitle>
 						</ItemContent>
-						<ItemContent className="flex-none text-center">
-							<ItemDescription className="font-mono text-xs tabular-nums">
-								{item.year}
-							</ItemDescription>
-						</ItemContent>
+						<ItemDescription className="flex-none font-mono text-[9px] tabular-nums">
+							{item.year}
+						</ItemDescription>
 					</Item>
 				))}
 			</ItemGroup>
 		</section>
+	)
+}
+
+export async function WorkSection({ ...props }: React.ComponentProps<"section">) {
+	const showBeta = await aiProgrammerBetaFlag()
+	const visibleWorks = showBeta ? works : works.filter((work) => work.url !== AI_PROGRAMMER_SLUG)
+
+	return (
+		<SectionList
+			heading="Work"
+			items={visibleWorks.map((work) => ({
+				href: `/work/${work.url}`,
+				title: work.role,
+				year: work.year,
+			}))}
+			{...props}
+		/>
 	)
 }
 
 export function EduSection({ ...props }: React.ComponentProps<"section">) {
 	return (
-		<section {...props}>
-			<h2>Edu</h2>
-			<ItemGroup className="mx-[-13px] w-auto gap-4!">
-				{educations.map((item, key) => (
-					<Item
-						key={key}
-						variant="default"
-						role="listitem"
-						className="group"
-						render={<Link href={`/edu/${item.url}`} />}
-					>
-						<ItemMedia>
-							<ImageFrameGrid layout="stack">
-								{item.images.map((image, i) => (
-									<ImageFrame key={i} size="sm" offset={image.offsets} className="w-24">
-										<Image
-											src={image.src}
-											alt={item.campus}
-											placeholder="blur"
-											width={400}
-											height={400}
-										/>
-									</ImageFrame>
-								))}
-							</ImageFrameGrid>
-						</ItemMedia>
-						<ItemContent className="ml-6">
-							<ItemTitle className="line-clamp-1">{item.degree}</ItemTitle>
-							<ItemDescription>{item.campus}</ItemDescription>
-						</ItemContent>
-						<ItemContent className="flex-none text-center">
-							<ItemDescription className="font-mono text-xs tabular-nums">
-								{item.year}
-							</ItemDescription>
-						</ItemContent>
-					</Item>
-				))}
-			</ItemGroup>
-		</section>
+		<SectionList
+			heading="Edu"
+			items={educations.map((education) => ({
+				href: `/edu/${education.url}`,
+				title: education.degree,
+				year: education.year,
+			}))}
+			{...props}
+		/>
 	)
 }
 
 export async function ProjectSection({ ...props }: React.ComponentProps<"section">) {
 	const visibility = await Promise.all(projects.map((project) => isProjectVisible(project.url)))
-	const items = projects.filter((_, index) => visibility[index])
+	const visibleProjects = projects.filter((_, index) => visibility[index])
 
 	return (
-		<section {...props}>
-			<h2>Project</h2>
-			<ItemGroup className="mx-[-13px] w-auto gap-4!">
-				{items.map((item, key) => (
-					<Item
-						key={key}
-						variant="default"
-						role="listitem"
-						className="group"
-						render={<Link href={`/project/${item.url}`} />}
-					>
-						<ItemMedia>
-							<ImageFrameGrid layout="stack">
-								{item.images.map((image, i) => (
-									<ImageFrame key={i} size="sm" offset={image.offsets} className="w-24">
-										<Image
-											src={image.src}
-											alt={item.title}
-											placeholder="blur"
-											width={400}
-											height={400}
-											className="object-top"
-										/>
-									</ImageFrame>
-								))}
-							</ImageFrameGrid>
-						</ItemMedia>
-						<ItemContent className="ml-6">
-							<ItemTitle className="line-clamp-1">{item.title}</ItemTitle>
-							<ItemDescription>{item.description}</ItemDescription>
-						</ItemContent>
-						<ItemContent className="flex-none text-center">
-							<ItemDescription className="font-mono text-xs tabular-nums">
-								{item.year}
-							</ItemDescription>
-						</ItemContent>
-					</Item>
-				))}
-			</ItemGroup>
-		</section>
+		<SectionList
+			heading="Project"
+			items={visibleProjects.map((project) => ({
+				href: `/project/${project.url}`,
+				title: project.title,
+				year: project.year,
+			}))}
+			{...props}
+		/>
 	)
 }
