@@ -4,18 +4,19 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Commands
 
-This project uses **Bun** as the package manager (required ≥1.3.5, Node ≥24.12).
+This project uses **Bun** as the package manager (required ≥1.4.4, Node ≥24.22.1).
 
 ```bash
 bun dev          # Start development server
 bun build        # Production build
-bun lint         # Run oxlint
-bun lint:fix     # Auto-fix lint issues
-bun format       # Format with oxfmt
-bun format:check # Check formatting without writing
+bun check        # Typecheck (Bun built-in, TS 7); never add a `tsc` script
+bun lint         # oxlint (type-aware, @shadcn/lint plugin)
+bun lint:fix     # oxlint --fix
+bun format       # oxfmt
+bun format:check # oxfmt --check
 ```
 
-Pre-commit hooks (husky + lint-staged) automatically run `oxlint --fix` and `oxfmt` on staged `.js/.jsx/.ts/.tsx/.json` files.
+Pre-commit hook (husky) runs `lint-staged` (`oxlint --fix` + `oxfmt` on staged files), then `bun check` and `bun run build`.
 
 ### Git workflow
 
@@ -41,14 +42,14 @@ Listing pages and `/explore` were removed in the redesign. Home-page section dat
 All portfolio content lives in `src/contents/`:
 
 - `profile.json` — Central config: `url` (the canonical site origin, `https://hibatillah.com` — cascades to `metadataBase`, canonical URLs, OG image URLs, `sitemap.ts`, `json-ld.tsx`, and the robots.txt `Host:`/`Sitemap:` lines, so changing it re-points the whole site), name, description, `twitterHandle` (e.g. `@handle`), and social links. Referenced in `next.config.ts` for `/links/:label` redirects (`mailto:` entries are filtered out). The `featured` field exists but the current home page does not read from it — it's vestigial.
-- `edu/`, `work/`, `projects/`, `components/` — MDX files with YAML frontmatter matching types in `src/lib/types.ts`.
+- `edu/`, `work/`, `projects/` — MDX files with YAML frontmatter matching types in `src/lib/types.ts`.
 
 Content is loaded via two server functions in `src/lib/contents.ts`:
 
 - `getContentByCategory<T>(category)` — Returns all frontmatter objects for a category
 - `getContentData<T>(category, slug)` — Returns `{ Content, data }` for a specific MDX file. Throws a readable error if the slug doesn't exist.
 
-`ContentCategory` is `"edu" | "work" | "projects" | "components"`. MDX frontmatter is exported as `frontmatter` via `remark-mdx-frontmatter`. Type definitions (`Experience`, `Education`, `Project`, `Component`) are in `src/lib/types.ts`.
+`ContentCategory` is `"edu" | "work" | "projects"`. MDX frontmatter is exported as `frontmatter` via `remark-mdx-frontmatter`. Type definitions (`Experience`, `Education`, `Project`) are in `src/lib/types.ts`.
 
 ### Images
 
@@ -99,8 +100,11 @@ Beyond search SEO, the site exposes machine-readable representations for autonom
 
 ### Key conventions
 
-- Linter: **oxlint** (not ESLint). Config in `.oxlintrc.json`.
-- Formatter: **oxfmt**. Config in `.oxfmtrc.json`.
+- Linter: **oxlint** (`oxlint.config.ts`, TS config) with the alpha `@shadcn/lint` JS plugin; all shadcn rules are at `warn` until findings are triaged. Formatter: **oxfmt** (`oxfmt.config.ts`) with Tailwind class sorting (`cn`, `cva`, `tw`). Typecheck: `bun check` (Bun built-in; `bun lint`/`bun fmt` are not used — Bun 1.4.4 has no `bun lint`).
+- `cn()` comes from the `cn` package, re-exported by `@/lib/utils`; there is no `clsx`/`tailwind-merge`.
+- **Cache Components** (`cacheComponents` + `partialPrefetching`, Rust React Compiler, `agentUpgrade: "security"` in `next.config.ts`): dynamic data must sit behind `"use cache"` or `<Suspense>`, and detail pages declare `generateStaticParams`. Flags render through `isProjectVisible`/`is*Visible` in `src/flags.ts`, which read Global Config via a cached (`cacheLife("minutes")`) helper — never call `flag()` while rendering (it reads headers). The `flag()` definitions only feed the Toolbar discovery route, so Toolbar overrides do not change rendered pages.
+- Flags read booleans via `@vercel/global-config` (the renamed Edge Config); keyboard shortcuts use `@tanstack/react-hotkeys` (alpha) in the logo only.
+- Prose styling: shadcn Typeset lives in `src/app/typeset.css` (preset `typeset-portfolio`, values from `DESIGN.md`). It is imported but not yet applied to the MDX `Wrapper`.
 - React Compiler is enabled (`reactCompiler: true` in `next.config.ts`) — avoid manual `useMemo`/`useCallback`.
 - `better-all` is available for concurrent async with named keys, but chaining `this.$.foo` between named tasks currently breaks the type inference — extract downstream work outside the `all({})` block instead.
 - Path alias `@/` maps to `src/`. Always use `@/` imports, never relative `../` paths.
@@ -110,6 +114,6 @@ Beyond search SEO, the site exposes machine-readable representations for autonom
 
 ### Adding new content
 
-To add a new project/experience/education/component, create an MDX file in the appropriate `src/contents/` subdirectory (`projects/`, `work/`, `edu/`, `components/`) with YAML frontmatter matching the corresponding TypeScript interface in `src/lib/types.ts`. The slug is derived from the filename.
+To add a new project/experience/education, create an MDX file in the appropriate `src/contents/` subdirectory (`projects/`, `work/`, `edu/`) with YAML frontmatter matching the corresponding TypeScript interface in `src/lib/types.ts`. The slug is derived from the filename.
 
 To surface a new item on the home page, add a static-image import and entry to the relevant array (`works`, `educations`, or `projects`) in `src/app/(app)/_components/content.ts`.

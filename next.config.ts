@@ -5,6 +5,12 @@ import profile from "./src/contents/profile.json"
 const nextConfig: NextConfig = {
 	pageExtensions: ["js", "jsx", "ts", "tsx", "md", "mdx"],
 	reactCompiler: true,
+	cacheComponents: true,
+	partialPrefetching: true,
+	experimental: {
+		turbopackRustReactCompiler: true,
+		agentUpgrade: "security",
+	},
 	redirects: () => {
 		return Object.entries(profile.links)
 			.filter(([, url]) => !url.startsWith("mailto:"))

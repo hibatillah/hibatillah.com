@@ -7,13 +7,13 @@ import {
 	ItemMedia,
 	ItemTitle,
 } from "@/components/ui/item"
-import { AI_PROGRAMMER_SLUG, aiProgrammerBetaFlag, isProjectVisible } from "@/flags"
+import { AI_PROGRAMMER_SLUG, isAiProgrammerBetaVisible, isProjectVisible } from "@/flags"
 import Image from "next/image"
 import Link from "next/link"
 import { educations, projects, works } from "./content"
 
 export async function WorkSection({ ...props }: React.ComponentProps<"section">) {
-	const showBeta = await aiProgrammerBetaFlag()
+	const showBeta = await isAiProgrammerBetaVisible()
 	const items = showBeta ? works : works.filter((work) => work.url !== AI_PROGRAMMER_SLUG)
 
 	return (

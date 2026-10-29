@@ -1,4 +1,12 @@
 import { TextLink } from "@/components/text-link"
+import { cacheLife } from "next/cache"
+
+async function CurrentYear() {
+	"use cache"
+	cacheLife("days")
+
+	return new Date().getFullYear()
+}
 
 export default function Layout({ children }: { children: React.ReactNode }) {
 	return (
@@ -9,7 +17,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 					<TextLink href="https://creativecommons.org/licenses/by/4.0/" underline="hover" external>
 						CC BY 4.0
 					</TextLink>
-					© {new Date().getFullYear()}
+					© <CurrentYear />
 				</div>
 				<span className="font-calloveya text-4xl leading-tight font-medium select-none">
 					Hibatillah

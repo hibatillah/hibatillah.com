@@ -1,4 +1,4 @@
-export type ContentCategory = "edu" | "work" | "projects" | "components"
+export type ContentCategory = "edu" | "work" | "projects"
 
 export interface ItemLink {
 	label: string
@@ -48,17 +48,6 @@ export interface Education {
 	 * Url to related contents. Could be internal or external links.
 	 * */
 	related?: Record<string, string>
-}
-
-export interface Component {
-	title: string
-	description: string
-	type: "registry:ui" | "registry:component" | "registry:block"
-	slug: string
-	registryDependencies?: string[]
-	dependencies?: string[]
-	credit?: string
-	creditUrl?: string
 }
 
 export interface MDXContent<T> {

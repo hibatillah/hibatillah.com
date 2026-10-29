@@ -2,10 +2,15 @@ import { Header } from "@/components/header"
 import { BreadcrumbJsonLd } from "@/components/json-ld"
 import profile from "@/contents/profile.json"
 import { isProjectVisible } from "@/flags"
-import { getContentData } from "@/lib/contents"
+import { getContentByCategory, getContentData } from "@/lib/contents"
 import { Project } from "@/lib/types"
 import { Metadata } from "next"
 import { notFound } from "next/navigation"
+
+export async function generateStaticParams() {
+	const items = await getContentByCategory<Project>("projects")
+	return items.map(({ slug }) => ({ slug }))
+}
 
 export async function generateMetadata({
 	params,

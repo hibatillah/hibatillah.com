@@ -2,6 +2,7 @@
 @import "tw-animate-css";
 @import "tailwind-scrollbar-hide/v4";
 @import "shadcn/tailwind.css";
+@import "./typeset.css";
 
 @custom-variant dark (&:is(.dark *));
 
@@ -46,6 +47,7 @@
 	--radius-4xl: calc(var(--radius) * 2.6);
 	--font-sans: var(--font-geist-sans);
 	--font-mono: var(--font-geist-mono);
+	--font-heading: var(--font-sans);
 	--font-calloveya: var(--font-calloveya-raw);
 }
 

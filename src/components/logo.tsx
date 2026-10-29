@@ -2,10 +2,10 @@
 
 import { cn } from "@/lib/utils"
 import { useTheme } from "@ecosy/next-themes"
+import { useHotkey } from "@tanstack/react-hotkeys"
 import { ArrowUpRightIcon } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
-import { useHotkeys } from "react-hotkeys-hook"
 import pfp from "../app/icon.png"
 import {
 	ContextMenu,
@@ -19,9 +19,7 @@ import { Kbd } from "./ui/kbd"
 export function Logo({ className }: { className?: string }) {
 	const { theme = "light", setTheme } = useTheme()
 
-	useHotkeys("d", () => setTheme(theme === "dark" ? "light" : "dark"), {
-		enableOnFormTags: false,
-	})
+	useHotkey("D", () => setTheme(theme === "dark" ? "light" : "dark"))
 
 	return (
 		<ContextMenu>

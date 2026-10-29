@@ -1,9 +1,14 @@
 import { Header } from "@/components/header"
 import { BreadcrumbJsonLd } from "@/components/json-ld"
 import profile from "@/contents/profile.json"
-import { getContentData } from "@/lib/contents"
+import { getContentByCategory, getContentData } from "@/lib/contents"
 import { Experience } from "@/lib/types"
 import { Metadata } from "next"
+
+export async function generateStaticParams() {
+	const items = await getContentByCategory<Experience>("work")
+	return items.map(({ slug }) => ({ slug }))
+}
 
 export async function generateMetadata({ params }: PageProps<"/work/[slug]">): Promise<Metadata> {
 	const { slug } = await params

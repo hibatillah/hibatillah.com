@@ -1,10 +1,10 @@
 import { Header } from "@/components/header"
 import { TextLink } from "@/components/text-link"
-import { eduSectionFlag, workSectionFlag } from "@/flags"
+import { isEduSectionVisible, isWorkSectionVisible } from "@/flags"
 import { EduSection, ProjectSection, WorkSection } from "./_components/sections"
 
 export default async function Page() {
-	const [showWork, showEdu] = await Promise.all([workSectionFlag(), eduSectionFlag()])
+	const [showWork, showEdu] = await Promise.all([isWorkSectionVisible(), isEduSectionVisible()])
 
 	return (
 		<>
