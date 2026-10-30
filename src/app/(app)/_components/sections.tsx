@@ -1,3 +1,6 @@
+import Image from "next/image"
+import Link from "next/link"
+
 import { ImageFrame, ImageFrameGrid } from "@/components/image-frame"
 import {
 	Item,
@@ -8,8 +11,7 @@ import {
 	ItemTitle,
 } from "@/components/ui/item"
 import { AI_PROGRAMMER_SLUG, isAiProgrammerBetaVisible, isProjectVisible } from "@/flags"
-import Image from "next/image"
-import Link from "next/link"
+
 import { educations, projects, works } from "./content"
 
 export async function WorkSection({ ...props }: React.ComponentProps<"section">) {

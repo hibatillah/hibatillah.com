@@ -1,17 +1,17 @@
-import { NextResponse, type NextRequest } from "next/server"
+import { type NextRequest, NextResponse } from "next/server"
 
 /**
  * Markdown content negotiation for agents (RFC 7231 §5.3.2).
  *
- * When a request carries `Accept: text/markdown`, serve the markdown
- * representation that already exists for the route — without changing the URL:
+ * When a request carries `Accept: text/markdown`, serve the markdown representation that already
+ * exists for the route — without changing the URL:
  *
- * - `/`                        → `/llms.txt` (the site map for LLMs)
+ * - `/` → `/llms.txt` (the site map for LLMs)
  * - `/project|work|edu/<slug>` → `/raw/<type>/<slug>` (the raw MDX endpoint)
  *
- * Browsers (which send `Accept: text/html`) fall through untouched, so the
- * HTML response stays the default. `[^/.]+` keeps `<slug>.md` paths (handled by
- * the rewrites in next.config.ts) out of this matcher.
+ * Browsers (which send `Accept: text/html`) fall through untouched, so the HTML response stays the
+ * default. `[^/.]+` keeps `<slug>.md` paths (handled by the rewrites in next.config.ts) out of this
+ * matcher.
  */
 const NEGOTIABLE = /^\/(project|work|edu)\/([^/.]+)$/
 

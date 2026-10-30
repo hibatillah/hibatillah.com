@@ -1,5 +1,6 @@
 import { readFile } from "node:fs/promises"
 import { join } from "node:path"
+
 import { isProjectVisible } from "@/flags"
 import { ContentCategory } from "@/lib/types"
 

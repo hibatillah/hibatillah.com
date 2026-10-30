@@ -1,0 +1,14 @@
+[fmt]
+printWidth = 100
+semi = false
+useTabs = true
+bracketSameLine = false
+jsdoc = false
+sortImports = true
+sortPackageJson = true
+ignorePatterns = [".next/", "public/", "bun.lock"]
+
+[fmt.sortTailwindcss]
+stylesheet = "./src/app/globals.css"
+attributes = ["tw"]
+functions = ["cn", "cva"]

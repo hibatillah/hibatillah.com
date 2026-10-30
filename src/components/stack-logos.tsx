@@ -1,5 +1,8 @@
 "use client"
 
+import { Tooltip } from "@base-ui/react/tooltip"
+import { type SVGProps, useState } from "react"
+
 import { AndroidIcon } from "@/components/ui/svgs/androidIcon"
 import { Authjs } from "@/components/ui/svgs/authjs"
 import { Dotnet } from "@/components/ui/svgs/dotnet"
@@ -31,8 +34,6 @@ import { SqlServer } from "@/components/ui/svgs/sqlServer"
 import { Tailwindcss } from "@/components/ui/svgs/tailwindcss"
 import { Typescript } from "@/components/ui/svgs/typescript"
 import { cn } from "@/lib/utils"
-import { Tooltip } from "@base-ui/react/tooltip"
-import { type SVGProps, useState } from "react"
 
 type LogoComponent = (props: SVGProps<SVGSVGElement>) => React.ReactNode
 
@@ -47,8 +48,8 @@ interface LogoEntry {
 }
 
 /**
- * Stack name (lowercased to match MDX frontmatter) → svgl logo(s).
- * Stacks without an svgl logo (e.g. Inertia.js, Midtrans) are intentionally absent and render nothing.
+ * Stack name (lowercased to match MDX frontmatter) → svgl logo(s). Stacks without an svgl logo
+ * (e.g. Inertia.js, Midtrans) are intentionally absent and render nothing.
  */
 const STACK_LOGOS: Record<string, LogoEntry> = {
 	react: { light: ReactLight, dark: ReactDark },

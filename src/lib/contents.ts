@@ -2,6 +2,7 @@
 
 import fs from "fs"
 import path from "path"
+
 import { ContentCategory, MDXContent } from "./types"
 
 const regex = /\.mdx$/i

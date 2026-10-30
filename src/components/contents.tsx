@@ -1,13 +1,15 @@
 "use client"
 
-import { Separator as SeparatorComponent } from "@/components/ui/separator"
-import { useCopyToClipboard } from "@/hooks/use-copy-clipboard"
-import { staggerContainer, staggerItem } from "@/lib/animations"
-import { cn, slugify } from "@/lib/utils"
 import { CopyIcon, LinkIcon, SquareCheckIcon } from "lucide-react"
 import { motion } from "motion/react"
 import { useState } from "react"
 import { toast } from "sonner"
+
+import { Separator as SeparatorComponent } from "@/components/ui/separator"
+import { useCopyToClipboard } from "@/hooks/use-copy-clipboard"
+import { staggerContainer, staggerItem } from "@/lib/animations"
+import { cn, slugify } from "@/lib/utils"
+
 import { Button } from "./ui/button"
 import { Card, CardFooter, CardHeader } from "./ui/card"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "./ui/tabs"

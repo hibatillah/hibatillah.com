@@ -1,9 +1,10 @@
+import { Metadata } from "next"
+
 import { Header } from "@/components/header"
 import { BreadcrumbJsonLd } from "@/components/json-ld"
 import profile from "@/contents/profile.json"
 import { getContentByCategory, getContentData } from "@/lib/contents"
 import { Experience } from "@/lib/types"
-import { Metadata } from "next"
 
 export async function generateStaticParams() {
 	const items = await getContentByCategory<Experience>("work")

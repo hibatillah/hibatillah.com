@@ -1,11 +1,12 @@
+import { Metadata } from "next"
+import { notFound } from "next/navigation"
+
 import { Header } from "@/components/header"
 import { BreadcrumbJsonLd } from "@/components/json-ld"
 import profile from "@/contents/profile.json"
 import { isProjectVisible } from "@/flags"
 import { getContentByCategory, getContentData } from "@/lib/contents"
 import { Project } from "@/lib/types"
-import { Metadata } from "next"
-import { notFound } from "next/navigation"
 
 export async function generateStaticParams() {
 	const items = await getContentByCategory<Project>("projects")

@@ -1,17 +1,21 @@
-import { cn } from "@/lib/utils"
 import Link from "next/link"
 import React from "react"
 
+import { cn } from "@/lib/utils"
+
 interface TextLinkProps extends React.ComponentProps<typeof Link> {
 	/**
-	 * short configuration for external links, including:
+	 * Short configuration for external links, including:
+	 *
 	 * - target="_blank"
 	 * - rel="noopener noreferrer"
+	 *
 	 * @default false
 	 */
 	external?: boolean
 	/**
 	 * Configure the underline behavior
+	 *
 	 * @default "always"
 	 */
 	underline?: "always" | "hover" | "none"

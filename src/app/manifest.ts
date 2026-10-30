@@ -1,5 +1,6 @@
-import profile from "@/contents/profile.json"
 import { MetadataRoute } from "next"
+
+import profile from "@/contents/profile.json"
 
 export default function manifest(): MetadataRoute.Manifest {
 	return {

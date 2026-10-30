@@ -1,8 +1,9 @@
+import { all } from "better-all"
+
 import profile from "@/contents/profile.json"
 import { isProjectVisible } from "@/flags"
 import { getContentByCategory } from "@/lib/contents"
 import { Education, Experience, Project } from "@/lib/types"
-import { all } from "better-all"
 
 // `/llms.txt` — a curated, markdown map of the site for LLMs and agents. See https://llmstxt.org
 export async function GET(request: Request) {

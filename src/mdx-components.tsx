@@ -1,6 +1,8 @@
-import { TextLink } from "@/components/text-link"
 import type { MDXComponents } from "mdx/types"
 import Image from "next/image"
+
+import { TextLink } from "@/components/text-link"
+
 import {
 	Blockquote,
 	Heading2,

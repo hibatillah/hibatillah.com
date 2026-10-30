@@ -1,0 +1,23 @@
+version: 2
+updates:
+  - package-ecosystem: bun
+    directory: /
+    schedule:
+      # Monthly runs on the 1st.
+      interval: monthly
+    # Majors are ungrouped, so each opens its own PR; keep the limit above the group count.
+    open-pull-requests-limit: 10
+    commit-message:
+      prefix: chore
+      include: scope
+    groups:
+      production-minor-patch:
+        dependency-type: production
+        update-types: [minor, patch]
+      development-minor-patch:
+        dependency-type: development
+        update-types: [minor, patch]
+    ignore:
+      # Types stay on the Node major in `engines`.
+      - dependency-name: "@types/node"
+        update-types: ["version-update:semver-major"]

@@ -1,8 +1,10 @@
 "use client"
 
-import { ThemeProvider } from "@/components/theme-provider"
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 import { useState } from "react"
+
+import { ThemeProvider } from "@/components/theme-provider"
+
 import { TooltipProvider } from "../components/ui/tooltip"
 
 export default function Provider({ children }: { children: React.ReactNode }) {

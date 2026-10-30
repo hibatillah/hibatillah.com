@@ -1,5 +1,6 @@
-import { TextLink } from "@/components/text-link"
 import { cacheLife } from "next/cache"
+
+import { TextLink } from "@/components/text-link"
 
 async function CurrentYear() {
 	"use cache"

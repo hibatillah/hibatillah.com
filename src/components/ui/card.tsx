@@ -1,9 +1,10 @@
 "use client"
 
-import { fadeSlideUp } from "@/lib/animations"
-import { cn } from "@/lib/utils"
 import { motion } from "motion/react"
 import * as React from "react"
+
+import { fadeSlideUp } from "@/lib/animations"
+import { cn } from "@/lib/utils"
 
 function Card({
 	className,

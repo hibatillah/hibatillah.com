@@ -1,18 +1,16 @@
-import { StackOffset } from "@/components/image-frame"
 import { StaticImageData } from "next/image"
 
-import ministry3 from "@/static/work/ministry/card.webp"
-import ministry1 from "@/static/work/ministry/group.webp"
-import ministry2 from "@/static/work/ministry/intern.webp"
-
+import { StackOffset } from "@/components/image-frame"
 import pcr1 from "@/static/edu/pcr/1.jpg"
 import pcr2 from "@/static/edu/pcr/2.jpg"
 import pcr3 from "@/static/edu/pcr/3.jpg"
-
 import furaya from "@/static/project/furaya-hotel/thumbnail.webp"
-import massbeat from "@/static/project/massbeat/thumbnail.webp"
 import klc from "@/static/project/klc-room/thumbnail.webp"
+import massbeat from "@/static/project/massbeat/thumbnail.webp"
 import yemeni from "@/static/project/yemeni-music/thumbnail.webp"
+import ministry3 from "@/static/work/ministry/card.webp"
+import ministry1 from "@/static/work/ministry/group.webp"
+import ministry2 from "@/static/work/ministry/intern.webp"
 
 export interface Thumbnail {
 	src: StaticImageData | string

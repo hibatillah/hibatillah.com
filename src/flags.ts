@@ -49,8 +49,8 @@ export const isAiProgrammerBetaVisible = () =>
 export const AI_PROGRAMMER_SLUG = "ai-programmer-onesia"
 
 /**
- * Every project by slug, including ones not surfaced on the homepage.
- * One flag per project gates BOTH its homepage card and its detail page.
+ * Every project by slug, including ones not surfaced on the homepage. One flag per project gates
+ * BOTH its homepage card and its detail page.
  */
 const PROJECT_TITLES: Record<string, string> = {
 	"furaya-hotel-management": "Furaya Hotel Management",
@@ -77,8 +77,8 @@ export const projectCardFlags = Object.fromEntries(
 ) as Record<string, ReturnType<typeof flag<boolean>>>
 
 /**
- * Whether a project is visible, covering both its homepage card and its detail
- * page. Unknown slugs (no flag declared) default to visible. Toolbar overrides do not apply here.
+ * Whether a project is visible, covering both its homepage card and its detail page. Unknown slugs
+ * (no flag declared) default to visible. Toolbar overrides do not apply here.
  */
 export async function isProjectVisible(slug: string): Promise<boolean> {
 	return slug in PROJECT_TITLES ? readGlobalConfigBoolean(`show-project-${slug}`, true) : true

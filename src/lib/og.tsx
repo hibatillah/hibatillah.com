@@ -1,5 +1,6 @@
 import { readFile } from "node:fs/promises"
 import { join } from "node:path"
+
 import { ImageResponse } from "next/og"
 
 // Allow Satori's `tw` Tailwind prop on JSX elements without type errors.
@@ -14,7 +15,17 @@ export const OG_CONTENT_TYPE = "image/png"
 
 const FONT_DIR = join(process.cwd(), "src/static/fonts/og")
 
+// Cached values are serialized, so fonts must be plain ArrayBuffers rather than Buffers.
+function toArrayBuffer(buffer: Buffer) {
+	return buffer.buffer.slice(
+		buffer.byteOffset,
+		buffer.byteOffset + buffer.byteLength,
+	) as ArrayBuffer
+}
+
 async function loadOgFonts() {
+	"use cache"
+
 	const [sans, sansBold, mono] = await Promise.all([
 		readFile(join(FONT_DIR, "Geist-Regular.ttf")),
 		readFile(join(FONT_DIR, "Geist-Bold.ttf")),
@@ -22,9 +33,19 @@ async function loadOgFonts() {
 	])
 
 	return [
-		{ name: "Geist", data: sans, weight: 400 as const, style: "normal" as const },
-		{ name: "Geist", data: sansBold, weight: 700 as const, style: "normal" as const },
-		{ name: "Geist Mono", data: mono, weight: 500 as const, style: "normal" as const },
+		{ name: "Geist", data: toArrayBuffer(sans), weight: 400 as const, style: "normal" as const },
+		{
+			name: "Geist",
+			data: toArrayBuffer(sansBold),
+			weight: 700 as const,
+			style: "normal" as const,
+		},
+		{
+			name: "Geist Mono",
+			data: toArrayBuffer(mono),
+			weight: 500 as const,
+			style: "normal" as const,
+		},
 	]
 }
 
@@ -70,7 +91,10 @@ function OgFrame({ eyebrow, title, description, centered }: OgFrameProps) {
 	)
 }
 
-/** Renders an OG `ImageResponse` from the shared frame. Use as the default export body of an `opengraph-image` route. */
+/**
+ * Renders an OG `ImageResponse` from the shared frame. Use as the default export body of an
+ * `opengraph-image` route.
+ */
 export async function renderOgImage(props: OgFrameProps) {
 	const fonts = await loadOgFonts()
 

@@ -1,9 +1,10 @@
+import { all } from "better-all"
+import { MetadataRoute } from "next"
+
 import profile from "@/contents/profile.json"
 import { isProjectVisible } from "@/flags"
 import { getContentByCategory } from "@/lib/contents"
 import { Education, Experience, Project } from "@/lib/types"
-import { all } from "better-all"
-import { MetadataRoute } from "next"
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 	const baseUrl = profile.url

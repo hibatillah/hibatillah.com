@@ -2,21 +2,23 @@ export { cn } from "cn"
 
 /**
  * Sort data manually based on provided order.
- * @param a - The first item to sort.
- * @param b - The second item to sort.
- * @param order - The order to sort the items.
+ *
  * @example
  * ```ts
  * data.sort((a, b) => customSort(a, b, order))
  * ```
+ *
+ * @param a - The first item to sort.
+ * @param b - The second item to sort.
+ * @param order - The order to sort the items.
  */
 export function customSort<T extends string>(a: T, b: T, order: T[]) {
 	return order.indexOf(a) - order.indexOf(b)
 }
 
 /**
- * Convert a string to a URL-safe lowercase slug.
- * ASCII-only — for Unicode/diacritics, swap in `github-slugger` or `slugify`.
+ * Convert a string to a URL-safe lowercase slug. ASCII-only — for Unicode/diacritics, swap in
+ * `github-slugger` or `slugify`.
  */
 export function slugify(text: string) {
 	return text

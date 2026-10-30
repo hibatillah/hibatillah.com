@@ -1,5 +1,8 @@
 "use client"
 
+import Link from "next/link"
+import { useEffect } from "react"
+
 import { Button } from "@/components/ui/button"
 import {
 	Empty,
@@ -9,8 +12,7 @@ import {
 	EmptyMedia,
 	EmptyTitle,
 } from "@/components/ui/empty"
-import Link from "next/link"
-import { useEffect } from "react"
+
 import { Logo } from "../components/logo"
 
 export default function Error({

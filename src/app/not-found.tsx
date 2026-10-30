@@ -1,3 +1,5 @@
+import Link from "next/link"
+
 import {
 	Empty,
 	EmptyContent,
@@ -6,7 +8,7 @@ import {
 	EmptyMedia,
 	EmptyTitle,
 } from "@/components/ui/empty"
-import Link from "next/link"
+
 import { Logo } from "../components/logo"
 import { Button } from "../components/ui/button"
 

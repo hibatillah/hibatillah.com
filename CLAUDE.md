@@ -12,11 +12,11 @@ bun build        # Production build
 bun check        # Typecheck (Bun built-in, TS 7); never add a `tsc` script
 bun lint         # oxlint (type-aware, @shadcn/lint plugin)
 bun lint:fix     # oxlint --fix
-bun format       # oxfmt
-bun format:check # oxfmt --check
+bun fmt          # Bun built-in formatter (config in bunfig.toml)
+bun fmt --check  # check formatting without writing
 ```
 
-Pre-commit hook (husky) runs `lint-staged` (`oxlint --fix` + `oxfmt` on staged files), then `bun check` and `bun run build`.
+Pre-commit hook (husky) runs `lint-staged` (`oxlint --fix` + `bun fmt` on staged files), then `bun check` and `bun run build`.
 
 ### Git workflow
 
@@ -100,7 +100,7 @@ Beyond search SEO, the site exposes machine-readable representations for autonom
 
 ### Key conventions
 
-- Linter: **oxlint** (`oxlint.config.ts`, TS config) with the alpha `@shadcn/lint` JS plugin; all shadcn rules are at `warn` until findings are triaged. Formatter: **oxfmt** (`oxfmt.config.ts`) with Tailwind class sorting (`cn`, `cva`, `tw`). Typecheck: `bun check` (Bun built-in; `bun lint`/`bun fmt` are not used — Bun 1.4.4 has no `bun lint`).
+- Linter: **oxlint** (`oxlint.config.ts`, TS config) with the alpha `@shadcn/lint` JS plugin; all shadcn rules are at `warn` until findings are triaged. Formatter: **`bun fmt`** (`[fmt]` in `bunfig.toml`) with Tailwind class sorting (`cn`, `cva`, `tw`). Typecheck: `bun check` (Bun built-in). `bun lint` is not used — Bun 1.4.4 has no `bun lint`, so linting stays on oxlint.
 - `cn()` comes from the `cn` package, re-exported by `@/lib/utils`; there is no `clsx`/`tailwind-merge`.
 - **Cache Components** (`cacheComponents` + `partialPrefetching`, Rust React Compiler, `agentUpgrade: "security"` in `next.config.ts`): dynamic data must sit behind `"use cache"` or `<Suspense>`, and detail pages declare `generateStaticParams`. Flags render through `isProjectVisible`/`is*Visible` in `src/flags.ts`, which read Global Config via a cached (`cacheLife("minutes")`) helper — never call `flag()` while rendering (it reads headers). The `flag()` definitions only feed the Toolbar discovery route, so Toolbar overrides do not change rendered pages.
 - Flags read booleans via `@vercel/global-config` (the renamed Edge Config); keyboard shortcuts use `@tanstack/react-hotkeys` (alpha) in the logo only.

@@ -1,6 +1,9 @@
 import profile from "@/contents/profile.json"
 
-/** `Person` + `WebSite` + `ProfilePage` graph declaring hibatillah.com as the canonical entity. Rendered once in the root layout. */
+/**
+ * `Person` + `WebSite` + `ProfilePage` graph declaring hibatillah.com as the canonical entity.
+ * Rendered once in the root layout.
+ */
 export function JsonLd() {
 	const personId = `${profile.url}/#person`
 	const websiteId = `${profile.url}/#website`
@@ -66,9 +69,9 @@ export function JsonLd() {
 }
 
 /**
- * `BreadcrumbList` structured data for a detail page. Paths are resolved against
- * `profile.url`. There is no category listing page, so detail pages use a flat
- * `Home › <title>` trail (never link a non-existent `/projects` etc.).
+ * `BreadcrumbList` structured data for a detail page. Paths are resolved against `profile.url`.
+ * There is no category listing page, so detail pages use a flat `Home › <title>` trail (never link
+ * a non-existent `/projects` etc.).
  */
 export function BreadcrumbJsonLd({ items }: { items: { name: string; path: string }[] }) {
 	const graph = {

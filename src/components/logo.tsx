@@ -1,11 +1,13 @@
 "use client"
 
-import { cn } from "@/lib/utils"
 import { useTheme } from "@ecosy/next-themes"
 import { useHotkey } from "@tanstack/react-hotkeys"
 import { ArrowUpRightIcon } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
+
+import { cn } from "@/lib/utils"
+
 import pfp from "../app/icon.png"
 import {
 	ContextMenu,

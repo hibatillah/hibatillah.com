@@ -11,7 +11,7 @@ A modern, responsive portfolio website showcasing work, education, and projects.
 - shadcn/ui with Base UI
 - MDX with `remark-gfm` and `remark-mdx-frontmatter`
 - `next/og` Open Graph images, schema.org JSON-LD structured data
-- Bun, oxlint, oxfmt
+- Bun (`bun fmt`, `bun check`), oxlint
 
 ### AI & agent relevancy
 

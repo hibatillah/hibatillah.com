@@ -15,9 +15,7 @@ export interface Experience {
 	description: string
 	location: string
 
-	/**
-	 * Url to related contents. Could be internal or external links.
-	 * */
+	/** Url to related contents. Could be internal or external links. */
 	related?: Record<string, string>
 }
 
@@ -44,9 +42,7 @@ export interface Education {
 	score: string
 	description: string
 	location: string
-	/**
-	 * Url to related contents. Could be internal or external links.
-	 * */
+	/** Url to related contents. Could be internal or external links. */
 	related?: Record<string, string>
 }
 

@@ -1,6 +1,7 @@
 import { Header } from "@/components/header"
 import { TextLink } from "@/components/text-link"
 import { isEduSectionVisible, isWorkSectionVisible } from "@/flags"
+
 import { EduSection, ProjectSection, WorkSection } from "./_components/sections"
 
 export default async function Page() {

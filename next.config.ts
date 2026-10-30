@@ -1,5 +1,6 @@
 import createMDX from "@next/mdx"
 import type { NextConfig } from "next"
+
 import profile from "./src/contents/profile.json"
 
 const nextConfig: NextConfig = {

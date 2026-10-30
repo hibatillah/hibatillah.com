@@ -1,17 +1,16 @@
-import type { Metadata, Viewport } from "next"
-
+import { Analytics } from "@vercel/analytics/next"
+import { SpeedInsights } from "@vercel/speed-insights/next"
+import { VercelToolbar } from "@vercel/toolbar/next"
 import { MotionConfig } from "motion/react"
+import type { Metadata, Viewport } from "next"
 import { Geist, Geist_Mono } from "next/font/google"
 import localFont from "next/font/local"
+import Script from "next/script"
 
 import { JsonLd } from "@/components/json-ld"
 import { Toaster } from "@/components/ui/sonner"
 import profile from "@/contents/profile.json"
 import { cn } from "@/lib/utils"
-import { Analytics } from "@vercel/analytics/next"
-import { SpeedInsights } from "@vercel/speed-insights/next"
-import { VercelToolbar } from "@vercel/toolbar/next"
-import Script from "next/script"
 import "./globals.css"
 import Provider from "./provider"
 
