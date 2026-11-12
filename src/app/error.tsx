@@ -9,11 +9,8 @@ import {
 	EmptyContent,
 	EmptyDescription,
 	EmptyHeader,
-	EmptyMedia,
 	EmptyTitle,
 } from "@/components/ui/empty"
-
-import { Logo } from "../components/logo"
 
 export default function Error({
 	error,
@@ -30,9 +27,6 @@ export default function Error({
 		<div className="grid min-h-dvh place-items-center">
 			<Empty className="w-fit">
 				<EmptyHeader>
-					<EmptyMedia>
-						<Logo />
-					</EmptyMedia>
 					<EmptyTitle>
 						<h1>Something went wrong</h1>
 					</EmptyTitle>

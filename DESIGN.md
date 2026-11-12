@@ -214,6 +214,33 @@ Focus is a 2px ring in `{colors.ring}` at 50% opacity.
 - **Card** — `card` background, `{rounded.xl}`, `{spacing.md}` padding, 1px `foreground/10` ring. Title in `h3`, description in `body-sm` + `muted-foreground`.
 - **Input** — 32px tall, `{rounded.lg}`, 1px `input` border, fully transparent background (it relies on the surface beneath). Placeholder in `muted-foreground`; focus swaps the border to `ring` and adds the ring.
 
+## Figures (mdxcn)
+
+Project pages draw small charts and diagrams from characters with the mdxcn component library (copied into the repo with the shadcn CLI; the figure list and data live in `PORTFOLIO-PLAN.md` section 8). Installed Nov 11, 2026: `GraphCheck`, `GraphFlow`, `GraphTimeline`, `GraphTree`, `GraphTable`, `GraphRank`, `GraphBoard`, `GraphSpec`, `Callout`, `Terminal`, plus the shared frame and `withMdxcn`. Files are in `src/components/` (`graph-*.tsx`, `callout.tsx`, `terminal.tsx`), `src/components/ui/graph-frame.tsx` and `graph-arrow.tsx`, and `src/lib/` (`graph-markdown.ts`, `graph-motion.ts`, `mdx.tsx`). They are registered in `src/mdx-components.tsx`.
+
+Figures do not get their own palette. mdxcn reads six CSS variables, and `globals.css` points each one at an existing token in `:root` only, so `.dark` follows the token values and no figure-specific dark values exist:
+
+| mdxcn variable     | Token                       | Use in a figure                                      |
+| ------------------ | --------------------------- | ---------------------------------------------------- |
+| `--graph-accent`   | `{colors.primary}`          | The current, chosen, or "now" row, and nothing else. |
+| `--graph-accent-2` | `{colors.muted-foreground}` | Second series; mapped to a gray on purpose.          |
+| `--graph-accent-3` | `{colors.ring}`             | Third series; mapped to a gray on purpose.           |
+| `--graph-frame`    | `{colors.border}`           | Dashed rules and dividers.                           |
+| `--graph-muted`    | `{colors.muted-foreground}` | Captions, notes, dimmed text.                        |
+| `--graph-faint`    | `{colors.border}`           | Ticks and the unused part of a bar.                  |
+
+Rules:
+
+- **Borderless.** Every figure sets `frame="none"`: no dashed box, no corner marks, and the title sits above the content. Dashed rules still appear inside tables and boards.
+- **One accent.** Use the default `palette="mono"` only. `duo` and `multi` would add a second saturated color, which this system forbids; their variables are mapped to grays so an accidental use stays on-system.
+- **Titles.** The `[ TITLE ]` label above each figure is `{colors.muted-foreground}`, not the accent (mdxcn colors it with `--graph-accent` by default; patched in `src/components/ui/graph-frame.tsx`). The accent stays reserved for the current, chosen, or checked row.
+- **Type.** Figures are 0.875rem. mdxcn sets `font-mono` on the figure container, but the base layer in `globals.css` applies `font-sans` to every element, so in the render test (Nov 11, 2026) labels and values came out in Geist, not Geist Mono. That is accepted for now, since Geist carries reading text here; forcing mono would mean overriding that base rule inside figures. The one-line caption under a figure is `body-sm` in `{colors.muted-foreground}`.
+- **Flow wraps.** `GraphFlow` rows wrap at every width (the stock `sm:flex-nowrap` was removed from `src/components/graph-flow.tsx`), because in the site's 30rem content column the nine-node pipeline overlapped itself. A wrapped row begins with its arrow.
+- **Dashes are faint in dark.** `--graph-frame` and `--graph-faint` are `{colors.border}`, which is `oklch(1 0 0 / 10%)` in dark; the dashed arrows, board bullets, and unused bar tails are barely visible there. Raise `--graph-frame` (for example to a mix of `{colors.muted-foreground}`) if that matters.
+- **Flat.** No shadow, no rounded card around a figure. Corner marks and edge titles paint over the line with `--graph-surface`, which defaults to `{colors.background}`; set `--graph-surface` to `{colors.card}` if a figure ever sits on a `Card`.
+- **Motion** is built into the components (about 220 ms, transform and opacity). Do not add loops or pulses.
+- **Do not restyle** the figure internals. Change the token mapping above, or the `frame` and `palette` props, instead.
+
 ## Do's and Don'ts
 
 ### Do

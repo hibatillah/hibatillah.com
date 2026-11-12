@@ -1,7 +1,6 @@
 import { Metadata } from "next"
 import { notFound } from "next/navigation"
 
-import { Header } from "@/components/header"
 import { BreadcrumbJsonLd } from "@/components/json-ld"
 import profile from "@/contents/profile.json"
 import { isProjectVisible } from "@/flags"
@@ -58,12 +57,8 @@ export default async function Page({ params }: PageProps<"/project/[slug]">) {
 					{ name: data.title, path: `/project/${slug}` },
 				]}
 			/>
-			<Header
-				heading={data.title}
-				description={data.headline}
-				stacks={data.stacks}
-				links={data.links ?? []}
-			/>
+			<h1 className="text-base font-medium">{data.title}</h1>
+			<p>{data.headline}</p>
 			<Content />
 		</>
 	)

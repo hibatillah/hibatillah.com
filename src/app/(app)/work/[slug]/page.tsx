@@ -1,6 +1,5 @@
 import { Metadata } from "next"
 
-import { Header } from "@/components/header"
 import { BreadcrumbJsonLd } from "@/components/json-ld"
 import profile from "@/contents/profile.json"
 import { getContentByCategory, getContentData } from "@/lib/contents"
@@ -50,7 +49,8 @@ export default async function Page({ params }: PageProps<"/work/[slug]">) {
 					{ name: data.title, path: `/work/${slug}` },
 				]}
 			/>
-			<Header heading={data.title} description={data.company} meta={[data.location, data.period]} />
+			<h1 className="text-base font-medium">{data.title}</h1>
+			<p>{data.company}</p>
 			<Content />
 		</>
 	)

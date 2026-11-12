@@ -5,11 +5,9 @@ import {
 	EmptyContent,
 	EmptyDescription,
 	EmptyHeader,
-	EmptyMedia,
 	EmptyTitle,
 } from "@/components/ui/empty"
 
-import { Logo } from "../components/logo"
 import { Button } from "../components/ui/button"
 
 export default function NotFound() {
@@ -17,9 +15,6 @@ export default function NotFound() {
 		<div className="grid min-h-dvh place-items-center">
 			<Empty className="w-fit">
 				<EmptyHeader>
-					<EmptyMedia>
-						<Logo />
-					</EmptyMedia>
 					<EmptyTitle>
 						<h1>404 - Page not found</h1>
 					</EmptyTitle>
