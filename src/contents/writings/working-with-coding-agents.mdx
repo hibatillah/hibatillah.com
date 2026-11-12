@@ -1,0 +1,52 @@
+---
+title: "How I work with coding agents"
+headline: "Brainstorm first, specs that lock the approach, and checks that don't trust the agent"
+description: "How a team of three builds a hospital asset-tracking product with coding agents. I brainstorm before any code, write specs that lock the approach, and score every agent run with plain code."
+slug: "working-with-coding-agents"
+date: "Nov 2026"
+---
+
+I lead [Encure](/project/encure), a hospital asset management product built by a team of three. It's me and two developers, with coding agents doing most of the typing. This is the workflow we use. Its core is that the approach is decided before an agent writes any code.
+
+## Brainstorm first
+
+I barely ask Claude to execute something right away. I always start with a brainstorm. At work, my PM explains the case, and then I brainstorm with Claude about what we can do. Sometimes I even skip the plan, because we both already understand what to do from the conversation.
+
+A new project starts the same way. I find something I need, or a problem that people around me have. Then I talk it through with Claude in a Claude Desktop project. We research it and validate the idea and the market. Then we talk about the system architecture and validate that too, until we reach a better option.
+
+After that I build a base for the project, which is usually my first commit. Then we implement some code. Once the codebase has conventions and patterns, I write the docs and the agent rules.
+
+## A spec that locks the approach
+
+Every piece of work starts as a planning conversation with me. Two commands turn it into work:
+
+- `/add-issues` turns the conversation into a Linear spec. The spec holds the decisions, with the alternatives I rejected. It also has anchors in the existing code, the contracts between parts, an acceptance checklist, and which subagent owns each area.
+- `/run-issues` takes a spec and checks it against the current code. Then it plans the work and runs it with one subagent per area. It opens a pull request only when every acceptance line passes.
+
+<GraphFlow title="PIPELINE">
+
+conversation → /add-issues → **Linear spec** → /run-issues → plan review → agents → acceptance check → PR → lead review
+
+</GraphFlow>
+
+I review every pull request. I wrote nearly all of the specs, and the two other developers ran them. My estimate is that agents did about 90% of their work and the developers about 10%. I built the foundation of the codebase myself, roughly half by hand and half with agents.
+
+## Context the agents can find
+
+I use the Diátaxis convention for the docs. It splits them into explanation, reference, and how-to. Then I write agent rules to keep agents inside our conventions. I also write subagents for each area of the codebase, so an agent has enough context every time it works in one area.
+
+An `AGENTS.md` routes each agent to the context for its area. A code index (CodeGraph) helps agents find similar existing code before they write new code. I have iterated on all of this many times.
+
+## Checks that do not trust the agent
+
+Claude Code hooks record what agents do, like which subagents ran, which Git operations they performed, and which Linear issues they touched. That record is replayed into Langfuse as a trace.
+
+A rule engine then scores each run PASS or FAIL against the repository's workflows. Two examples are verification before a commit, and a confirmation gate before implementation starts. The rule engine is plain code, not another model, so the same run always gets the same score.
+
+## Reviewing a pull request
+
+If a pull request is UI work, I check the UI first. If not, I depend on the tests for that logic or flow. That is mostly what I do now, and I'm still working out what else I should check.
+
+## Where the project stands
+
+Every pull request still goes through me. The product itself is paused. The core modules are built, the project is waiting for review from the hospital technician who requested it, and it has no paying clients yet.

@@ -3,11 +3,14 @@ import { all } from "better-all"
 import profile from "@/contents/profile.json"
 import { isProjectVisible } from "@/flags"
 import { getContentByCategory } from "@/lib/contents"
-import { Education, Experience, Project } from "@/lib/types"
+import { Education, Experience, Project, Writing } from "@/lib/types"
 
 // `/llms.txt` — a curated, markdown map of the site for LLMs and agents. See https://llmstxt.org
 export async function GET(request: Request) {
-	const { projects, experiences, educations } = await all({
+	const { projects, experiences, educations, writings } = await all({
+		async writings() {
+			return getContentByCategory<Writing>("writings")
+		},
 		async projects() {
 			return getContentByCategory<Project>("projects")
 		},
@@ -39,6 +42,10 @@ export async function GET(request: Request) {
 		[
 			"## Projects",
 			...visibleProjects.map((p) => `- [${p.title}](${url}/project/${p.slug}.md): ${p.headline}`),
+		].join("\n"),
+		[
+			"## Writing",
+			...writings.map((w) => `- [${w.title}](${url}/writing/${w.slug}.md): ${w.headline}`),
 		].join("\n"),
 		[
 			"## Education",

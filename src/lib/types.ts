@@ -1,4 +1,13 @@
-export type ContentCategory = "edu" | "work" | "projects"
+export type ContentCategory = "edu" | "work" | "projects" | "writings"
+
+export interface Writing {
+	title: string
+	headline: string
+	description: string
+	slug: string
+	/** Human-readable publish date, e.g. "Nov 2026". */
+	date: string
+}
 
 export interface ItemLink {
 	label: string

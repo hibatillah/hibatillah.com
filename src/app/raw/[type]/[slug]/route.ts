@@ -9,6 +9,7 @@ const TYPE_TO_CATEGORY: Record<string, ContentCategory> = {
 	project: "projects",
 	work: "work",
 	edu: "edu",
+	writing: "writings",
 }
 
 // Serves raw MDX (frontmatter + prose, imports stripped) as text/markdown for agents.

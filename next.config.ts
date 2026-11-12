@@ -25,6 +25,7 @@ const nextConfig: NextConfig = {
 		{ source: "/project/:slug.md", destination: "/raw/project/:slug" },
 		{ source: "/work/:slug.md", destination: "/raw/work/:slug" },
 		{ source: "/edu/:slug.md", destination: "/raw/edu/:slug" },
+		{ source: "/writing/:slug.md", destination: "/raw/writing/:slug" },
 	],
 	// RFC 8288 Link headers advertising machine-readable representations to agents.
 	headers: async () => [
@@ -62,6 +63,12 @@ const nextConfig: NextConfig = {
 		{
 			source: "/edu/:slug",
 			headers: [{ key: "Link", value: '</edu/:slug.md>; rel="alternate"; type="text/markdown"' }],
+		},
+		{
+			source: "/writing/:slug",
+			headers: [
+				{ key: "Link", value: '</writing/:slug.md>; rel="alternate"; type="text/markdown"' },
+			],
 		},
 	],
 }

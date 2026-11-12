@@ -4,12 +4,15 @@ import { MetadataRoute } from "next"
 import profile from "@/contents/profile.json"
 import { isProjectVisible } from "@/flags"
 import { getContentByCategory } from "@/lib/contents"
-import { Education, Experience, Project } from "@/lib/types"
+import { Education, Experience, Project, Writing } from "@/lib/types"
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 	const baseUrl = profile.url
 
-	const { projects, experiences, educations } = await all({
+	const { projects, experiences, educations, writings } = await all({
+		async writings() {
+			return getContentByCategory<Writing>("writings")
+		},
 		async projects() {
 			return getContentByCategory<Project>("projects")
 		},
@@ -55,5 +58,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 		priority: 0.7,
 	}))
 
-	return [...staticPages, ...projectPages, ...experiencePages, ...educationPages]
+	const writingPages: MetadataRoute.Sitemap = writings.map((writing) => ({
+		url: `${baseUrl}/writing/${writing.slug}`,
+		lastModified: new Date(),
+		changeFrequency: "yearly",
+		priority: 0.6,
+	}))
+
+	return [...staticPages, ...projectPages, ...experiencePages, ...educationPages, ...writingPages]
 }

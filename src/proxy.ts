@@ -7,13 +7,13 @@ import { type NextRequest, NextResponse } from "next/server"
  * exists for the route — without changing the URL:
  *
  * - `/` → `/llms.txt` (the site map for LLMs)
- * - `/project|work|edu/<slug>` → `/raw/<type>/<slug>` (the raw MDX endpoint)
+ * - `/project|work|edu|writing/<slug>` → `/raw/<type>/<slug>` (the raw MDX endpoint)
  *
  * Browsers (which send `Accept: text/html`) fall through untouched, so the HTML response stays the
  * default. `[^/.]+` keeps `<slug>.md` paths (handled by the rewrites in next.config.ts) out of this
  * matcher.
  */
-const NEGOTIABLE = /^\/(project|work|edu)\/([^/.]+)$/
+const NEGOTIABLE = /^\/(project|work|edu|writing)\/([^/.]+)$/
 
 export function proxy(request: NextRequest) {
 	const accept = request.headers.get("accept") ?? ""
@@ -39,5 +39,5 @@ export function proxy(request: NextRequest) {
 }
 
 export const config = {
-	matcher: ["/", "/project/:slug", "/work/:slug", "/edu/:slug"],
+	matcher: ["/", "/project/:slug", "/work/:slug", "/edu/:slug", "/writing/:slug"],
 }
