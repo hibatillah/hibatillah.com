@@ -4,7 +4,6 @@ period: "Oct 2022 - Oct 2023"
 slug: "massbeat"
 roles:
   - "UI/UX Designer"
-  - "Business Analyst"
 stacks:
   - "Figma"
 links:
@@ -12,75 +11,112 @@ links:
     url: "https://www.behance.net/gallery/162029955/MassBeat-Aplikasi-Workout-Dan-Konsultasi-Trainer"
   - label: "Prototype"
     url: "https://www.figma.com/proto/5jYtHgzCiSNgocCWvUKgCx/MassBeat?type=design&node-id=603-31600&t=8kvmnVoWZL8CJVRN-1&scaling=scale-down&page-id=1%3A2&starting-point-node-id=603%3A31600&show-proto-sidebar=1&mode=design"
-headline: "A user-centered home workout platform"
-description: "A unified home workout ecosystem designed to consolidate fragmented fitness tools into a consistent user-centered platform for trainees and instructors."
+headline: "A home workout app plan: three podium places, then sunset"
+description: "A home workout app concept with guided programs and paid trainer consultations, by a team of three students. It was a design and business plan only. We never built it as a working app, and we sunset it in 2023."
 ---
 
 import syahduu from "@/static/edu/pcr/2.jpg"
 import achievement from "@/static/project/massbeat/achievement.webp"
-import thumbnail from "@/static/project/massbeat/thumbnail.webp"
 
-MassBeat was not just a design project, it was my entry into the world of Technopreneurship.
+<Callout type="note" title="SUMMARY">
 
-Born during the isolation of the COVID-19 pandemic, I co-founded a team of three to tackle a growing problem: the disconnect between home workouts and professional guidance. While this project did not move to full-scale development, it served as a rigorous exercise in Product Validation, UI/UX Design, and Business Planning.
+**Problem.** Home workout apps lock their programs behind a pricey subscription, and personal trainers are expensive.
 
-## Fitness in _Isolation_
+**Decision.** We built the first version around the top-priority need only, with a free tier and cheap subscriptions.
 
-When gyms closed during the pandemic, people lost access to equipment and, more importantly, professional guidance.
+**Result.** The plan won three podium places in business plan competitions. The app was never built, and we sunset the project in 2023.
 
-- The Gap: Users had to choose between expensive private trainers or generic, unguided YouTube videos.
+**Role.** UI/UX designer in a team of three. I also contributed to the proposals.
 
-- The Insight: Through our initial surveys, we found that users didn't just want a workout list, they wanted a _community_ and _dietary accountability_.
+</Callout>
 
-## _Design Thinking_ Methodology
+MassBeat was a home workout app concept. It had guided workout programs and paid consultations with personal trainers. It was a design and business plan, never a working app.
 
-Unlike my engineering projects, MassBeat was driven strictly by the Design Thinking framework. We didn't write a single line of code until we understood the human element.
+We were Tim Syahduu at Politeknik Caltex Riau. Aidel Haikal Alatas was the team lead, for networking, administration, and recruiting respondents. Sari Wahyuni was the business analyst, and I was the UI/UX designer.
 
-### 1. Empathize & Define
+## The problem
 
-We conducted desk research and interviewed local gym trainers to understand their pain points in retaining clients remotely. We used Affinity Mapping to categorize hundreds of user insights into clear feature requirements.
+We started from a survey of 39 respondents, mostly students aged 18 to 23. We also did two interviews, one with a personal trainer in Pekanbaru and one with a person who exercises regularly. The trainer's clients had kept consulting by chat during the pandemic. That supported remote consultation as a feature.
 
-### 2. Ideate & Prototype
+We also compared against Fita, an Indonesian fitness app. Its programs are locked behind a pricey subscription, and its interface is harder to use.
 
-I led the UI/UX phase using Figma. We adopted a mobile-first approach, knowing our users would be working out in their living rooms, not at desks.
+<GraphRank title="SURVEY" max={100}>
 
-## A _Holistic_ Ecosystem
+- 78% program
+- 62% app helps
+- 50% expert
 
-We designed MassBeat to be more than a utility app. It was a platform connecting three pillars:
+</GraphRank>
 
-1.  Workout Programs: Tiered access (Basic vs. Premium) with video guidance.
+Of 39 respondents, 78% wanted a workout program that fits them. In the same survey, 62% said an app would help them reach their goals, and 50% wanted to consult an expert.
 
-2.  Nutrition: Integrated meal planning that adapts to the workout intensity.
+## Decisions
 
-3.  Consultation: A marketplace for trainers to offer shared or private digital sessions.
+### Scope the first version to the top priority
 
-## Business Validation & Awards
+Ideas went through an affinity diagram and a prioritization matrix. Learning correct form and having a guide came first. Regular programs and healthy meals came later. We delegated rewards, and we eliminated personal calorie and nutrition tracking.
 
-Since the output of this project was the Business Plan and High-Fidelity Mockups, we validated our product-market fit through national business competitions.
+<GraphBoard title="FIRST">
 
-Our ability to articulate the "Business Value" alongside the "User Experience" led to a series of podium finishes:
+### Do first
 
-- 1st Runner Up - GenBI Riau Business Plan Competition 2023
+- learning correct form
+- having a guide
 
-- 2nd Runner Up - LIKMI #2 2023 by Yogyakarta State University
+### Later
 
-- 2nd Runner Up - PIKMI 2023 by Bina Sarana Informatika University
+- regular programs
+- healthy meals
 
-- Participated in 1000 startup digital program.
+</GraphBoard>
 
-<ImageFrameGrid className="my-8">
-	<ImageFrame offset="b" transform="rotate" trigger="self" className="w-full sm:h-60">
-		<Image src={syahduu} alt="Syahduu Team" placeholder="blur" />
-	</ImageFrame>
-	<ImageFrame offset="r" transform="rotate" trigger="self" className="w-full sm:h-60">
-		<Image src={achievement} alt="Syahduu's Achievement" placeholder="blur" />
-	</ImageFrame>
-</ImageFrameGrid>
+<GraphBoard title="NOT NOW">
 
-This project taught me that a great product needs more than just clean code.
+### Delegate
 
-- We learned to validate assumptions using the SEQ method during testing.
+- rewards
 
-- We learned to adapt our features based on real feedback from competition judges and mentors.
+### Eliminate
 
-- We gained a deep appreciation for how design decisions directly impact the business revenue model.
+- personal calorie and nutrition tracking
+
+</GraphBoard>
+
+### A free tier plus cheap subscriptions
+
+The free tier has limited programs. Silver costs Rp10,000 a week or Rp40,000 a month, and Gold costs Rp25,000 a week or Rp60,000 a month. Gyms and healthy-food businesses can buy ad packages. This answers the pain point that personal trainers are expensive.
+
+### Mobile first, minimal desktop
+
+I designed the mobile prototype in full, and a reduced desktop version for the web.
+
+## Impact
+
+We ran a usability test with the Single Ease Question, with 5 testers and 7 tasks. The average score was 6.32 out of 7, and the average task time was 12.17 seconds. Every task was completed. Login was easiest (7.0), and subscribing to a package was hardest (5.8). One tester said the subscribe button's color did not fit. Then we ran follow-up interviews from January 14 to 17, 2023.
+
+The plan won three podium places, all in business plan categories, not UI/UX:
+
+- 1st Runner Up, GenBI Riau Business Plan Competition 2023
+- 2nd Runner Up, LIKMI #2 2023 (Yogyakarta State University)
+- 2nd Runner Up, PIKMI 2023 (Bina Sarana Informatika University)
+
+We were also a finalist at the Sumatera Accounting Competition 2022, and we took part in 1000 Startup Digital.
+
+<Image src={syahduu} alt="Team Syahduu" placeholder="blur" />
+
+<Image src={achievement} alt="Team Syahduu's achievements" placeholder="blur" />
+
+## How it ended
+
+We joined 1000 Startup Digital to build the real app. We completed its Ideation stage and advanced to Hacksprint. But we could not present or continue because of our college workload, so we sunset the project.
+
+<GraphTimeline title="JOURNEY">
+
+- Oct 2022: project starts
+- 2022: finalist at the Sumatera Accounting Competition
+- Jan 2023: follow-up interviews after the usability test
+- 2023: three podium places in business plan competitions
+- 2023: Ideation completed and Hacksprint reached in 1000 Startup Digital, then unable to continue
+- **Oct 2023: sunset**
+
+</GraphTimeline>

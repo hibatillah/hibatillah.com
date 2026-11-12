@@ -4,7 +4,7 @@ company: "Ministry of Finance Indonesia"
 period: "Feb - Jul 2024"
 slug: "frontend-ministry-finance"
 location: "Jakarta Selatan, Indonesia"
-description: "Executed Design Sprints and Agile Scrum cycles to drive iterative development within a cross-functional team. Managed deliverables and regularly presented milestones to stakeholders to ensure continuous project alignment."
+description: "My MSIB Batch 6 internship at the Ministry of Finance's training agency (BPPK). We ran a design sprint with Ministry employees, worked in two-week Scrum sprints with stakeholder reviews, and tested by hand because the team had no QA."
 ---
 
 import card from "@/static/work/ministry/card.webp"
@@ -13,70 +13,36 @@ import intern from "@/static/work/ministry/intern.webp"
 import sprint1 from "@/static/work/ministry/sprint1.webp"
 import sprint2 from "@/static/work/ministry/sprint2.webp"
 
-Stepping into enterprise modernization during my internship at Ministry of Finance at South Jakarta, Indonesia. This journey put me at the center of a massive digital transformation effort by replacing a legacy, nationwide room management system used by the entire Indonesian Ministry of Finance. The scope was intimidating, managing dorms, labs, and halls across numerous units for audiences ranging from general public users to high-level internal staff.
+I did my MSIB Batch 6 internship at the Ministry of Finance's training agency (BPPK) in South Jakarta. I was a frontend developer in a team of three. We built KLC Room, a replacement for the Ministry's room booking system. The product, its decisions, and its status are on the [KLC Room project page](/project/klc-room). This page covers how we worked.
 
-The challenge wasn't just technical, it was organizational. We needed to migrate complex workflows with outdated systems into a modern digital experience within a very tight three-month development window.
+<Image src={card} alt="Intern MSIB 6 at BPPK Ministry Finance Indonesia" placeholder="blur" />
 
-<ImageFrameGrid layout="grid" className="my-8 w-fit mx-auto">
-	<ImageFrame
-		size="default"
-		offset="l"
-		transform="rotate"
-		trigger="self"
-		className="max-sm:hidden aspect-9/16 h-72 sm:h-80 w-52 z-10"
-	>
-		<Image src={card} alt="Intern MSIB 6 at BPPK Ministry Finance Indonesia" placeholder="blur" />
-	</ImageFrame>
-	<ImageFrame
-		size="default"
-		offset="br"
-		transform="rotate"
-		trigger="self"
-		className="sm:h-60 sm:-translate-x-1/6"
-	>
-		<Image
-			src={intern}
-			alt="Lanyard MSIB 6 at BPPK Ministry Finance Indonesia"
-			placeholder="blur"
-		/>
-	</ImageFrame>
-</ImageFrameGrid>
+<Image src={intern} alt="Lanyard MSIB 6 at BPPK Ministry Finance Indonesia" placeholder="blur" />
 
-## Methodology
+## Design sprint
 
-Embracing Agile Scrum under pressure to tackle over dozens of required features with a lean team of three developers, we adopted a strict Agile Scrum methodology. This structure was crucial for maintaining velocity and managing scope creep.
+We assisted a design sprint led by BPPK stakeholders, with 20 to 30 Ministry employees from various units. They were the people who would use the system. We did not just receive a requirements document. Sitting with them showed me the friction in their daily booking work first-hand. It turned into product requirements, business process diagrams, and mockups.
 
-- We worked in strict 2-week sprints. This timeboxing forced us to break down enormous requirements into manageable, shippable tasks.
+I think the sprint wasn't held really well, though. We ended up designing the UI too quickly, in the middle of defining the problems, because many of the older employees needed something to visualize.
 
-- Each sprint ended with a review session where we presented completed work to project managers. This immediate feedback loop allowed us to pivot quickly when a feature didn't align with the business need, saving weeks of wasted effort.
+<Image src={sprint1} alt="Design sprint session" placeholder="blur" />
 
-- In a small squad, there was no dedicated QA team. I learned to blend development with blackbox testing, ensuring that the complex workflows I built actually held up under real-world scenarios.
+<Image src={sprint2} alt="Design sprint session" placeholder="blur" />
 
-Stakeholder Collaboration & The Design Sprint One of the most valuable experiences was moving beyond code to understand the human element of the system. We didn't just receive a requirements document, we actively shaped it.
+## Scrum
 
-We conducted an intensive Design Sprint involving 20 - 30 Ministry employees from various units as the actual future users of the system. Facilitating these face-to-face sessions was eye-opening. I moved from abstract assumptions to concrete user validation, witnessing first-hand the friction points in their existing daily operations. This direct interaction translated into a product requirement, business process diagrams and high-fidelity mockups that truly reflected user needs rather than assumptions.
+We had dozens of features to build and three developers, so we worked in Scrum with two-week sprints.
 
-<ImageFrameGrid className="my-8">
-	<ImageFrame offset="b" transform="rotate" trigger="self" className="w-full sm:h-60">
-		<Image src={sprint1} alt="Sprint Design" placeholder="blur" />
-	</ImageFrame>
-	<ImageFrame offset="r" transform="rotate" trigger="self" className="aspect-square">
-		<Image src={sprint2} alt="Sprint Design" placeholder="blur" />
-	</ImageFrame>
-</ImageFrameGrid>
+- Two-week sprints forced us to break large requirements into small, shippable tasks.
+- Each sprint ended with a review where we presented finished work to the project managers. So we could change course early when a feature did not match the need.
+- There was no dedicated QA. I tested the flows I built by hand, blackbox style, to check they held up in realistic use.
 
-## Key Takeaways
+## Role
 
-This experience was a crash course in enterprise software delivery. It taught me that successful development isn't just about writing clean functions, it's about clear communication, disciplined planning, and empathy for the end-users.
+I built the Public and Employee flows on the frontend and designed about 80% of the system in Figma. I also helped write the business requirements document, with the ERD, BPMN, and use cases.
 
-I developed strong confidence in seeing a massive project from vague initial interviews to a deployable preview, in working alongside people whose needs were very different from each other, and in delivering something a team could actually rely on.
-
-<ImageFrameGrid className="my-8 w-fit mx-auto">
-	<ImageFrame offset="c" transform="rotate" className="col-span-full sm:h-80">
-		<Image
-			src={group}
-			alt="Hibatillah's Final Presentation MSIB 6 at BPPK Ministry Finance Indonesia"
-			placeholder="blur"
-		/>
-	</ImageFrame>
-</ImageFrameGrid>
+<Image
+	src={group}
+	alt="Final presentation of MSIB Batch 6 at BPPK Ministry Finance Indonesia"
+	placeholder="blur"
+/>

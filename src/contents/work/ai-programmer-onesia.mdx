@@ -4,13 +4,40 @@ company: "Onesia"
 period: "Feb 2026 - now"
 slug: "ai-programmer-onesia"
 location: "Pekanbaru, Indonesia"
-description: "Training computer-vision object-detection models and building the real-time detection pipeline deployed into a live web application."
+description: "I'm building a device-control API that connects meeting rooms to their hardware, and a real-time computer-vision pipeline for live CCTV. Both are in development."
 ---
 
-Somehow ended up owning the computer vision side of things here, further than I expected to go. It began with training object-detection models and grew from there, later touching some llm work as well.
+My official role is AI programmer, since February 2026. I work on two things. One is an API that controls the hardware in meeting rooms. The other is a computer-vision pipeline that runs on live CCTV. Neither is live yet.
 
-On the vision side, I trained and iterated on computer-vision object-detection models. That meant sourcing and versioning image datasets, then tuning preprocessing and augmentation strategies across many training runs, each pass chipping away at the error rate until the detection accuracy was reliable enough to ship.
+## Device-control API
 
-From there I built the end-to-end real-time computer-vision pipeline: object detection and tracking, event recording, and automated report generation. Rather than staying a research notebook, the whole thing was wired into a web application, so the models run against real footage and turn what they see into structured reports.
+This is a Python and Django service that runs on a mini PC in each meeting room. The company already has a smart-meeting app, built in Laravel and not by me. My API connects that app to the room's hardware.
 
-Working on it...
+<GraphFlow title="API">
+
+smart-meeting app (Laravel) → Django API on the mini PC → attendance devices (WebSocket)
+
+Django API on the mini PC → meeting screen through its converter (TCP)
+
+</GraphFlow>
+
+The API handles two kinds of hardware:
+
+- **Attendance devices** (face scan, fingerprint, RFID card, QR) over WebSocket. The same device can also open the door to internal rooms for registered employees.
+- **The interactive flat panel**, the meeting screen. I control power, volume, brightness, and contrast over TCP, through its converter.
+
+Speakers are planned, and I'm still waiting for the hardware. The API is close to finished but not in use yet, so I call it in development.
+
+## Computer vision
+
+This is Python, Django, and YOLO. The pipeline runs real-time detection on live CCTV, mostly people and vehicles. I source the datasets and fine-tune the YOLO models over many iterations. I also built the pipeline that records events and generates reports automatically.
+
+<GraphFlow title="CCTV">
+
+camera → detector modules (plug-in) → events → reports
+
+</GraphFlow>
+
+Detectors are modules, so a new one plugs in without touching the rest. There are 8 detectors so far.
+
+For each model, I test against labeled real footage. Then I track the misses and false alarms from one version to the next, instead of trusting the training score alone. The models are still in testing, so I'm not publishing detection numbers.

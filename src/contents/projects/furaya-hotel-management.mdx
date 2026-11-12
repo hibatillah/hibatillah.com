@@ -1,6 +1,6 @@
 ---
 title: "Furaya Hotel Front Desk Management"
-period: "Oct 2024 - Jul 2025"
+period: "Aug 2024 - Jul 2025"
 slug: "furaya-hotel-management"
 roles:
   - "Fullstack Developer"
@@ -17,87 +17,102 @@ stacks:
 links:
   - label: "Repository"
     url: "https://github.com/hibatillah/furaya"
-headline: "Modernizing a legacy hotel management system"
-description: "Digitized complex manual workflows into a secure, role-based management system to streamline front desk operations and reduce administrative errors."
+headline: "A front desk module with one sidebar instead of nested menus"
+description: "My final project at Politeknik Caltex Riau: a hotel front desk module that replaces a text-only, nested-menu system with a persistent sidebar. Never adopted by the hotel."
 ---
 
-import thumbnail from "@/static/project/furaya-hotel/thumbnail.webp"
+import oldMenu from "@/static/project/furaya-hotel/old-menu.webp"
+import sidebar from "@/static/project/furaya-hotel/sidebar.webp"
 
-<ImageFrameGrid className="mb-8 w-fit mx-auto">
-	<ImageFrame offset="c" transform="rotate" className="col-span-full sm:h-80">
-		<Image
-			src={thumbnail}
-			alt="Furaya Hotel Management System"
-			placeholder="blur"
-			className="object-top"
-		/>
-	</ImageFrame>
-</ImageFrameGrid>
+<Callout type="note" title="SUMMARY">
 
-The hotel industry relies on speed and service, but many hotels still use systems built decades ago. The Furaya Hotel Project was built to fix this.
+**Problem.** Front desk staff used a text-only system with nested menus. They also merged handwritten books into it by hand for reports.
 
-I was recruited by a lecturer to join a team of four to build a real system for a client. Our goal was to replace their outdated desktop software with a modern, fast web application for the Front Desk.
+**Decision.** I replaced the nested menus with a sidebar that is always visible.
 
-## Bottleneck
+**Result.** The hotel never adopted it. In a usability test with 7 testers, satisfaction averaged 91%.
 
-The hotel was running on a legacy desktop app from the early 2000s. It looked like an old computer BIOS screen—blocky and rigid, but the real problem was how it worked.
+**Role.** Full-stack developer. I built the front desk module alone.
 
-> The Back to Menu Trap
+</Callout>
 
-The system did not have a navigation bar. To switch from _Check-In_ to _Room Status,_ a staff member had to:
+This was my final project at Politeknik Caltex Riau. A lecturer offered "Furaya Hotel" as a project title, based on a real hotel in Pekanbaru, and I took the front desk module. Other students built other modules separately.
 
-1.  Click a `Back` button to exit the current page.
+## The problem
 
-2.  Wait for the Main Menu list to load.
+In the stakeholder interviews with the hotel's management, the front desk said they used two things at once, a digital system and handwritten books. For reports, including the daily report, staff merged the two by hand. That was slow, and it risked errors.
 
-3.  Click the new option.
+The digital system was text-only with nested menus. To move to another task, staff pressed back several times to reach the main menu.
 
-This constant back-and-forth was too slow for a busy hotel lobby with guests waiting in line.
+<Image
+	src={oldMenu}
+	alt="The old system's Front Office main menu: a text-only screen with seven numbered options"
+	placeholder="blur"
+/>
 
-## Speed & Simplicity
+The old system's main menu, from the final report. I cropped out the staff name.
 
-The main goal was to remove that friction. I replaced the _Main Menu_ page with a Persistent Sidebar. Now, staff can jump from _Booking_ to _Guest List_ in one click, without ever losing their place.
+## Decisions
 
-We chose a tech stack that provided speed and stability:
+### One sidebar instead of nested menus
 
-- `Laravel` to handle complex booking rules securely.
+I never considered another idea for the navigation. The old system is really old, and its UI looks like a command line. To show the menu, it sends you to a whole page. Systems today show the menu in a sidebar, and the content takes most of the screen. That is what I built. Users still see about 80% of the screen as content, and they switch menus in one click. Reservations, check-in and check-out, and room status are one click apart.
 
-- `React` + `Tailwind CSS` to make the interface responsive and modern.
+<GraphTree title="NAVIGATION">
 
-- `Inertia.js` enables smooth, seamless navigation and data handling between Laravel and the frontend.
+- old system (nested menus)
+  - Front Office
+    - On-line Front Office
+      - Reservations
+      - Front Desk
+- new system (sidebar)
+  - Dashboard
+  - Reservasi
+  - Check In - Out
+  - Status Kamar
 
-Using Inertia allowed us to build a fast, app-like experience where pages load instantly, but kept the backend simple.
+</GraphTree>
 
-## Key Features
+In the old system, switching tasks meant going back up through the menus. The sidebar reaches each task in one click. The sidebar labels are in Indonesian. Reservasi is reservations, and Status Kamar is room status.
 
-### 1. The Front Desk Dashboard
+<Image
+	src={sidebar}
+	alt="The new check-in and check-out list with the sidebar on the left"
+	placeholder="blur"
+/>
 
-Designed the dashboard to give an instant overview. Instead of digging through menus, staff immediately see _Today's Check-ins, Occupancy Rates, and VIP Guests_ the moment they log in.
+The check-in and check-out list with the sidebar. The guest data is dummy.
 
-### 2. Visual Room Grid
+### Prototype changes from the hotel's feedback
 
-In the old system, checking room status meant reading a text list. I changed this to a Data Table with Filtering and Sorting capabilities. Rooms are using color-coded badge based on its status. This uses _Jacob's Law_ (using familiar patterns) to help staff process information instantly.
+I built the design in three prototype iterations. The hotel's management reviewed the first two, and their feedback shaped the next iteration each time.
 
-### 3. Role-Based Access
+<GraphTimeline title="PROTOTYPES">
 
-We set strict security rules to ensure data safety:
+- Aug 2024: requirements, feature list, system modeling, first prototype
+- Sep 2024: reviewed with the hotel, added a floor plan to each room, simplified check-in and check-out
+- Oct to Nov 2024: reviewed again, added online payment and supporting features
 
-- Staff: Can Check-in/Check-out guests.
+</GraphTimeline>
 
-- Admin: Can manage Room Rates and Inventory.
+I built the system from March to June 2025. It uses Laravel, Inertia.js, React, Tailwind CSS, shadcn/ui, and MySQL, with Midtrans for payment. I presented it in a final seminar in July 2025.
 
-- Manager: Can only view sales reports.
+## Impact
 
-## Testing
+The hotel never used the system, so there are no usage results. I do have a usability test from the final report. Seven respondents answered a 15-question Likert form: 3 in the guest role, 2 staff, and 2 admin. Most were classmates and lecturers, not the hotel's own staff.
 
-We tested the system to make sure it was ready for the real world.
+<GraphRank title="USABILITY" max={100}>
 
-- Stress Test: The system handled 100-200 users at the same time without slowing down.
+- 91% satisfaction
+- 90% efficiency
+- 89% fewer errors
+- 87% memorable
+- 84% learnability
 
-- User Test: The new navigation was a success. Staff reported that the Sidebar workflow was much faster and easier to learn than the old _Menu Index_ system.
+</GraphRank>
 
----
+These are average scores from 7 testers. The two highest single items, at 97% each, were recalling the steps quickly after a break and finding it comfortable to use.
 
-The final system successfully modernized the hotel's workflow. By removing the clunky _BIOS-style_ navigation and replacing it with a modern web design, we helped the staff work faster and reduced the waiting time for guests.
+## My role
 
-This project was my Final College Capstone, and it was accepted because it solved a critical operational speed problem for the client.
+I was the full-stack developer, and the only builder of the front desk module. It covers reservations for staff and the public, check-in and check-out, guests, room status, dashboards, and room management.

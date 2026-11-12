@@ -1,6 +1,6 @@
 ---
 title: "KLC Room"
-period: "Oct 2024 - Jul 2025"
+period: "Feb - Jul 2024"
 slug: "klc-room"
 roles:
   - "Frontend Developer"
@@ -9,53 +9,93 @@ stacks:
   - "React"
   - "Typescript"
   - "NextAuth"
-  - "Prisma ORM"
-  - "PostgreSQL"
+  - "date-fns"
   - "Tailwind CSS"
   - "Shadcn UI"
-headline: "Ministry's Unit's room management system."
-description: "Modernized facility management by centralizing room bookings into a single secure platform enabling efficient resource sharing across multiple organizational units."
+headline: "Room booking for Ministry of Finance units across time zones"
+description: "An MSIB internship project: a room booking system for Ministry of Finance (BPPK) units across Indonesia. We built every planned feature in six sprints and handed it over as a deployment-ready preview. Whether it went live is unknown."
 ---
 
 import thumbnail from "@/static/project/klc-room/thumbnail.webp"
 
-<ImageFrameGrid className="mb-8 w-fit mx-auto">
-	<ImageFrame offset="c" transform="rotate" className="col-span-full sm:h-80">
-		<Image
-			src={thumbnail}
-			alt="Ministry Unit Room Management"
-			placeholder="blur"
-			className="object-top"
-		/>
-	</ImageFrame>
-</ImageFrameGrid>
+<Callout type="note" title="SUMMARY">
 
-## Challenge
+**Problem.** Ministry units across Indonesia booked classrooms, dormitories, labs, and halls through a slow, outdated PHP system.
 
-The Indonesian Ministry of Finance relied on a legacy PHP-based system to manage thousands of bookable assets (classrooms, dormitories, labs) across the country. The system was suffering from severe performance bottlenecks, an outdated user interface that frustrated staff, and a codebase that was nearly impossible to maintain or upgrade efficiently.
+**Decision.** I helped design it with the people who would use it, and we stored every date in UTC so bookings hold across time zones.
 
-The stakeholders demanded a radical shift: they needed an enterprise-grade internal tool that felt as fast, modern, and intuitive as consumer platforms like Airbnb or Traveloka.
+**Result.** We built every planned feature in six two-week sprints and handed it over as a deployment-ready preview. Whether it went live is unknown.
 
-## Solution
+**Role.** Frontend developer for the Public and Employee flows. I designed about 80% of the system in Figma.
 
-We re-engineered the entire platform from the ground up using a modern React-based ecosystem. The decision to move to Next.js and TypeScript was driven by the need for speed (server-side rendering for fast initial loads), type safety across complex data structures, and long-term maintainability.
+</Callout>
 
-## Role-Based Access & SSO
+KLC Room is a room booking system for the Ministry of Finance's training agency (BPPK). I built it during my MSIB Batch 6 internship, in a team of three. The role and process side is on [my work page](/work/frontend-ministry-finance).
 
-We had to integrate with the Ministry's existing Single Sign-On (SSO) for internal employees while maintaining a separate, secure authentication flow for public users.
+## The problem
 
-We utilized NextAuth to handle this hybrid authentication strategy, creating middleware matchers to secure routes and ensure users only accessed data pertinent to their role.
+Ministry units across Indonesia booked classrooms, dormitories, labs, meeting rooms, and halls through an old PHP system. It was slow to use. The new system had to serve five kinds of users, from public visitors to a super admin.
 
-## Building a Reusable Component System
+<GraphTimeline title="TIMELINE">
 
-I leveraged TailwindCSS and shadcn/ui as a foundation to build a robust design system.
+- Late Feb to late Mar 2024: discovery
+- Late Mar to Jul 2024: build, in six two-week sprints
+- **Early to mid Jul 2024: handed over as a deployment-ready preview**
 
-I developed complex, custom UI components from scratch, including filters and calendars for deeply nested unit locations and interactive, large-scale booking calendars that had to handle conflicting schedules in real-time.
+</GraphTimeline>
 
-## Advanced Search & Filtering Data Flow
+## Decisions
 
-A core requirement was allowing users to find available rooms across different geographical units and room types on specific dates. This required designing efficient frontend interfaces that could handle complex query parameters and display organized results from the backend API, ensuring a snappy user experience even when filtering large datasets.
+### Design with the people who use it
 
----
+The team assisted a design sprint led by BPPK stakeholders, with 20 to 30 Ministry employees. I think it wasn't held really well. We started well when we defined the problems. But we ended up designing the UI too quickly, because many of the older employees needed something to visualize what we had talked about.
 
-Results Despite the constraints of a small 3-person team and a 3-month timeline, we successfully delivered a fully functional, modern replacement system ready for deployment preview. The new KLC Rooms platform drastically improved the user experience, streamlined the booking workflow, and provided a scalable foundation for future Ministry operations.
+After that I designed about 80% of the system in Figma, from stakeholder references, with booking patterns people already know.
+
+<Image
+	src={thumbnail}
+	alt="Design of the KLC Room public landing page, with a room search bar and a list of available units"
+	placeholder="blur"
+/>
+
+The public landing page, design before build (MVP), not the shipped interface.
+
+### Dates stored in UTC, shown in the selected time zone
+
+I don't really remember the exact bugs. We started by handling dates ourselves with the built-in Date object, maybe with some help from Intl. They only have a few date functions, but we kept using them because we didn't know packages for dates existed. It was my 6th semester, but the first five were only about learning to code, not real projects, so I knew very little about dependencies. Comparing dates by their raw values was really bad.
+
+Then we converted every date to a Unix timestamp. That is easy to compare. But we always needed an extra step to convert it back, and we still had to handle time zones and locale. Then we found date-fns. It made comparing easy, and time zones and locale too, because everything is a function I can call on any date.
+
+Bookings span several days, and Ministry units sit in different Indonesian time zones. So now every date is stored in UTC, converted for the selected time zone with date-fns, and all date math goes through it.
+
+### Reusable components across five roles
+
+Forms, multiselect, file upload, dashboards, and calendars were built once and reused. That keeps every role's pages consistent.
+
+## A late request
+
+A booking calendar was requested late in the build. It shipped with a minimum feature set, a calendar view that lists every booked room per date with its type and location. Stakeholders asked for more. But the team chose to finish what we had already built, so no feature was left half done.
+
+## Result
+
+We delivered all planned features in six sprints. We wrote test cases but never ran them, and I have no usage data.
+
+<Callout type="note" title="STATUS">
+
+Every listed feature was built and test cases were written, but the tests were never run. The system was handed over as a deployment-ready preview. Whether it went live is unknown.
+
+</Callout>
+
+## My role
+
+<GraphSpec title="ROLE">
+
+- Role: frontend developer, Public and Employee flows
+- Design: about 80% of the system in Figma
+- Process: helped run the design sprint, wrote the BRD
+- Logic: brainstormed with the full-stack developer, including SSO
+- Team: three
+
+</GraphSpec>
+
+The BRD covered the ERD, BPMN diagrams, and use cases. The team was Muhammad Arief (full-stack developer), Nyala Dinar Abadan (frontend developer), and me.

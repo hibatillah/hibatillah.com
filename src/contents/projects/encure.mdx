@@ -1,0 +1,110 @@
+---
+title: "Encure"
+period: "Nov 2025 - Oct 2026"
+slug: "encure"
+roles:
+  - "Project Lead"
+stacks:
+  - "Bun"
+  - "Turborepo"
+  - "Elysia"
+  - "Next.js"
+  - "Drizzle ORM"
+  - "PostgreSQL"
+  - "Better Auth"
+  - "Cloudflare R2"
+  - "PostHog"
+  - "Langfuse"
+links:
+  - label: "Website"
+    url: "https://encure.id"
+headline: "Hospital asset tracking from procurement to disposal"
+description: "A multi-tenant SaaS for hospitals to track medical equipment from procurement to disposal. The core modules are built. The project is paused and has no paying clients yet."
+---
+
+<Callout type="note" title="SUMMARY">
+
+**Problem.** Hospitals track medical equipment in Excel. Nobody is alerted when an asset is due for maintenance or calibration, and there is no continuous record from procurement to disposal.
+
+**Decision.** Keep one audit-ready record per asset for its whole life, in a multi-tenant system where a hospital group sees all its branches.
+
+**Result.** The core modules are built. The project has been paused since early October 2026, waiting for review from the hospital technician who requested it. It has no paying clients yet.
+
+**Role.** Project lead. I planned the product, designed the architecture, and built the foundation. I wrote nearly all the task specs and reviewed every pull request.
+
+</Callout>
+
+## The problem
+
+Hospitals track their medical equipment in Excel. Nobody is alerted when an asset is due for maintenance or calibration. There is also no continuous record of an asset from procurement to disposal. Annual Ministry of Health (ASPAK) reporting and accreditation audits require that record.
+
+Two validation interviews in January 2026 confirmed Excel-based tracking, the annual reporting duty, and that photos of disposed assets must be kept for audit.
+
+<GraphFlow title="LIFECYCLE">
+
+procurement → receive → borrow / transfer → maintenance → disposal
+
+</GraphFlow>
+
+Each asset needs one record that follows it through these steps, with a photo kept at disposal.
+
+## How it started
+
+A friend asked me about his thesis idea. It was a hardware project from his lecturer, but neither of us knew hardware. So I suggested software instead, where I could help. Then I asked him about problems from his internship. He found that many hospitals lack item management, especially maintaining their items. He prepared the proposal, and I helped with the software. After he presented it, we talked about the evaluation, and I learned that managing assets is a big thing for hospitals.
+
+Then I interviewed him about how a hospital would behave and how much it needed. I also had him interview a source person with my own questions. The answers were good, so I did market research and prepared documents to check it was viable. I did that before telling my developer friends. Then I asked them to join, with all the data, so they would not start from zero. We started slowly. Then we all subscribed to paid AI plans and worked in a rush from August to October.
+
+## What is built
+
+The core modules are built and working. They are procurement (order, receive), catalog and assets, borrowing, transfers, maintenance tickets, and disposal. There are also departments and locations, and multi-branch hospital groups with a headquarters view across branches.
+
+Two things are not done. The ASPAK export is planned, and the AI chat is built but not working as expected yet.
+
+<GraphTimeline title="TIMELINE">
+
+- Early 2025: the idea, from a friend's thesis
+- Nov 2025 to early Jan 2026: SaaS planning
+- Feb to Jun 2026: foundation
+- Late Jul to early Oct 2026: team development
+- **Oct 2026: paused, waiting for the hospital technician's review**
+
+</GraphTimeline>
+
+## Decisions
+
+### Multi-tenant by subdomain
+
+Each hospital gets its own address, `{slug}.encure.id`. Branches sit under an organization, so a hospital group sees all of its branches from the headquarters view.
+
+### Audit-ready records
+
+This matches the audit requirement from the interviews. Each organization has a hash-chained audit ledger. The activity feed is written in the same transaction as the change it describes. There is also a monthly archive to cold storage.
+
+### One schema package as the source of truth
+
+The database models and validation live in one package. Both the API and the dashboard use it, so API calls are type-checked end to end.
+
+Prices are stored as integer milli-rupiah, to avoid floating-point errors in procurement and valuation.
+
+## Performance
+
+I ran k6 load tests on my local machine, against a single endpoint, `GET /assets?limit=20`, in September 2026. These are a local benchmark, not production numbers. The scripts have no think time, so each virtual user sends requests back to back. That is far heavier than the same number of real staff.
+
+<GraphTable title="K6 LOCAL">
+
+| Scenario | Users    | p95    | Errors |
+| -------- | -------- | ------ | -----: |
+| Load     | 20       | 105 ms |     0% |
+| Spike    | 5 to 300 | 1.19 s |     0% |
+
+</GraphTable>
+
+The load test ran 20 virtual users for 5 minutes (65,300 requests, about 218 requests per second). The spike test jumped from 5 to 300 users in 30 seconds (14,219 requests). Both had zero failed requests.
+
+## How the team works
+
+I planned the product, designed the architecture, and built the foundation, about half by hand and half with coding agents. I wrote nearly all of the task specs and reviewed every pull request. Two developers executed the specs, and my estimate is that agents did about 90% of that work. The spec-and-checks workflow has its own write-up: [How I work with coding agents](/writing/working-with-coding-agents).
+
+## Stack
+
+Bun, Turborepo, Elysia (API), Next.js 16 (dashboard and marketing site), Drizzle ORM with PostgreSQL, Better Auth (organizations and branches), Cloudflare R2, PostHog, and Langfuse.

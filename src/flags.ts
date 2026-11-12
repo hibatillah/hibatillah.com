@@ -55,12 +55,7 @@ export const AI_PROGRAMMER_SLUG = "ai-programmer-onesia"
 const PROJECT_TITLES: Record<string, string> = {
 	"furaya-hotel-management": "Furaya Hotel Management",
 	"klc-room": "KLC Room",
-	"yemeni-music-classification": "Yemeni Music Classification",
 	massbeat: "MassBeat",
-	"ekolog-app": "Ekolog App",
-	"indogrosir-scm": "Indogrosir Supply Chain System Case Study",
-	"rice-type-color": "Rice Identification based on Color",
-	"rotte-scm": "Rotte Bakery Supply Chain System Case Study",
 }
 
 /** One flag per project, keyed by slug (`show-project-<slug>`). */
