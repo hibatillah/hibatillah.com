@@ -1,0 +1,125 @@
+---
+title: "Notch"
+period: "Oct 2026 - now"
+slug: "notch"
+roles:
+  - "Developer"
+stacks:
+  - "Rust"
+  - "Direct2D"
+  - "GPUI"
+headline: "A Windows notch that stays close to the Dynamic Island, written in Rust"
+description: "A small notch for the top of the Windows screen, modeled on Apple's Dynamic Island. It's written in Rust and drawn directly with Direct2D. The source is closed, and the current version is a pre-release."
+---
+
+<Callout type="note" title="SUMMARY">
+
+**Problem.** I wanted a Windows notch that stays close to Apple's Dynamic Island, with a calendar and only the features I use.
+
+**Decision.** I keep the layout separate from the content. So a page or an activity is one folder or file plus one line in a registry. I draw everything directly with Direct2D.
+
+**Result.** In one run on my PC, idle CPU was 0.078% of one core and memory was 24.1 MiB. The source is closed, and the current version is 0.5.0, a pre-release.
+
+**Role.** I designed and built it.
+
+</Callout>
+
+Notch is a small notch for the top of the Windows screen, modeled on Apple's Dynamic Island. It's written in Rust and drawn directly with Direct2D, with no UI framework and no web view. The settings window is a separate program, built with GPUI and gpui-kit.
+
+## Why I built it
+
+Nusa is the popular notch for Windows. It included features I don't need, and it did not have a calendar. A friend also built a C# version, but it used frosted glass, which moves away from the Dynamic Island look. I wanted one that stays close to the Dynamic Island. Nusa and NotchNook were my inspiration.
+
+## What it does
+
+The notch has pages for media with synced lyrics, a file shelf, a calendar (from an iCal address), a focus timer, and system stats. It also has activities for volume, brightness, battery, Bluetooth, microphone, camera, clipboard, Caps Lock, and Windows notifications.
+
+## Decisions
+
+### The layout is separate from the content
+
+The host owns the shape, the padding, and the header. A page draws only its content area. Each page or activity is one folder or file plus one line in a registry, so adding one needs no other code.
+
+```
+ +-----------------------------------------------+
+ | 10 px padding                                 |
+ | [==ooo]     18:41      [icons] [gear]         |
+ | 10 px gap                                     |
+ | +-------------------------------------------+ |
+ | | THE PAGE: only this area is its own       | |
+ | | width: set by the page                    | |
+ | | height: 86 px                             | |
+ | +-------------------------------------------+ |
+ | 14 px padding                                 |
+ +-----------------------------------------------+
+ header 16 px: page dots, clock, status icons, gear
+ pill width  = page width + 32 (16 + 16)
+ pill height = 10 + 16 + 10 + 86 + 14 = 136
+```
+
+The open notch, with a page that has the default content height. Sizes are in device-independent pixels.
+
+### Direct2D, with the settings as a separate program
+
+I draw directly with Direct2D, so the notch has no UI framework in its process. The settings window is a separate program, so it costs nothing while it's closed.
+
+### Behavior for every state
+
+Every state has defined behavior. The notch can be idle, hovered, open, or showing a notification banner. Over a maximized window, the default is lyrics only, and over a full-screen app, the notch is hidden. Both are separate saved choices. After the PC unlocks or resumes, the notch restores its position without stealing focus. This was the hardest part of the build.
+
+<GraphFlow title="STATES">
+
+idle → hover → open → notification banner
+
+</GraphFlow>
+
+## Resource use
+
+I measure with a script that opens and closes the notch many times and samples CPU and memory. These numbers are from one run on Nov 13, 2026, on a Ryzen 5 8645HS with Windows 11 Home build 26300. It was a release build of version 0.5.0, using the shelf page, 20 seconds of idle, and 10 open/close cycles. Every limit passed in that run.
+
+<GraphSpec title="RESOURCES">
+
+- Start memory: 24.1 MiB, limit 30 MiB
+- Idle CPU, collapsed: 0.078% of one core, limit 0.1%
+- CPU per open/close cycle: 172 ms, limit 400 ms
+- Memory growth over 10 cycles: 0.3 MiB, limit 3 MiB
+- Handle growth over 10 cycles: -8, limit 20
+- Idle CPU after the cycles: 0%, limit 0.1%
+
+</GraphSpec>
+
+CPU is counted in ticks of about 15.6 ms, and 0.078% is one tick. This is one run on one PC. On the same PC, the idle checks can pass or fail by a tick or two between runs, and I don't know why. The run did not measure music playback or live lyrics.
+
+The settings window is a separate program. While it's open it uses about 44.6 MiB and 0.94% of one core, measured on Oct 31, 2026.
+
+This is the start of the check's real output:
+
+<Terminal title="PERF">
+
+```
+Notch performance check: shelf page only,
+20 s idle, 10 open/close cycles
+  after start: 24.1 MB private working set, 1015 handles
+Idle, collapsed:
+  settles after start-up  ok
+  CPU while idle  0.078 %  (limit 0.1 %)  ok
+  memory (private working set)  24.1 MB  (limit 30 MB)  ok
+Opening and closing 10 times:
+  CPU per open+close cycle  172 ms  (limit 400 ms)  ok
+  memory growth over the cycles  0.3 MB  (limit 3 MB)  ok
+  handle growth over the cycles  -8  (limit 20 )  ok
+  open events logged  20  (expected 20)  ok
+Idle again after the animations (timers must have stopped):
+  settles after the animations  ok
+  CPU while idle after cycles  0 %  (limit 0.1 %)  ok
+...
+All performance checks passed.
+```
+
+</Terminal>
+
+I removed the compile lines and one line where the script measured again after reading the notification database. I also removed the checks for the devices, stats, and pinned pages at the end. All of those passed. I narrowed the gaps between the columns and wrapped the first line to fit the page. The script prints MB, but these are MiB.
+
+## Status
+
+Notch is closed source. The current version is 0.5.0, a pre-release. I have only tested it on Windows 11, build 26300.

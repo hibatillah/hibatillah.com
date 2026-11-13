@@ -84,6 +84,32 @@ This matches the audit requirement from the interviews. Each organization has a 
 
 The database models and validation live in one package. Both the API and the dashboard use it, so API calls are type-checked end to end.
 
+<GraphTree title="MONOREPO">
+
+- monorepo
+  - apps
+    - backend
+    - dashboard
+    - marketing
+  - packages
+    - schema
+    - db
+    - auth
+    - api
+    - storage
+    - email
+    - env
+    - impex
+    - lib
+    - logging
+    - ui
+  - docs
+  - scripts
+
+</GraphTree>
+
+The repository layout. The schema package holds the Drizzle models and the Zod validation that the API and the dashboard share.
+
 Prices are stored as integer milli-rupiah, to avoid floating-point errors in procurement and valuation.
 
 ## Performance

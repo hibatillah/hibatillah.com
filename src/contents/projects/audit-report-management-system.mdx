@@ -1,0 +1,102 @@
+---
+title: "Audit Report Management System"
+period: "2026"
+slug: "audit-report-management-system"
+roles:
+  - "Fullstack Developer"
+stacks:
+  - "Typescript"
+  - "TanStack Start"
+  - "Better Auth"
+  - "Drizzle ORM"
+  - "PostgreSQL"
+  - "Cloudflare R2"
+headline: "One archive for a government office's assignment reports"
+description: "A document archive I built alone for a government office. Each assignment shows which documents it has and which are missing. It's live, and the office is still moving over to it."
+---
+
+<Callout type="note" title="SUMMARY">
+
+**Problem.** Staff kept assignment documents in their own Google Drive. Nobody had a list of what an assignment needed, so a missing document was found only when someone asked for it.
+
+**Decision.** One archive where each assignment shows which documents it has and which are missing.
+
+**Result.** The system is live and staff use it. The office is still moving over to it.
+
+**Role.** I built it alone. I interviewed a government office staff member, designed the system, built it, deployed it, and I maintain it.
+
+</Callout>
+
+This is a document archive for the assignment reports of a government office. I built it alone, in 2026. I don't link the repo or the live site, because they show the real office. I can show a demo on request, so [email me](mailto:hibatillahhabib@gmail.com). I kept the Indonesian names for the documents, because that's what the office calls them.
+
+## The problem
+
+I interviewed a government office staff member who helps manage the assignment reports. I asked about their real flow, what they need, and what kinds of documents they handle.
+
+Staff often lost track of which document was missing from an assignment. They only noticed later, when they needed the assignment's data again. There was no single sheet that listed the documents of every assignment, and no single place to store them. Each person kept their own documents in their own Google Drive.
+
+When the office asked for a document, they handed it over. If a document was lost, that was the end of it. Most of the documents come from monitoring on site, so nobody can make them again.
+
+## Decisions
+
+### A document checklist for every assignment
+
+Each assignment lists the documents it needs, so staff can see what's done and what's missing at a glance. There are six:
+
+- Surat Tugas, the assignment letter
+- PKA, the audit work program
+- KKA, the audit working papers
+- LHA, the audit result report
+- NHA, the audit result notice
+- Berita Acara, the record of the follow-up agreement
+
+A seventh section, Tindak Lanjut, holds follow-up documents and stays open after an assignment is finished.
+
+<GraphCheck title="ASSIGNMENT">
+
+- [x] Surat Tugas
+- [x] PKA
+- [x] KKA
+- [ ] LHA
+- [ ] NHA
+- [ ] Berita Acara
+
+</GraphCheck>
+
+A dummy assignment with three of its six documents uploaded.
+
+### Completion: a strict rule now, a looser one planned
+
+Only the team leader can finish an assignment. Right now an assignment needs all six documents before it can be finished.
+
+That is hard for the office at the moment, because they have already lost many documents. So I plan to loosen the rule for a few months, until they are better prepared and fully moved over. The team leader would tick that the documents match the assignment, and that they are responsible for any that are missing. I haven't built this yet.
+
+<GraphFlow title="COMPLETION">
+
+team leader → ticks acknowledgement → **assignment complete**
+
+</GraphFlow>
+
+This is the planned flow.
+
+### Team members belong to the assignment
+
+Teams rotate every month in practice, and often the same people work on both assignments of a month. So I store the members on the assignment, not on a fixed team.
+
+### Cloudflare R2 for the files
+
+The files live in Cloudflare R2. It has no egress fees, so downloads don't add cost. Its API is S3-compatible, so standard libraries work. The person who offered the system pays for the storage for now. So the office can try it at no cost, and take over the bill once it proves useful.
+
+## What is not done
+
+- The report dashboard is planned and not started. It would filter by category, month, year, or team leader, and export as PNG or PDF.
+- Some files are large PDFs. I plan to raise the upload limit to 100 MB. I also plan to upload in chunks, so an upload that stops halfway doesn't restart.
+- The user guide is short and has no screenshots or demo yet. I'm improving it.
+
+## How much it's used
+
+Several teams use it. Each team has about 2 assignments a month, and each assignment has 11 to 30 PDFs. Most files are under 10 MB. Staff use it a few times a month, mostly to upload.
+
+## My role
+
+I built it alone. I interviewed that staff member, designed the system, built it, deployed it, and I maintain it.
