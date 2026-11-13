@@ -31,6 +31,38 @@ conversation → /add-issues → **Linear spec** → /run-issues → plan review
 
 I review every pull request. I wrote nearly all of the specs, and the two other developers ran them. My estimate is that agents did about 90% of their work and the developers about 10%. I built the foundation of the codebase myself, roughly half by hand and half with agents.
 
+This is part of a real `/run-issues` run on two issues. It plans the batches and the order of the subagents before it touches any code.
+
+<Terminal title="RUN-ISSUES">
+
+```
+Execution plan
+
+development
+  │
+  ▼
+┌ batch 1 — ISSUE-1 (1 plan) ──┐
+│ branch: feature/issue-1      │
+│ commit → PR → development    │
+└──────────────────────────────┘
+        ▼
+   ┌ batch 2 — ISSUE-2 (1 plan) ──────┐
+   │ branch: feature/issue-2          │
+   │ commit → PR → feature/issue-1    │
+   │ (batch 1)                        │
+   └──────────────────────────────────┘
+        ▼
+       done
+
+Subagents (dependency order):
+data → packages → backend
+→ dashboard → test
+```
+
+</Terminal>
+
+I translated the heading from Indonesian, replaced the issue IDs and branch names, and removed the issue title and a line about migrations. I also redrew the boxes narrower and wrapped one line to fit the page. By default, `/run-issues` chains every batch in one stack. In another run it found that two issues touched the same file, so it planned two independent stacks instead.
+
 ## Context the agents can find
 
 I use the Diátaxis convention for the docs. It splits them into explanation, reference, and how-to. Then I write agent rules to keep agents inside our conventions. I also write subagents for each area of the codebase, so an agent has enough context every time it works in one area.

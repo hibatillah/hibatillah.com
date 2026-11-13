@@ -3,7 +3,7 @@ import { SpeedInsights } from "@vercel/speed-insights/next"
 import { VercelToolbar } from "@vercel/toolbar/next"
 import { MotionConfig } from "motion/react"
 import type { Metadata, Viewport } from "next"
-import { Geist, Geist_Mono } from "next/font/google"
+import { Caveat, Geist, Geist_Mono } from "next/font/google"
 import localFont from "next/font/local"
 import Script from "next/script"
 
@@ -21,6 +21,11 @@ const geistSans = Geist({
 
 const geistMono = Geist_Mono({
 	variable: "--font-geist-mono",
+	subsets: ["latin"],
+})
+
+const caveat = Caveat({
+	variable: "--font-caveat",
 	subsets: ["latin"],
 })
 
@@ -80,6 +85,7 @@ export default function RootLayout({
 					"isolate font-sans antialiased",
 					geistSans.variable,
 					geistMono.variable,
+					caveat.variable,
 					calloveya.variable,
 				)}
 			>
