@@ -81,9 +81,9 @@ function Terminal({
 
 	return (
 		<Graph className={className} corner={corner} frame={frame} title={title}>
-			<GraphBody className="overflow-x-auto overflow-y-hidden">
+			<GraphBody className="[scrollbar-width:thin] overflow-x-auto overflow-y-hidden">
 				<motion.pre
-					className="m-0 flex min-w-max flex-col gap-0.5 leading-relaxed whitespace-pre"
+					className="m-0 flex min-w-max flex-col gap-0.5 text-[11px] leading-relaxed whitespace-pre"
 					initial={reduce ? false : "hidden"}
 					variants={list}
 					viewport={graphViewport}
@@ -104,13 +104,15 @@ function Terminal({
 							<span
 								aria-hidden="true"
 								className={cn(
-									"text-center select-none",
+									"text-center [font-family:ui-monospace,Cascadia_Mono,Consolas,Menlo,monospace] select-none",
 									line.kind === "command" ? "text-graph-accent" : "text-transparent",
 								)}
 							>
 								{line.kind === "command" ? prompt : " "}
 							</span>
-							<span>{line.text || " "}</span>
+							<span className="[font-family:ui-monospace,Cascadia_Mono,Consolas,Menlo,monospace]">
+								{line.text || " "}
+							</span>
 						</motion.code>
 					))}
 				</motion.pre>

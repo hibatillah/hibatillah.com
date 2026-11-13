@@ -19,8 +19,11 @@ import { withMdxcn } from "@/lib/mdx"
 // Delete once every page stops using ImageFrame, ImageFrameGrid, and TextLink.
 const components: MDXComponents = {
 	// Every figure is borderless (DESIGN.md "Figures"); a figure's own `frame` prop still wins.
+	// The wrapper div keeps the column spacing and scopes the list styles in globals.css to page text.
 	wrapper: ({ children }: { children?: React.ReactNode }) => (
-		<GraphFrameProvider frame="none">{children}</GraphFrameProvider>
+		<div className="mdx-content flex flex-col gap-6">
+			<GraphFrameProvider frame="none">{children}</GraphFrameProvider>
+		</div>
 	),
 	Image,
 	ImageFrame: ({ children }: React.ComponentProps<"div">) => <div>{children}</div>,
