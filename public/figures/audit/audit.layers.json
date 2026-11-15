@@ -1,0 +1,29 @@
+{
+ "title": "Assignment document checklist",
+ "layers": [
+  {
+   "id": "surat-tugas",
+   "title": "Surat Tugas",
+   "description": "The assignment letter. Uploaded.",
+   "accent": true
+  },
+  {
+   "id": "kka",
+   "title": "KKA",
+   "description": "The audit working papers. Uploaded.",
+   "accent": true
+  },
+  {
+   "id": "lha",
+   "title": "LHA",
+   "description": "The audit result report. Still missing, so the assignment cannot be finished.",
+   "accent": false
+  },
+  {
+   "id": "tray",
+   "title": "Tindak Lanjut",
+   "description": "Follow-up documents. This section stays open after the assignment is finished.",
+   "accent": false
+  }
+ ]
+}

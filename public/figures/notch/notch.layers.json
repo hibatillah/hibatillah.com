@@ -1,0 +1,71 @@
+{
+ "title": "Notch layout",
+ "layers": [
+  {
+   "id": "screen",
+   "title": "Top edge of the screen",
+   "description": "The notch hangs from the top edge and flares into it at both corners.",
+   "accent": false
+  },
+  {
+   "id": "host",
+   "title": "Host",
+   "description": "Owns the shape, the padding and the header. 136 px tall: 10 + 16 + 10 + 86 + 14.",
+   "accent": false
+  },
+  {
+   "id": "header",
+   "title": "Header, 16 px",
+   "description": "One row drawn by the host, the same on every page.",
+   "accent": false
+  },
+  {
+   "id": "dots",
+   "title": "Page dots",
+   "description": "One pill for the current page and a dot for each other page.",
+   "accent": false
+  },
+  {
+   "id": "clock",
+   "title": "Clock",
+   "description": "Sits in the centre of the header.",
+   "accent": false
+  },
+  {
+   "id": "status",
+   "title": "Status icons",
+   "description": "Activities such as volume, microphone and camera show here.",
+   "accent": false
+  },
+  {
+   "id": "gear",
+   "title": "Settings",
+   "description": "Opens the settings window, which is a separate program.",
+   "accent": false
+  },
+  {
+   "id": "page",
+   "title": "The page, 86 px",
+   "description": "Only this area belongs to the page. Its width sets the width of the pill.",
+   "accent": false
+  },
+  {
+   "id": "cover",
+   "title": "Cover art",
+   "description": "Album art from the playing app, with that app's badge on the corner.",
+   "accent": true
+  },
+  {
+   "id": "track",
+   "title": "Title and artist",
+   "description": "The current track.",
+   "accent": true
+  },
+  {
+   "id": "controls",
+   "title": "Controls",
+   "description": "Previous, pause, next, and the lyrics toggle.",
+   "accent": true
+  }
+ ]
+}

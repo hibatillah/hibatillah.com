@@ -1,0 +1,102 @@
+/* Layered figures: theme tokens, hover states and the touch fallback. */
+.layered-figure {
+	--lf-ink: var(--foreground);
+	--lf-surface: var(--background);
+	--lf-accent: var(--primary);
+	--lf-accent-soft: color-mix(in oklab, var(--primary) 18%, var(--background));
+	margin: 0;
+}
+
+.layered-figure-interactive {
+	display: none;
+}
+
+.layered-figure-svg svg {
+	display: block;
+	width: 100%;
+	height: auto;
+}
+
+@media (hover: hover) and (pointer: fine) {
+	.layered-figure[data-ready] .layered-figure-fallback {
+		display: none;
+	}
+	.layered-figure[data-ready] .layered-figure-interactive {
+		display: block;
+	}
+}
+
+.layered-figure .lf-fill,
+.layered-figure .lf-line {
+	transition:
+		fill 150ms,
+		stroke 150ms,
+		opacity 150ms;
+}
+
+/* Other layers fade their linework only. Fills stay opaque so lower plates never show through. */
+.layered-figure[data-active] .lf-lines [data-layer]:not([data-on]) .lf-line {
+	opacity: 0.5;
+}
+
+.layered-figure .lf-lines [data-on] .lf-line:not(.lf-blue) {
+	stroke: var(--lf-accent);
+}
+
+.layered-figure .lf-fills [data-on] .lf-fill {
+	fill: color-mix(in srgb, var(--lf-accent-soft) 55%, var(--lf-surface));
+	stroke: color-mix(in srgb, var(--lf-accent-soft) 55%, var(--lf-surface));
+}
+
+/* The caption height is reserved so the page does not move when it fills. */
+.layered-figure-caption {
+	display: flex;
+	min-height: 3.25rem;
+	flex-direction: column;
+	gap: 0.125rem;
+	margin-top: 0.75rem;
+	font-size: 0.875rem;
+	line-height: 1.5;
+	color: var(--muted-foreground);
+}
+
+.layered-figure-caption strong {
+	color: var(--foreground);
+	font-weight: 500;
+}
+
+.layered-figure-legend {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.375rem;
+	margin: 0.5rem 0 0;
+	padding: 0;
+	list-style: none;
+}
+
+.layered-figure-legend button {
+	border: 1px solid var(--border);
+	border-radius: 0.375rem;
+	padding: 0.125rem 0.5rem;
+	font-size: 0.75rem;
+	color: var(--muted-foreground);
+	background: transparent;
+	cursor: default;
+}
+
+.layered-figure-legend button[data-on] {
+	border-color: var(--lf-accent);
+	color: var(--lf-accent);
+}
+
+.layered-figure-legend button:focus-visible {
+	outline: 2px solid var(--lf-accent);
+	outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.layered-figure .lf-fill,
+	.layered-figure .lf-line {
+		transition: none;
+	}
+}

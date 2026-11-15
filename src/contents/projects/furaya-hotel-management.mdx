@@ -21,7 +21,9 @@ headline: "A front desk module with one sidebar instead of nested menus"
 description: "My final project at Politeknik Caltex Riau: a hotel front desk module that replaces a text-only, nested-menu system with a persistent sidebar. Never adopted by the hotel."
 ---
 
+import oldMenuDrawing from "@/static/project/furaya-hotel/old-menu-drawing.png"
 import oldMenu from "@/static/project/furaya-hotel/old-menu.webp"
+import sidebarDrawing from "@/static/project/furaya-hotel/sidebar-drawing.png"
 import sidebar from "@/static/project/furaya-hotel/sidebar.webp"
 
 <Callout type="note" title="SUMMARY">
@@ -51,6 +53,12 @@ The digital system was text-only with nested menus. To move to another task, sta
 />
 
 The old system's main menu, from the final report. I cropped out the staff name.
+
+<Image
+	src={oldMenuDrawing}
+	alt="Drawing of the old system: a screen with a numbered text menu"
+	className="dark:hue-rotate-180 dark:invert"
+/>
 
 ## Decisions
 
@@ -82,6 +90,12 @@ In the old system, switching tasks meant going back up through the menus. The si
 />
 
 The check-in and check-out list with the sidebar. The guest data is dummy.
+
+<Image
+	src={sidebarDrawing}
+	alt="Drawing of the new front desk: a screen with a sidebar and the content next to it"
+	className="dark:hue-rotate-180 dark:invert"
+/>
 
 ### Prototype changes from the hotel's feedback
 

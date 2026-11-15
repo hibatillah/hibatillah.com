@@ -1,0 +1,35 @@
+{
+ "title": "Coding agent pipeline",
+ "layers": [
+  {
+   "id": "conversation",
+   "title": "Planning conversation",
+   "description": "Every piece of work starts as a brainstorm before any code.",
+   "accent": true
+  },
+  {
+   "id": "spec",
+   "title": "Linear spec",
+   "description": "/add-issues turns the conversation into a spec that locks the approach, with the rejected alternatives.",
+   "accent": true
+  },
+  {
+   "id": "subagents",
+   "title": "Subagents",
+   "description": "/run-issues runs one subagent per area in dependency order: data, packages, backend, dashboard, test.",
+   "accent": true
+  },
+  {
+   "id": "rules",
+   "title": "Rule engine",
+   "description": "Plain code scores each run PASS or FAIL, so the same run always gets the same score.",
+   "accent": true
+  },
+  {
+   "id": "pr",
+   "title": "Pull request",
+   "description": "Opened only when every acceptance line passes, then reviewed by the lead.",
+   "accent": true
+  }
+ ]
+}

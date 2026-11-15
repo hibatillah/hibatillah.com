@@ -1,0 +1,41 @@
+{
+ "title": "Asset lifecycle record",
+ "layers": [
+  {
+   "id": "ledger",
+   "title": "One record per asset",
+   "description": "A hash-chained audit ledger. Each step writes an entry in the same transaction as the change.",
+   "accent": false
+  },
+  {
+   "id": "procurement",
+   "title": "Procurement",
+   "description": "The asset is ordered.",
+   "accent": true
+  },
+  {
+   "id": "receive",
+   "title": "Receive",
+   "description": "The delivery is checked in and the asset enters the catalog.",
+   "accent": true
+  },
+  {
+   "id": "transfer",
+   "title": "Borrow / transfer",
+   "description": "The asset moves between departments or branches and comes back.",
+   "accent": true
+  },
+  {
+   "id": "maintenance",
+   "title": "Maintenance",
+   "description": "Tickets for repair and calibration.",
+   "accent": true
+  },
+  {
+   "id": "disposal",
+   "title": "Disposal",
+   "description": "The asset is retired, and its photo is kept for audit.",
+   "accent": true
+  }
+ ]
+}

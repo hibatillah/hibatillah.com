@@ -75,6 +75,8 @@ Claude Code hooks record what agents do, like which subagents ran, which Git ope
 
 A rule engine then scores each run PASS or FAIL against the repository's workflows. Two examples are verification before a commit, and a confirmation gate before implementation starts. The rule engine is plain code, not another model, so the same run always gets the same score.
 
+<LayeredFigure name="agents" />
+
 ## Reviewing a pull request
 
 If a pull request is UI work, I check the UI first. If not, I depend on the tests for that logic or flow. That is mostly what I do now, and I'm still working out what else I should check.

@@ -1,0 +1,41 @@
+{
+ "title": "hibatillah.com core stack",
+ "layers": [
+  {
+   "id": "tailwind",
+   "title": "Tailwind CSS v4",
+   "description": "Design tokens: three fonts, the gray ramp in light and dark, radius and spacing scales.",
+   "accent": true
+  },
+  {
+   "id": "shadcn",
+   "title": "shadcn/ui + Base UI",
+   "description": "Primitives: a dialog, an input, tabs, a slider, and one button shown unstyled and styled.",
+   "accent": true
+  },
+  {
+   "id": "mdx",
+   "title": "MDX",
+   "description": "Every project, work and education page is one MDX document with frontmatter.",
+   "accent": false
+  },
+  {
+   "id": "nextjs",
+   "title": "Next.js 16",
+   "description": "The App Router file tree and its routes, behind the proxy that negotiates markdown.",
+   "accent": false
+  },
+  {
+   "id": "react",
+   "title": "React 19",
+   "description": "The component tree: layout, sections, and the item rows inside them.",
+   "accent": true
+  },
+  {
+   "id": "typescript",
+   "title": "TypeScript",
+   "description": "Types such as the Project interface check every content file.",
+   "accent": true
+  }
+ ]
+}
