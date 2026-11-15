@@ -51,19 +51,38 @@
 	stroke: color-mix(in srgb, var(--lf-accent-soft) 55%, var(--lf-surface));
 }
 
-/* The caption height is reserved so the page does not move when it fills. */
+/* Every caption shares one grid cell, so the caption box is as tall as the longest text. Only opacity changes. */
 .layered-figure-caption {
-	display: flex;
-	min-height: 3.25rem;
-	flex-direction: column;
-	gap: 0.125rem;
+	display: grid;
 	margin-top: 0.75rem;
 	font-size: 0.875rem;
 	line-height: 1.5;
 	color: var(--muted-foreground);
 }
 
-.layered-figure-caption strong {
+.layered-figure-caption-item {
+	display: flex;
+	grid-area: 1 / 1;
+	flex-direction: column;
+	gap: 0.125rem;
+	opacity: 0;
+	transform: translateY(2px);
+	pointer-events: none;
+	transition:
+		opacity 110ms ease-out,
+		transform 110ms ease-out;
+}
+
+/* The incoming text waits a moment so it does not collide with the outgoing text. */
+.layered-figure-caption-item[data-on] {
+	opacity: 1;
+	transform: translateY(0);
+	transition:
+		opacity 200ms ease-out 70ms,
+		transform 200ms ease-out 70ms;
+}
+
+.layered-figure-caption-item strong {
 	color: var(--muted-foreground);
 	font-weight: 500;
 }
@@ -107,8 +126,11 @@
 
 @media (prefers-reduced-motion: reduce) {
 	.layered-figure .lf-fill,
-	.layered-figure .lf-line {
+	.layered-figure .lf-line,
+	.layered-figure-caption-item,
+	.layered-figure-caption-item[data-on] {
 		transition: none;
+		transform: none;
 	}
 }
 

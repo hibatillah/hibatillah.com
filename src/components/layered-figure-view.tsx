@@ -11,6 +11,9 @@ import { cn } from "@/lib/utils"
 
 const AUTOPLAY_INTERVAL_MS = 2600
 
+/** Clearing waits this long, so moving between layers or onto the legend never flashes the idle caption. */
+const CLEAR_DELAY_MS = 180
+
 type LayeredFigureViewProps = LayeredFigureData & {
 	/** Keyboard-reachable list of layers below the figure. Always on in legend mode. */
 	legend?: boolean
@@ -50,6 +53,7 @@ export function LayeredFigureView({
 	const [fetchedSvg, setFetchedSvg] = useState<string | null>(null)
 	const markup = svg ?? fetchedSvg
 	const isLegendMode = mode === "legend"
+	const clearTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
 
 	// Large figures are not inlined. Only pointer devices fetch them, others keep the image.
 	useEffect(() => {
@@ -63,10 +67,23 @@ export function LayeredFigureView({
 		return () => controller.abort()
 	}, [svg, svgUrl])
 
+	function cancelClear() {
+		if (clearTimerRef.current) clearTimeout(clearTimerRef.current)
+		clearTimerRef.current = null
+	}
+
 	function activate(layerId: string | null) {
+		cancelClear()
 		setActiveLayerId(layerId)
 		onActiveChange?.(layerId)
 	}
+
+	function scheduleClear() {
+		cancelClear()
+		clearTimerRef.current = setTimeout(() => activate(null), CLEAR_DELAY_MS)
+	}
+
+	useEffect(() => cancelClear, [])
 
 	// The SVG is injected markup React does not manage, so the active marker is set here.
 	useEffect(() => {
@@ -87,7 +104,6 @@ export function LayeredFigureView({
 		return () => clearInterval(timer)
 	}, [isLegendMode, autoplay, markup, isOnScreen, isHolding, reduceMotion, layers, activeLayerId])
 
-	const activeLayer = layers.find((layer) => layer.id === activeLayerId)
 	const showLegend = isLegendMode || legend
 
 	return (
@@ -125,19 +141,30 @@ export function LayeredFigureView({
 									if (group) activate(group.dataset.layer ?? null)
 								}
 					}
-					onPointerLeave={isLegendMode ? undefined : () => activate(null)}
+					onPointerLeave={isLegendMode ? undefined : scheduleClear}
 					dangerouslySetInnerHTML={{ __html: markup ?? "" }}
 				/>
 				{caption && !isLegendMode && (
+					// Every caption sits in one grid cell, so the box is as tall as the longest text and never shifts.
 					<figcaption className="layered-figure-caption" aria-live="polite">
-						{activeLayer ? (
-							<>
-								<strong>{activeLayer.title}</strong>
-								<span>{activeLayer.description}</span>
-							</>
-						) : (
-							<span>Hover a layer to see what it does.</span>
-						)}
+						<span
+							className="layered-figure-caption-item"
+							data-on={activeLayerId === null ? "" : undefined}
+							aria-hidden={activeLayerId !== null}
+						>
+							Hover a layer to see what it does.
+						</span>
+						{layers.map((layer) => (
+							<span
+								key={layer.id}
+								className="layered-figure-caption-item"
+								data-on={layer.id === activeLayerId ? "" : undefined}
+								aria-hidden={layer.id !== activeLayerId}
+							>
+								<strong>{layer.title}</strong>
+								<span>{layer.description}</span>
+							</span>
+						))}
 					</figcaption>
 				)}
 			</div>
@@ -154,7 +181,7 @@ export function LayeredFigureView({
 								}}
 								onPointerLeave={() => {
 									setIsHolding(false)
-									if (!isLegendMode) activate(null)
+									if (!isLegendMode) scheduleClear()
 								}}
 								onFocus={() => {
 									setIsHolding(true)
@@ -162,7 +189,7 @@ export function LayeredFigureView({
 								}}
 								onBlur={() => {
 									setIsHolding(false)
-									if (!isLegendMode) activate(null)
+									if (!isLegendMode) scheduleClear()
 								}}
 							>
 								<strong>{layer.title}</strong>
