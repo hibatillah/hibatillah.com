@@ -1,16 +1,20 @@
 "use client"
 
+import { motion, useInView, useReducedMotion } from "motion/react"
 import Image from "next/image"
 import { useEffect, useRef, useState } from "react"
 
 import "@/components/layered-figure.css"
+import { fadeUp, graphTransition, graphViewport } from "@/lib/graph-motion"
 import type { LayeredFigureData } from "@/lib/layered-figure"
 import { cn } from "@/lib/utils"
 
+const AUTOPLAY_INTERVAL_MS = 2600
+
 type LayeredFigureViewProps = LayeredFigureData & {
-	/** Keyboard-reachable list of layers below the figure. */
+	/** Keyboard-reachable list of layers below the figure. Always on in legend mode. */
 	legend?: boolean
-	/** Caption with the active layer's title and description. */
+	/** Caption with the active layer's title and description. Shape mode only. */
 	caption?: boolean
 	initialActiveLayerId?: string | null
 	onActiveChange?: (layerId: string | null) => void
@@ -18,12 +22,16 @@ type LayeredFigureViewProps = LayeredFigureData & {
 }
 
 /**
- * Exploded drawing with hoverable layers. Desktop pointers get the inline SVG,
+ * Exploded drawing with highlightable layers. Desktop pointers get the inline SVG,
  * other devices get the annotated image. Visuals are driven by `data-active` on the
  * root and `data-on` on the active layer's groups (see layered-figure.css).
  */
 export function LayeredFigureView({
 	title,
+	mode = "shape",
+	inactive = "lines",
+	autoplay = false,
+	note,
 	svg,
 	svgUrl,
 	layers,
@@ -35,9 +43,13 @@ export function LayeredFigureView({
 	className,
 }: LayeredFigureViewProps) {
 	const rootRef = useRef<HTMLElement>(null)
+	const reduceMotion = useReducedMotion()
+	const isOnScreen = useInView(rootRef)
 	const [activeLayerId, setActiveLayerId] = useState<string | null>(initialActiveLayerId)
+	const [isHolding, setIsHolding] = useState(false)
 	const [fetchedSvg, setFetchedSvg] = useState<string | null>(null)
 	const markup = svg ?? fetchedSvg
+	const isLegendMode = mode === "legend"
 
 	// Large figures are not inlined. Only pointer devices fetch them, others keep the image.
 	useEffect(() => {
@@ -65,14 +77,32 @@ export function LayeredFigureView({
 		}
 	}, [activeLayerId, markup])
 
+	// Legend mode can walk through the layers on its own. Hover or focus on a row pauses it.
+	useEffect(() => {
+		if (!isLegendMode || !autoplay || !markup || !isOnScreen || isHolding || reduceMotion) return
+		const timer = setInterval(() => {
+			const currentIndex = layers.findIndex((layer) => layer.id === activeLayerId)
+			setActiveLayerId(layers[(currentIndex + 1) % layers.length].id)
+		}, AUTOPLAY_INTERVAL_MS)
+		return () => clearInterval(timer)
+	}, [isLegendMode, autoplay, markup, isOnScreen, isHolding, reduceMotion, layers, activeLayerId])
+
 	const activeLayer = layers.find((layer) => layer.id === activeLayerId)
+	const showLegend = isLegendMode || legend
 
 	return (
-		<figure
+		<motion.figure
 			ref={rootRef}
 			className={cn("layered-figure", className)}
+			data-mode={mode}
+			data-inactive={inactive}
 			data-active={activeLayerId ?? undefined}
 			data-ready={markup ? "" : undefined}
+			variants={fadeUp(reduceMotion)}
+			initial="hidden"
+			whileInView="show"
+			viewport={graphViewport}
+			transition={graphTransition(reduceMotion)}
 		>
 			<Image
 				src={fallback.src}
@@ -85,14 +115,20 @@ export function LayeredFigureView({
 			<div className="layered-figure-interactive">
 				<div
 					className="layered-figure-svg"
-					onPointerOver={(event) => {
-						const group = (event.target as Element).closest<SVGGElement>(".lf-fills [data-layer]")
-						if (group) activate(group.dataset.layer ?? null)
-					}}
-					onPointerLeave={() => activate(null)}
+					onPointerOver={
+						isLegendMode
+							? undefined
+							: (event) => {
+									const group = (event.target as Element).closest<SVGGElement>(
+										".lf-fills [data-layer]",
+									)
+									if (group) activate(group.dataset.layer ?? null)
+								}
+					}
+					onPointerLeave={isLegendMode ? undefined : () => activate(null)}
 					dangerouslySetInnerHTML={{ __html: markup ?? "" }}
 				/>
-				{caption && (
+				{caption && !isLegendMode && (
 					<figcaption className="layered-figure-caption" aria-live="polite">
 						{activeLayer ? (
 							<>
@@ -104,25 +140,39 @@ export function LayeredFigureView({
 						)}
 					</figcaption>
 				)}
-				{legend && (
-					<ul className="layered-figure-legend" aria-label={`${title} layers`}>
-						{layers.map((layer) => (
-							<li key={layer.id}>
-								<button
-									type="button"
-									data-on={layer.id === activeLayerId ? "" : undefined}
-									onPointerEnter={() => activate(layer.id)}
-									onPointerLeave={() => activate(null)}
-									onFocus={() => activate(layer.id)}
-									onBlur={() => activate(null)}
-								>
-									{layer.title}
-								</button>
-							</li>
-						))}
-					</ul>
-				)}
 			</div>
-		</figure>
+			{showLegend && (
+				<ul className="layered-figure-legend" aria-label={`${title} layers`}>
+					{layers.map((layer) => (
+						<li key={layer.id}>
+							<button
+								type="button"
+								data-on={layer.id === activeLayerId ? "" : undefined}
+								onPointerEnter={() => {
+									setIsHolding(true)
+									activate(layer.id)
+								}}
+								onPointerLeave={() => {
+									setIsHolding(false)
+									if (!isLegendMode) activate(null)
+								}}
+								onFocus={() => {
+									setIsHolding(true)
+									activate(layer.id)
+								}}
+								onBlur={() => {
+									setIsHolding(false)
+									if (!isLegendMode) activate(null)
+								}}
+							>
+								<strong>{layer.title}</strong>
+								{isLegendMode && <span>{layer.description}</span>}
+							</button>
+						</li>
+					))}
+				</ul>
+			)}
+			{isLegendMode && note && <p className="layered-figure-note">{note}</p>}
+		</motion.figure>
 	)
 }

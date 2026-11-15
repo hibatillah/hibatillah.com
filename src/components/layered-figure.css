@@ -24,6 +24,9 @@
 	.layered-figure[data-ready] .layered-figure-interactive {
 		display: block;
 	}
+	.layered-figure[data-mode="shape"][data-ready] .layered-figure-legend {
+		display: flex;
+	}
 }
 
 .layered-figure .lf-fill,
@@ -65,6 +68,10 @@
 	font-weight: 500;
 }
 
+.layered-figure[data-mode="shape"] .layered-figure-legend {
+	display: none;
+}
+
 .layered-figure-legend {
 	display: flex;
 	flex-wrap: wrap;
@@ -72,6 +79,10 @@
 	margin: 0.5rem 0 0;
 	padding: 0;
 	list-style: none;
+}
+
+.layered-figure-legend button strong {
+	font-weight: inherit;
 }
 
 .layered-figure-legend button {
@@ -99,4 +110,107 @@
 	.layered-figure .lf-line {
 		transition: none;
 	}
+}
+
+/* Legend mode (Onesia): rows with text, whole groups fade, links follow the site accent. */
+.layered-figure[data-mode="legend"] {
+	--iso-flow: var(--primary);
+	--iso-hub: var(--primary);
+}
+
+/* Palette of the Onesia drawing, mapped to site tokens. Specificity beats the SVG's own theme blocks. */
+.layered-figure[data-mode="legend"] .iso[data-theme] {
+	--anatomy-paper: var(--background);
+	--anatomy-face: #fff;
+	--anatomy-top: #fff;
+	--anatomy-shade-0: #dcdcd9;
+	--anatomy-shade-1: #e5e5e2;
+	--anatomy-shade-2: #ededea;
+	--anatomy-shade-3: #f4f4f1;
+	--anatomy-lit-top: #fff;
+	--anatomy-lit-shade: #eeeeeb;
+	--anatomy-hi: #26262a;
+	--anatomy-mid: #8a8a8f;
+	--anatomy-lo: #b4b4b8;
+	--anatomy-faint: #d4d4d6;
+	--anatomy-lit: #000;
+	--anatomy-halo: #8a8a80;
+	--anatomy-halo-opacity: 0.32;
+	--anatomy-dot: #3a3a3e;
+}
+
+.dark .layered-figure[data-mode="legend"] .iso[data-theme] {
+	--anatomy-paper: var(--background);
+	--anatomy-face: #1b1b1b;
+	--anatomy-top: #1c1c1c;
+	--anatomy-shade-0: #0f0f0f;
+	--anatomy-shade-1: #121212;
+	--anatomy-shade-2: #151515;
+	--anatomy-shade-3: #181818;
+	--anatomy-lit-top: #262626;
+	--anatomy-lit-shade: #1d1d1d;
+	--anatomy-hi: #d4d4d4;
+	--anatomy-mid: #6a6a6a;
+	--anatomy-lo: #3e3e3e;
+	--anatomy-faint: #2a2a2a;
+	--anatomy-lit: #fff;
+	--anatomy-halo: #050505;
+	--anatomy-halo-opacity: 0.9;
+	--anatomy-dot: #e6e6e6;
+}
+
+.layered-figure[data-inactive="group"] svg [data-layer] {
+	transition: opacity 350ms cubic-bezier(0.32, 0.72, 0, 1);
+}
+
+.layered-figure[data-inactive="group"][data-active] svg [data-layer]:not([data-on]) {
+	opacity: 0.3;
+}
+
+.layered-figure[data-mode="legend"] .layered-figure-legend {
+	display: grid;
+	gap: 0.25rem;
+	margin-top: 1rem;
+}
+
+@media (min-width: 40rem) {
+	.layered-figure[data-mode="legend"] .layered-figure-legend {
+		grid-template-columns: 1fr 1fr;
+		gap: 0.25rem 1.25rem;
+	}
+}
+
+.layered-figure[data-mode="legend"] .layered-figure-legend button {
+	display: flex;
+	width: 100%;
+	flex-direction: column;
+	gap: 0.125rem;
+	border: 0;
+	border-radius: 0.5rem;
+	padding: 0.5rem;
+	text-align: left;
+	background: transparent;
+}
+
+.layered-figure[data-mode="legend"] .layered-figure-legend button strong {
+	color: var(--foreground);
+	font-size: 0.8125rem;
+	font-weight: 600;
+}
+
+.layered-figure[data-mode="legend"] .layered-figure-legend button span {
+	font-size: 0.75rem;
+	line-height: 1.45;
+	color: var(--muted-foreground);
+}
+
+.layered-figure[data-mode="legend"] .layered-figure-legend button[data-on],
+.layered-figure[data-mode="legend"] .layered-figure-legend button:hover {
+	background: var(--muted);
+}
+
+.layered-figure-note {
+	margin: 0.75rem 0 0;
+	font-size: 0.75rem;
+	color: var(--muted-foreground);
 }

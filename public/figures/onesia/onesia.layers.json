@@ -1,0 +1,29 @@
+{
+	"title": "Onesia room hardware and CCTV pipeline",
+	"mode": "legend",
+	"inactive": "group",
+	"autoplay": true,
+	"note": "Concept figure. My part is the REST API on the mini PC and the CCTV pipeline. The devices and the room control apps already existed.",
+	"layers": [
+		{
+			"id": "app",
+			"title": "Room control apps",
+			"description": "They call one REST API on the mini PC. These are the existing control website and mobile app. I did not build them, and they reach every device through the API."
+		},
+		{
+			"id": "ws",
+			"title": "Attendance device",
+			"description": "Connected over WebSocket. It takes face scan, fingerprint, RFID card and QR. The same device opens the door for registered employees."
+		},
+		{
+			"id": "tcp",
+			"title": "Meeting screen",
+			"description": "Connected over TCP, through its converter. The API controls power, volume, brightness and contrast of the interactive flat panel."
+		},
+		{
+			"id": "cv",
+			"title": "CCTV pipeline",
+			"description": "A camera feeds 8 detectors, which produce events and reports. It detects people and vehicles on live CCTV in real time. A new detector plugs in without touching the rest."
+		}
+	]
+}

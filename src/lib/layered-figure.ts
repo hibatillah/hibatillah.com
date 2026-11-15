@@ -10,6 +10,14 @@ export type LayeredFigureLayer = {
 
 export type LayeredFigureData = {
 	title: string
+	/** `shape`: hover the drawing. `legend`: rows drive the drawing and the legend always shows. */
+	mode?: "shape" | "legend"
+	/** `lines`: other layers fade their linework. `group`: other layers fade as whole groups. */
+	inactive?: "lines" | "group"
+	/** Legend mode only: cycle through the layers while the figure is on screen. */
+	autoplay?: boolean
+	/** Small line under the legend. */
+	note?: string
 	/** Inline markup. Omitted for large figures, which load from `svgUrl` on desktop only. */
 	svg?: string
 	svgUrl: string
@@ -40,10 +48,10 @@ export async function loadLayeredFigure(name: string): Promise<LayeredFigureData
 		readFile(path.join(directory, `${name}.layers.json`), "utf8"),
 		readFile(path.join(directory, `${name}-annotated.png`)),
 	])
-	const { title, layers } = JSON.parse(layersFile) as {
-		title: string
-		layers: LayeredFigureLayer[]
-	}
+	const { layers, ...options } = JSON.parse(layersFile) as Omit<
+		LayeredFigureData,
+		"svg" | "svgUrl" | "fallback"
+	>
 
 	const svgLayerIds = new Set([...svg.matchAll(/data-layer="([^"]+)"/g)].map((match) => match[1]))
 	const fileLayerIds = new Set(layers.map((layer) => layer.id))
@@ -58,7 +66,7 @@ export async function loadLayeredFigure(name: string): Promise<LayeredFigureData
 	}
 
 	return {
-		title,
+		...options,
 		svg: svg.length > INLINE_SVG_LIMIT_BYTES ? undefined : svg,
 		svgUrl: `/figures/${name}/${name}.svg`,
 		layers,
