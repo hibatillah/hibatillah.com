@@ -11,6 +11,7 @@ import { GraphSpec } from "@/components/graph-spec"
 import { GraphTable } from "@/components/graph-table"
 import { GraphTimeline } from "@/components/graph-timeline"
 import { GraphTree } from "@/components/graph-tree"
+import { Quote } from "@/components/quote"
 import { Terminal } from "@/components/terminal"
 import { GraphFrameProvider } from "@/components/ui/graph-frame"
 import { withMdxcn } from "@/lib/mdx"
@@ -42,6 +43,7 @@ const components: MDXComponents = {
 	GraphTable,
 	GraphTimeline,
 	GraphTree,
+	Quote,
 	Terminal,
 }
 
