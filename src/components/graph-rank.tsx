@@ -123,7 +123,7 @@ function GraphRank({
 								key={entry.label}
 								variants={item}
 							>
-								<span className="truncate text-foreground">{entry.label}</span>
+								<span className="truncate text-muted-foreground">{entry.label}</span>
 								<span className="flex min-w-0 items-center">
 									<span aria-hidden="true" className="text-graph-frame select-none">
 										[

@@ -12,7 +12,7 @@ import { cn } from "@/lib/utils"
  */
 function GraphCorners({ mark = "+" }: { mark?: string }) {
 	const corner =
-		"pointer-events-none absolute z-10 flex size-4 items-center justify-center bg-[var(--graph-surface,var(--background))] font-mono text-sm leading-none text-graph-frame select-none"
+		"pointer-events-none absolute z-10 flex size-4 items-center justify-center bg-[var(--graph-surface,var(--background))] font-mono text-xs leading-none text-graph-frame select-none"
 
 	return (
 		<>
@@ -160,10 +160,10 @@ const graphProseClass = cn(
 	"[&_ul]:m-0 [&_ul]:flex [&_ul]:list-none [&_ul]:flex-col [&_ul]:gap-1 [&_ul]:p-0",
 	"[&_ol]:m-0 [&_ol]:flex [&_ol]:list-none [&_ol]:flex-col [&_ol]:gap-1 [&_ol]:p-0",
 	"[&_li]:relative [&_li]:pl-4 [&_li]:before:absolute [&_li]:before:left-0 [&_li]:before:text-graph-muted [&_li]:before:content-['-']",
-	"[&_a]:text-foreground [&_a]:underline [&_a]:decoration-graph-frame [&_a]:decoration-dashed [&_a]:underline-offset-[0.2em]",
-	"[&_code]:font-semibold [&_code]:text-foreground",
+	"[&_a]:text-muted-foreground [&_a]:underline [&_a]:decoration-graph-frame [&_a]:decoration-dashed [&_a]:underline-offset-[0.2em]",
+	"[&_code]:font-semibold [&_code]:text-muted-foreground",
 	"[&_pre]:m-0 [&_pre]:whitespace-pre-wrap [&_pre_code]:font-normal [&_pre_code]:text-inherit",
-	"[&_strong]:font-semibold [&_strong]:text-foreground",
+	"[&_strong]:font-semibold [&_strong]:text-muted-foreground",
 	"[&_em]:text-graph-muted [&_em]:not-italic",
 )
 
@@ -250,7 +250,7 @@ function Graph({
 			<figure
 				aria-labelledby={title ? captionId : undefined}
 				className={cn(
-					"relative w-full min-w-0 font-mono text-sm text-foreground",
+					"relative w-full min-w-0 font-mono text-xs text-muted-foreground",
 					frame === "box" && "graph-frame",
 					className,
 				)}

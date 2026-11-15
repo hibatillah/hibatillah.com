@@ -135,7 +135,7 @@ function rowsOf(children: React.ReactNode): FlowRow[] {
 
 function nodeTone(palette: GraphPalette | undefined): Record<FlowTone, string> {
 	return {
-		default: "text-foreground",
+		default: "text-muted-foreground",
 		accent: paletteTone(palette, "primary"),
 		muted: paletteTone(palette, "secondary"),
 	}

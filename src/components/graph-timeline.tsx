@@ -120,7 +120,7 @@ function GraphTimeline({
 										className={cn(
 											"text-center leading-none select-none",
 											live && toneClass(palette, "primary"),
-											state === "done" && "text-foreground",
+											state === "done" && "text-muted-foreground",
 											state === "next" && toneClass(palette, "secondary"),
 										)}
 									>
@@ -129,7 +129,7 @@ function GraphTimeline({
 									<span
 										className={cn(
 											"tabular-nums",
-											state === "next" ? toneClass(palette, "secondary") : "text-foreground",
+											state === "next" ? toneClass(palette, "secondary") : "text-muted-foreground",
 										)}
 									>
 										{event.date}
@@ -138,7 +138,7 @@ function GraphTimeline({
 										<span
 											className={cn(
 												live && toneClass(palette, "primary"),
-												state === "done" && "text-foreground",
+												state === "done" && "text-muted-foreground",
 												state === "next" && toneClass(palette, "secondary"),
 											)}
 										>

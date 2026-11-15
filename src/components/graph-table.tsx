@@ -89,7 +89,7 @@ function GraphTable({
 									<th
 										key={header}
 										className={cn(
-											"relative px-3 pb-3 font-normal whitespace-nowrap text-foreground",
+											"relative px-3 pb-3 font-normal whitespace-nowrap text-muted-foreground",
 											(align?.[index] ?? (index === 0 ? "left" : "right")) === "right"
 												? "text-right"
 												: "text-left",

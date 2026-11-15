@@ -64,7 +64,7 @@
 }
 
 .layered-figure-caption strong {
-	color: var(--foreground);
+	color: var(--muted-foreground);
 	font-weight: 500;
 }
 
@@ -193,7 +193,7 @@
 }
 
 .layered-figure[data-mode="legend"] .layered-figure-legend button strong {
-	color: var(--foreground);
+	color: var(--muted-foreground);
 	font-size: 0.8125rem;
 	font-weight: 600;
 }

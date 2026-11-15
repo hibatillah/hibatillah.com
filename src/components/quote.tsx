@@ -56,7 +56,7 @@ function Quote({ by, source, title, children, corner, frame, className }: QuoteP
 						>
 							“
 						</span>
-						<GraphProse className="text-base leading-relaxed text-foreground sm:text-lg">
+						<GraphProse className="text-base leading-relaxed text-muted-foreground sm:text-lg">
 							{children}
 						</GraphProse>
 					</div>
@@ -68,7 +68,7 @@ function Quote({ by, source, title, children, corner, frame, className }: QuoteP
 									—
 								</span>
 								<span className="flex min-w-0 flex-wrap gap-x-2">
-									{by ? <cite className="text-foreground not-italic">{by}</cite> : null}
+									{by ? <cite className="text-muted-foreground not-italic">{by}</cite> : null}
 									{source ? <span className="text-graph-muted">{source}</span> : null}
 								</span>
 							</footer>

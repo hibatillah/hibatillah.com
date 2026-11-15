@@ -96,7 +96,7 @@ function GraphSpec({ title, rows: rowsProp, children, corner, frame, className }
 									<GraphProse
 										className={cn(
 											"[overflow-wrap:anywhere] tabular-nums",
-											row.accent ? "text-graph-accent" : "text-foreground",
+											row.accent ? "text-graph-accent" : "text-muted-foreground",
 										)}
 									>
 										<span>{row.rich}</span>
@@ -105,7 +105,7 @@ function GraphSpec({ title, rows: rowsProp, children, corner, frame, className }
 									<span
 										className={cn(
 											"tabular-nums",
-											row.accent ? "text-graph-accent" : "text-foreground",
+											row.accent ? "text-graph-accent" : "text-muted-foreground",
 										)}
 									>
 										{row.value}

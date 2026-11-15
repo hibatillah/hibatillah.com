@@ -140,7 +140,7 @@ function GraphTree({ title, nodes, children, corner, frame, className }: GraphTr
 									<span aria-hidden="true" className="text-graph-frame select-none">
 										{row.branch}
 									</span>
-									<span className={cn(row.accent ? "text-graph-accent" : "text-foreground")}>
+									<span className={cn(row.accent ? "text-graph-accent" : "text-muted-foreground")}>
 										{row.label}
 									</span>
 								</span>

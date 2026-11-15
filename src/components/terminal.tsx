@@ -93,7 +93,7 @@ function Terminal({
 						<motion.code
 							className={cn(
 								"grid grid-cols-[1.25rem_minmax(0,1fr)] gap-x-2",
-								line.kind === "command" && "text-foreground",
+								line.kind === "command" && "text-muted-foreground",
 								line.kind === "comment" && "text-graph-muted",
 								line.kind === "ok" && "text-graph-accent",
 								line.kind === "output" && "text-graph-muted",

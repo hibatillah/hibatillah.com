@@ -63,7 +63,7 @@ function Callout({ type = "note", title, children, corner, frame, className }: C
 					>
 						{glyph[type]}
 					</span>
-					<GraphProse className="text-foreground">{children}</GraphProse>
+					<GraphProse className="text-muted-foreground">{children}</GraphProse>
 				</motion.div>
 			</GraphBody>
 		</Graph>

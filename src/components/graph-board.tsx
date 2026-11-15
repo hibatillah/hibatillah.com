@@ -166,7 +166,7 @@ function GraphBoard({
 															"text-pretty",
 															state === "now" && toneClass(palette, "primary"),
 															state === "next" && toneClass(palette, "secondary"),
-															state === "done" && "text-foreground",
+															state === "done" && "text-muted-foreground",
 														)}
 													>
 														{entry.label}
